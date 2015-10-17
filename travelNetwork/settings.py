@@ -36,7 +36,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'core'
+    'core',
+    'authentication'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -68,6 +69,8 @@ TEMPLATES = [
     },
 ]
 
+AUTH_USER_MODEL = 'authentication.travelUser'
+
 WSGI_APPLICATION = 'travelNetwork.wsgi.application'
 
 # Internationalization
@@ -82,6 +85,7 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
 
 
 # Static files (CSS, JavaScript, Images)
