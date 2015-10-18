@@ -6,7 +6,7 @@ from django.contrib.auth.models import (
 
 
 class travelUserManager(BaseUserManager):
-    def create_user(self, email, date_of_birth, password=None):
+    def create_user(self, email, date_of_birth=None, password=None):
         """
         Creates and saves a User with the given email, date of
         birth and password.
@@ -23,14 +23,13 @@ class travelUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, date_of_birth, password):
+    def create_superuser(self, email, password):
         """
         Creates and saves a superuser with the given email, date of
         birth and password.
         """
         user = self.create_user(email,
-            password=password,
-            date_of_birth=date_of_birth
+            password=password
         )
         user.is_admin = True
         user.save(using=self._db)
@@ -44,14 +43,14 @@ class travelUser(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
-    date_of_birth = models.DateField(blank=True)
+    date_of_birth = models.DateField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
     objects = travelUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['date_of_birth']
+    REQUIRED_FIELDS = []
 
     def get_full_name(self):
         # The user is identified by their email address
@@ -67,6 +66,11 @@ class travelUser(AbstractBaseUser):
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
+        # Simplest possible answer: Yes, always
+        return True
+
+    def has_perms(self, perm_list, obj=None):
+        "Does the user have all permissions?"
         # Simplest possible answer: Yes, always
         return True
 
