@@ -6,7 +6,9 @@ from django.contrib.auth.models import (
 
 
 class travelUserManager(BaseUserManager):
-    def create_user(self, email, date_of_birth=None, password=None):
+
+    def create_user(self, email, first_name=None, last_name=None, date_of_birth=None, password=None):
+
         """
         Creates and saves a User with the given email, date of
         birth and password.
@@ -17,6 +19,8 @@ class travelUserManager(BaseUserManager):
         user = self.model(
             email=self.normalize_email(email),
             date_of_birth=date_of_birth,
+            first_name=first_name,
+            last_name=last_name
         )
 
         user.set_password(password)
@@ -29,7 +33,7 @@ class travelUserManager(BaseUserManager):
         birth and password.
         """
         user = self.create_user(email,
-            password=password
+            password=password,
         )
         user.is_admin = True
         user.save(using=self._db)
@@ -44,6 +48,8 @@ class travelUser(AbstractBaseUser):
         unique=True,
     )
     date_of_birth = models.DateField(blank=True, null=True)
+    first_name = models.CharField(blank=True, max_length=30)
+    last_name = models.CharField(blank=True,  max_length=30)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
@@ -52,6 +58,14 @@ class travelUser(AbstractBaseUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
+    def get_first_name(self):
+        # The user is identified by their email address
+        return self.first_name
+
+    def get_last_name(self):
+        # The user is identified by their email address
+        return self.last_name
+
     def get_full_name(self):
         # The user is identified by their email address
         return self.email
@@ -59,7 +73,6 @@ class travelUser(AbstractBaseUser):
     def get_short_name(self):
         # The user is identified by their email address
         return self.email
-
 
     def __str__(self):              # __unicode__ on Python 2
         return self.email
