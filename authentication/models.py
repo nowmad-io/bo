@@ -7,7 +7,7 @@ from django.contrib.auth.models import (
 
 class travelUserManager(BaseUserManager):
 
-    def create_user(self, email, first_name=None, last_name=None, date_of_birth=None, password=None):
+    def create_user(self, email, first_name='', last_name='', date_of_birth=None, password=None):
 
         """
         Creates and saves a User with the given email, date of
