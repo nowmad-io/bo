@@ -5,7 +5,8 @@ from rest_framework import serializers, viewsets
 User = get_user_model()
 
 # Serializers define the API representation.
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('url', 'email', 'password')
+        fields = ('first_name', 'last_name', 'email', 'location')
+        depth = 1
