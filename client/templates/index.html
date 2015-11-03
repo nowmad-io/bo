@@ -1,20 +1,19 @@
 {% load i18n %}
 {% load static %}
 
-<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Flux • TodoMVC</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'client/css/base.css'%}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'client/css/app.css'%}" />
+    <title>TravelNetwork</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'client/css/global.css'%}" />
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"/>
   </head>
-  <body>
-    <section id="todoapp"></section>
-    <footer id="info">
-      <p>Double-click to edit a todo</p>
-      <p>Created by <a href="http://github.com/julienR2/travelNetwork">Startup</a></p>
-    </footer>
-    <script src="{% static 'client/js/bundle.min.js' %}"></script>
-  </body>
-</html>
+
+<body>
+  <div id="travel-network-client"></div>
+</body>
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing&key=AIzaSyAPLYV9BEARMIbWQ5TO9-t9MWO-hh0Mmtc"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="{% static 'client/js/shared.js' %}"></script>
+<script src="{% static 'client/js/client.js' %}"></script>
