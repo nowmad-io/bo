@@ -1,19 +1,31 @@
-{% load i18n %}
 {% load static %}
-
-<html lang="en">
+<!doctype html public >
+<html>
   <head>
     <meta charset="utf-8">
-    <title>TravelNetwork</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'client/css/global.css'%}" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Travel Network</title>
+      <meta name="description" content="">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+
   </head>
+  <body>
+    <div id="travel-network-client"></div>
 
-<body>
-  <div id="travel-network-client"></div>
-</body>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="{% static 'client/js/shared.js' %}"></script>
+    <script src="{% static 'client/js/client.js' %}"></script>
+    
+    <script>
+      window.AppMain.init({
+        API_URL: "{{ context.apiUrl }}",
+        BASE_URL: "{{ context.baseUrl }}"
+      });
+    </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing&key=AIzaSyAPLYV9BEARMIbWQ5TO9-t9MWO-hh0Mmtc"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="{% static 'client/js/shared.js' %}"></script>
-<script src="{% static 'client/js/client.js' %}"></script>
+  </body>
+</html>
