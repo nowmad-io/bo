@@ -19,6 +19,6 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^client/', include('client.urls', namespace='client')),
-    url(r'^auth/', include('djoser.urls.authtoken')),
-    url(r'^', include('core.urls', namespace='core')),
+    url(r'^api/', include('core.urls')),
+    #url(r'^toto/', include('djoser.urls.authtoken')),
 ]
