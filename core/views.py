@@ -15,15 +15,16 @@ def index(request):
     return HttpResponse("Hello, world. You're at the core index.")
 
 class UserViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.AllowAny,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    def perform_create(self, serializer):
+        serializer.save()
 
 
-class ReviewList(generics.ListCreateAPIView):
+class ReviewViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.AllowAny,)
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-
-
-class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Review.objects.all()
-    serializer_class = ReviewSerializer
+    def perform_create(self, serializer):
+        serializer.save()
