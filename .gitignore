@@ -52,6 +52,7 @@ coverage.xml
 *.log
 config.py
 
+
 # Sphinx documentation
 docs/_build/
 
