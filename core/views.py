@@ -22,9 +22,13 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer.save()
 
 
+
+
 class ReviewViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.AllowAny,)
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     def perform_create(self, serializer):
+        print 'blabla'
+        # print request.user
         serializer.save()
