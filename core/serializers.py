@@ -14,7 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class ReviewSerializer(serializers.ModelSerializer):
     created_by = serializers.PrimaryKeyRelatedField(read_only=True)
-    
+
     class Meta:
         model = Review
         fields = ('id', 'title', 'description', 'location', 'privacy', 'category', 'created_by', 'creation_date')

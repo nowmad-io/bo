@@ -4,6 +4,12 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
+
+# class travelUser(models.Model):
+#     me =
+#     friends = models.ManyToManyField(travelUser)
+
+
 class Location(models.Model):
     longitude = models.FloatField(blank=False, null=False, default=0)
     latitude = models.FloatField(blank=False, null=False, default=0)

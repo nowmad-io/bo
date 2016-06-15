@@ -55,7 +55,7 @@ class travelUser(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     location = models.ForeignKey(Location, blank=True, null=True)
-
+    friends = models.ManyToManyField("self")
     objects = travelUserManager()
 
     USERNAME_FIELD = 'email'
@@ -94,6 +94,9 @@ class travelUser(AbstractBaseUser):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
         return True
+
+    def get_friends(self):
+        return self.friends.all()
 
     @property
     def is_staff(self):
