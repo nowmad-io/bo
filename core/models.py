@@ -25,6 +25,18 @@ class Category(models.Model):
 
     name = models.CharField(max_length=30)
 
+class PersonalManager(models.Manager):
+    def query_set(self):
+        return super(PersonalManager, self).get_queryset().filter(privacy = 100)
+
+class FriendsManager(models.Manager):
+    def query_set(self):
+        return super(PersonalManager, self).get_queryset().filter(privacy = 50)
+
+class AllManager(models.Manager):
+    def query_set(self):
+        return super(PersonalManager, self).get_queryset().filter(privacy = 0)
+
 
 class Review(models.Model):
     title = models.CharField(max_length=30)
@@ -39,24 +51,18 @@ class Review(models.Model):
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='first_reviewer')
     creation_date = models.DateField(auto_now_add=True)
 
+    objects = models.Manager()
+    personal_review = PersonalManager()
+    friends_review = FriendsManager()
+    all_review = AllManager()
+
     def __unicode__(self):
             return self.title
 
 
-
+# nimporte quoi ^^
 
 #different manager in each case
-class PersonalManager(models.Manager):
-    def query_set(self):
-        return super(PersonalManager, self).get_queryset().filter(privacy = 100)
-
-class FriendsManager(models.Manager):
-    def query_set(self):
-        return super(PersonalManager, self).get_queryset().filter(privacy = 50)
-
-class AllManager(models.Manager):
-    def query_set(self):
-        return super(PersonalManager, self).get_queryset().filter(privacy = 0)
 
 #different class of review
 class PersonalReview(Review):
