@@ -37,7 +37,8 @@ class ReviewViewSet(viewsets.ViewSet):
     serializer_class = ReviewSerializer
 
     def list(self, request):
-        queryset = Review.objects.all()
+        
+        queryset = Review.objects.filter(created_by = request.user)
 
         # print queryset.keys
         # queryset = Review.objects.filter(created_by = request.user)
