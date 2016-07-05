@@ -45,8 +45,9 @@ class ReviewSerializer(serializers.Serializer):
         #after the JSONParser so that we have a dict
         #we need to get the right
         user = None
+        # print self.context['user']
         request = self.context['request']
-        print request
+        # print request
         if request and hasattr(request, "user"):
             user = request.user
         validated_data['created_by'] = user

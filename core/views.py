@@ -34,6 +34,7 @@ class ReviewViewSet(viewsets.ViewSet):
     """
     # permission_classes = (permissions.IsAuthenticated,)
     permission_classes = (permissions.AllowAny,)
+    serializer_class = ReviewSerializer
 
     def list(self, request):
         queryset = Review.objects.all()
@@ -51,12 +52,28 @@ class ReviewViewSet(viewsets.ViewSet):
     #     url_path='create',
     # )
     def create(self, request):
-        print request.body
-        serializer = ReviewSerializer(data = request.body)
+
+        serializer = self.serializer_class(data = request.data, context={'request':request})
+        print 'what'
         if serializer.is_valid():
-            print 'valid'
+            print 'before'
             serializer.save()
-        return Response(serializer.data)
+            print 'why'
+            return Response(
+                serializer.validated_data, status=status.HTTP_201_CREATED
+            )
+
+        return Response({
+            'status': 'Bad request',
+            'message': 'Account could not be created with received data.'
+        }, status=status.HTTP_400_BAD_REQUEST)
+        #
+        # print request.body
+        # serializer = ReviewSerializer(data = request.body)
+        # if serializer.is_valid():
+        #     print 'valid'
+        #     serializer.save()
+        # return Response(serializer.data)
 
     # def perform_create(self, serializer):
     #     print 'blabla'
