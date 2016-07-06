@@ -36,8 +36,17 @@ class ReviewViewSet(viewsets.ViewSet):
     permission_classes = (permissions.AllowAny,)
     serializer_class = ReviewSerializer
 
+    # def get_permissions(self):
+    #     if self.request.method in permissions.SAFE_METHODS:
+    #         return (permissions.AllowAny(),)
+    #
+    #     if self.request.method == 'POST':
+    #         return (permissions.AllowAny(),)
+    #
+    #     return (permissions.IsAuthenticated(), IsAccountOwner(),)
+
     def list(self, request):
-        
+
         queryset = Review.objects.filter(created_by = request.user)
 
         # print queryset.keys
@@ -98,6 +107,42 @@ class ReviewViewSet(viewsets.ViewSet):
 
     def destroy(self, request, pk=None):
         pass
+#
+# class LoginView(views.APIView):
+#     def post(self, request, format=None):
+#         data = json.loads(request.body)
+#
+#         email = data.get('email', None)
+#         password = data.get('password')
+#
+#         account = authenticate(email=email, password=password)
+#
+#         if account is not None:
+#             if account.is_active:
+#                 login(request, account)
+#
+#                 serialized = AccountSerializer(account)
+#
+#                 return Response(serialized.data)
+#             else:
+#                 return Response({
+#                     'status': 'Unauthorized',
+#                     'message': 'This account has been disabled.'
+#             }, status=status.HTTP_401_UNAUTHORIZED)
+#         else:
+#             return Response({
+#                'status': 'Unauthorized',
+#                'message': 'Username/password combination invalid.'
+#         }, status=status.HTTP_401_UNAUTHORIZED)
+#
+#
+# class LogoutView(views.APIView):
+#     permissions = (permissions.IsAuthenticated,)
+#
+#     def post(self, request, format=None):
+#         logout(request)
+#
+#         return Response({}, status=status.HTTP_204_NO_CONTENT)
 
 # class ReviewViewSet(viewsets.ModelViewSet):
 #     permission_classes = (permissions.AllowAny,)
