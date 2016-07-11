@@ -46,9 +46,10 @@ class ReviewViewSet(viewsets.ViewSet):
     #     return (permissions.IsAuthenticated(), IsAccountOwner(),)
 
     def list(self, request):
-
-        queryset = Review.objects.filter(created_by = request.user)
-
+        if request.user.is_authenticated():
+            queryset = Review.objects.filter(created_by = request.user)
+        else:
+            queryset = []
         # print queryset.keys
         # queryset = Review.objects.filter(created_by = request.user)
         serializer = ReviewSerializer(queryset, many=True)
