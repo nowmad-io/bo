@@ -1,0 +1,64 @@
+[{
+    "model": "core.location",
+    "pk": 1,
+    "fields": {
+        "longitude": 2.3522219000000177,
+        "latitude": 48.85661400000001
+    }
+}, {
+    "model": "core.location",
+    "pk": 2,
+    "fields": {
+        "longitude": -84.09072459999999,
+        "latitude": 9.9280694
+    }
+}, {
+    "model": "core.location",
+    "pk": 3,
+    "fields": {
+        "longitude": 114.99913300000003,
+        "latitude": -8.2611406
+    }
+}, {
+    "model": "core.location",
+    "pk": 4,
+    "fields": {
+        "longitude": -74.00594130000002,
+        "latitude": 40.7127837
+    }
+}, {
+    "model": "core.location",
+    "pk": 5,
+    "fields": {
+        "longitude": 35.2359927,
+        "latitude": 31.7781161
+    }
+}, {
+    "model": "core.location",
+    "pk": 6,
+    "fields": {
+        "longitude": 2.344335600000022,
+        "latitude": 48.88396849999999
+    }
+}, {
+    "model": "core.location",
+    "pk": 7,
+    "fields": {
+        "longitude": -84.5981913,
+        "latitude": 9.5727431
+    }
+}, {
+    "model": "core.location",
+    "pk": 8,
+    "fields": {
+        "longitude": -87.46024310588837,
+        "latitude": 20.1430579521347
+    }
+}, {
+    "model": "core.location",
+    "pk": 9,
+    "fields": {
+        "longitude": 131.03688220000004,
+        "latitude": -25.3444277
+    }
+}]

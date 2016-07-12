@@ -1,0 +1,46 @@
+[{
+    "model": "authentication.traveluser",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$MfpALK3OF2pm$zI/VrQL+R5crCI1woOIPf1poeil+tfvDZghfY2pkJW4=",
+        "last_login": null,
+        "email": "x@x.com",
+        "date_of_birth": null,
+        "first_name": "Xavier",
+        "last_name": "Chemla",
+        "is_active": true,
+        "is_admin": true,
+        "location": 1,
+        "friends": []
+    }
+}, {
+    "model": "authentication.traveluser",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$RMDusmWa4vXZ$I+PLhFctIYFErhx/NcczsEHflkXN9dqG8iPLuXTNHLw=",
+        "last_login": "2016-07-12T01:28:01.080Z",
+        "email": "j@j.com",
+        "date_of_birth": null,
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "is_admin": true,
+        "location": 2,
+        "friends": []
+    }
+}, {
+    "model": "authentication.traveluser",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$1mOIwqUK7tPk$4xkwfvtHww+wAW7su6RXbBew01DDjO7A6pDtdZ53KdY=",
+        "last_login": "2016-07-12T01:28:01.080Z",
+        "email": "test@test.com",
+        "date_of_birth": null,
+        "first_name": "foo",
+        "last_name": "bar",
+        "is_active": true,
+        "is_admin": false,
+        "location": 3,
+        "friends": []
+    }
+}]
