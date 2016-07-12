@@ -1,7 +1,7 @@
 from django.conf.urls import url, include
 from django.contrib.auth import get_user_model
 from rest_framework import serializers, viewsets
-from core.models import Review
+from core.models import Review, Location
 
 User = get_user_model()
 
@@ -20,50 +20,46 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'first_name', 'last_name', 'email', 'location')
         depth = 1
 
-# class GetToken(APIView):
-#     throttle_classes = ()
-#     permission_classes = (AllowAny,)
-#     authentication_classes = (TokenAuthentication,)
-#     parser_classes = (parsers.FormParser, parsers.MultiPartParser, parsers.JSONParser,)
-#     renderer_classes = (renderers.JSONRenderer,)
-#     def post(self, request):
-#         serializer = AuthTokenSerializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-#         user = serializer.validated_data['user']
-#         token, created = Token.objects.get_or_create(user=user)
-#         return Response({'token': token.key})
+class LocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Location
+        fields = ('longitude', 'latitude')
 
-class ReviewSerializer(serializers.Serializer):
-    title = serializers.CharField()
-    description = serializers.CharField()
-    privacy = serializers.IntegerField()
-    location_id = serializers.IntegerField()
-    # created_by = serializers.IntegerField()
+class ReviewSerializer(serializers.ModelSerializer):
+    location = LocationSerializer(many=False,)
+
+    class Meta:
+        model = Review
+        fields = ('id', 'title', 'description', 'privacy', 'location')
 
     def create(self, validated_data):
         #validated_data contains all data from the serializer
-        #after the JSONParser so that we have a dict
-        #we need to get the right
+
+        #set up created_by attribute with logged user or None
         user = None
-        # print self.context['user']
         request = self.context['request']
-        # print request
         if request and hasattr(request, "user"):
             user = request.user
-        validated_data['created_by'] = user
-        return Review.objects.create(**validated_data)
+            validated_data['created_by'] = user
+
+        # create location manually (DRF doesn't handle nested creation or update)
+        location_data = validated_data.pop('location')
+        location, _ = Location.objects.get_or_create(**location_data)
+        validated_data['location'] = location
+
+        review = Review.objects.create(**validated_data)
+
+        return review
 
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)
         instance.description = validated_data.get('description', instance.description)
         instance.privacy = validated_data.get('privacy', instance.privacy)
+
+        # handle manually location
+        location_data = validated_data.pop('location')
+        location, _ = Location.objects.get_or_create(**location_data)
+        instance.location = location
+
         instance.save()
         return instance
-
-# class ReviewSerializer(serializers.ModelSerializer):
-#     created_by = serializers.PrimaryKeyRelatedField(read_only=True)
-#
-#     class Meta:
-#         model = Review
-#         fields = ('id', 'title', 'description', 'location', 'privacy', 'category', 'created_by', 'creation_date')
-#         depth = 2
