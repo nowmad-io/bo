@@ -55,7 +55,6 @@ class travelUser(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     location = models.ForeignKey(Location, blank=True, null=True)
-    friends = models.ManyToManyField("self")
     objects = travelUserManager()
 
     USERNAME_FIELD = 'email'

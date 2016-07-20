@@ -49,7 +49,8 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'core',
     'authentication',
-    'client'
+    'client',
+    'friends'
 )
 
 MIDDLEWARE_CLASSES = (

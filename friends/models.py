@@ -11,9 +11,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
 
 from django.db import models
-from friendship.exceptions import AlreadyExistsError, AlreadyFriendsError
+from friends.exceptions import AlreadyExistsError, AlreadyFriendsError
 
-from friendship.signals import (
+from friends.signals import (
     friendship_request_created, friendship_request_rejected,
     friendship_request_canceled,
     friendship_request_viewed, friendship_request_accepted,
@@ -150,11 +150,14 @@ class FriendshipManager(models.Manager):
         """ Return a list of all friends """
         key = cache_key('friends', user.pk)
         friends = cache.get(key)
-
+        print "key = " + key
+        print "friends = " + str(friends)
         if friends is None:
             qs = Friend.objects.select_related('from_user', 'to_user').filter(to_user=user).all()
             friends = [u.from_user for u in qs]
             cache.set(key, friends)
+
+        print friends
 
         return friends
 
