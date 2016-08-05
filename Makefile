@@ -1,11 +1,34 @@
+PYTHON = ./venv/bin/python
+PIP = ./venv/bin/pip
+
+init:
+	rm -rf venv
+	find . -name '*.pyc' -delete
+	@echo Creating venv with python `which python`
+	virtualenv -p `which python` venv --verbose
+
+
+fixtures_users:
+	$(PYTHON) manage.py dumpdata authentication.traveluser > fixtures/users.json
+
+fixtures_locations:
+	$(PYTHON) manage.py dumpdata core.location > fixtures/locations.json
+
+fixtures_reviews:
+	$(PYTHON) manage.py dumpdata core.reviews > fixtures/reviews.json
+
+
 start_me_up:
-	rm -vf db.sqlite3
-	pip install -r requirements.txt -U
-	python manage.py migrate --run-syncdb --noinput
+	find . -name '*.pyc' -delete
+	rm -vf travelNetwork/db.sqlite3
+	$(PIP) install -r requirements.txt -U
+	$(PYTHON) manage.py makemigrations corsheaders
+	$(PYTHON) manage.py makemigrations
+	$(PYTHON) manage.py migrate --run-syncdb --noinput
 
-	python manage.py loaddata fixtures/locations.json
-	python manage.py loaddata fixtures/users.json
-	python manage.py loaddata fixtures/reviews.json
+	$(PYTHON) manage.py loaddata fixtures/locations.json
+	$(PYTHON) manage.py loaddata fixtures/users.json
+	$(PYTHON) manage.py loaddata fixtures/reviews.json
 
-start_server:
-	python manage.py runserver
+server:
+	$(PYTHON) manage.py runserver
