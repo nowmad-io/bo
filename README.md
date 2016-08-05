@@ -21,3 +21,10 @@
   ```
   > make server
   ```
+
+## Setting up fixtures
+
+```
+> make export_fixtures
+```
+Once you created a test database with a set of objects, you can export it as fixtures so it can be loaded during the next ```make start_me_up```.

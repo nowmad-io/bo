@@ -1,73 +1,80 @@
-[{
-    "model": "core.review",
-    "pk": 1,
-    "fields": {
-        "title": "Statue of Liberty",
-        "description": "This is probably something to visit if you go to New York !",
-        "location": 4,
-        "privacy": 0,
-        "created_by": 1,
-        "creation_date": "2016-01-23",
-        "category": []
-    }
-}, {
-    "model": "core.review",
-    "pk": 2,
-    "fields": {
-        "title": "Temple Mount",
-        "description": "One of the most important religious sites in the world",
-        "location": 5,
-        "privacy": 0,
-        "created_by": 1,
-        "creation_date": "2016-01-23",
-        "category": []
-    }
-}, {
-    "model": "core.review",
-    "pk": 3,
-    "fields": {
-        "title": "On the Road Bar",
-        "description": "A really cool bar with good ambiance !",
-        "location": 6,
-        "privacy": 0,
-        "created_by": 1,
-        "creation_date": "2016-07-12",
-        "category": []
-    }
-}, {
-    "model": "core.review",
-    "pk": 4,
-    "fields": {
-        "title": "Playa Hermosa",
-        "description": "A beautiful beach on the Pacific Coast",
-        "location": 7,
-        "privacy": 0,
-        "created_by": 2,
-        "creation_date": "2016-07-12",
-        "category": []
-    }
-}, {
-    "model": "core.review",
-    "pk": 5,
-    "fields": {
-        "title": "Best Bench in the World",
-        "description": "A famous bench in Tulum where you have one of the best view of a blue ocean and white beach",
-        "location": 8,
-        "privacy": 0,
-        "created_by": 2,
-        "creation_date": "2016-07-12",
-        "category": []
-    }
-}, {
-    "model": "core.review",
-    "pk": 6,
-    "fields": {
-        "title": "Uluru",
-        "description": "A rock in the middle of Australia",
-        "location": 9,
-        "privacy": 0,
-        "created_by": 3,
-        "creation_date": "2016-07-12",
-        "category": []
-    }
-}]
+[
+{
+  "model": "core.review",
+  "pk": 1,
+  "fields": {
+    "title": "Statue of Liberty",
+    "description": "This is probably something to visit if you go to New York !",
+    "location": 4,
+    "privacy": 0,
+    "created_by": 1,
+    "creation_date": "2016-01-23",
+    "category": []
+  }
+},
+{
+  "model": "core.review",
+  "pk": 2,
+  "fields": {
+    "title": "Temple Mount",
+    "description": "One of the most important religious sites in the world",
+    "location": 5,
+    "privacy": 0,
+    "created_by": 1,
+    "creation_date": "2016-01-23",
+    "category": []
+  }
+},
+{
+  "model": "core.review",
+  "pk": 3,
+  "fields": {
+    "title": "On the Road Bar",
+    "description": "A really cool bar with good ambiance !",
+    "location": 6,
+    "privacy": 0,
+    "created_by": 1,
+    "creation_date": "2016-07-12",
+    "category": []
+  }
+},
+{
+  "model": "core.review",
+  "pk": 4,
+  "fields": {
+    "title": "Playa Hermosa",
+    "description": "A beautiful beach on the Pacific Coast",
+    "location": 7,
+    "privacy": 0,
+    "created_by": 2,
+    "creation_date": "2016-07-12",
+    "category": []
+  }
+},
+{
+  "model": "core.review",
+  "pk": 5,
+  "fields": {
+    "title": "Best Bench in the World",
+    "description": "A famous bench in Tulum where you have one of the best view of a blue ocean and white beach",
+    "location": 8,
+    "privacy": 0,
+    "created_by": 2,
+    "creation_date": "2016-07-12",
+    "category": []
+  }
+},
+{
+  "model": "core.review",
+  "pk": 6,
+  "fields": {
+    "title": "Uluru",
+    "description": "A rock in the middle of Australia",
+    "location": 9,
+    "privacy": 0,
+    "created_by": 3,
+    "creation_date": "2016-07-12",
+    "category": []
+  }
+}
+]

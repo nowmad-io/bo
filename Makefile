@@ -8,15 +8,11 @@ init:
 	virtualenv -p `which python` venv --verbose
 
 
-fixtures_users:
-	$(PYTHON) manage.py dumpdata authentication.traveluser > fixtures/users.json
-
-fixtures_locations:
-	$(PYTHON) manage.py dumpdata core.location > fixtures/locations.json
-
-fixtures_reviews:
-	$(PYTHON) manage.py dumpdata core.reviews > fixtures/reviews.json
-
+export_fixtures:
+	$(PYTHON) manage.py dumpdata --indent 2 authentication.travelUser > fixtures/users.json
+	$(PYTHON) manage.py dumpdata --indent 2 friends.Friend > fixtures/friends.json
+	$(PYTHON) manage.py dumpdata --indent 2 core.Location > fixtures/locations.json
+	$(PYTHON) manage.py dumpdata --indent 2 core.Review > fixtures/reviews.json
 
 start_me_up:
 	find . -name '*.pyc' -delete
@@ -28,6 +24,7 @@ start_me_up:
 
 	$(PYTHON) manage.py loaddata fixtures/locations.json
 	$(PYTHON) manage.py loaddata fixtures/users.json
+	$(PYTHON) manage.py loaddata fixtures/friends.json
 	$(PYTHON) manage.py loaddata fixtures/reviews.json
 
 server:
