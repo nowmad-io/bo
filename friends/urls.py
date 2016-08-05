@@ -1,5 +1,5 @@
 from django.conf.urls import url, patterns
-from friends.views import FriendViewSet, FriendshipEventViewset, FriendshipRequestViewSet
+from friends.views import FriendViewSet, FriendshipRequestViewSet
 
 friends_list = FriendViewSet.as_view({
     'get': 'list'
@@ -24,12 +24,12 @@ friendship_incoming = FriendshipRequestViewSet.as_view({
     'get': 'incoming_list'
 })
 
-friendship_validation = FriendshipEventViewset.as_view({
-    'post': 'accept'
+friendship_validation = FriendshipRequestViewSet.as_view({
+    'get': 'accept'
 })
 
-friendship_rejection = FriendshipEventViewset.as_view({
-    'post': 'reject'
+friendship_rejection = FriendshipRequestViewSet.as_view({
+    'get': 'reject'
 })
 
 

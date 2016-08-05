@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 
 from rest_framework.decorators import list_route
 from rest_framework.response import Response
@@ -8,10 +9,10 @@ from rest_framework import status, permissions, viewsets
 from rest_framework import generics
 
 from django.shortcuts import render
-from .serializers import FriendSerializer, FriendshipRequestSerializer, FriendshipIdSerializer
+from .serializers import FriendSerializer, FriendshipRequestSerializer
 from core.serializers import UserSerializer
-from .models import Friend
-
+from .models import Friend, FriendshipRequest
+import json
 # Create your views here.
 
 class FriendshipRequestViewSet(viewsets.ViewSet):
@@ -32,24 +33,40 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
 
     def destroy(self, request, pk):
         """ delete friendship request with pk=pk """
-        pass
+        friendship_request = get_object_or_404(FriendshipRequest,id=pk)
+
+        if friendship_request.from_user.id != request.user.id:
+            return Response({'message':'WhoAreYou ??'},  status=status.HTTP_403_FORBIDDEN)
+
+        result = friendship_request.cancel()
+        print result
+        if result:
+            return Response(status = status.HTTP_201_CREATED)
+
+        return Response({
+              'status': 'Bad request'
+          }, status=status.HTTP_400_BAD_REQUEST)
+
 
     def create(self, request):
         """ create a friendship request """
 
-        #chek if there is a from_user
+        #chek if there is a from_user and a message
         if 'from_user' not in request.data:
-            # raise error
-            pass
+            request.data['from_user']=request.user.id
 
+        if 'message' not in request.data:
+            request.data['message']= "come on, let\'s be friends !"
 
         #check the user performing the request is the user authenticated
         if request.data['from_user'] != request.user.id:
-            return Response({'status':'WhoAreYou ??'},  status=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
+            return Response({'message':'WhoAreYou ??'},  status=status.HTTP_403_FORBIDDEN)
+
+
 
         #get the data back
         serializer = self.serializer_class(data = request.data)
-
+        print "what"
         #build the request in the backend
         if serializer.is_valid():
             serializer.save()
@@ -62,7 +79,7 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
 
     def incoming_list(self, request):
         """ print the list of incoming transaction """
-        queryset = Friend.objects.requests(user = request.user)
+        queryset = Friend.objects.unrejected_requests(user = request.user)
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)
 
@@ -72,53 +89,42 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)
 
-
-class FriendshipEventViewset(viewsets.ViewSet):
-    """
-        manage incoming friendship request
-        print the list of incoming friendship request
-        validate incoming friendship request
-    """
-
-    permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = FriendshipIdSerializer
-
     def accept(self, request, pk):
-        """ accept a request """
-        """ validate a friendship request """
+        """ accept a friendship request, create friend and remove the request form incoming"""
 
-        #chek if there is a from_user
-        if 'to_user' not in request.data:
-            # raise error
-            pass
+        friendship_request = get_object_or_404(FriendshipRequest,id=pk)
 
-        #check the user performing the request is the user authenticated
-        if request.data['to_user'] != request.user.id:
-            return Response({'status':'WhoAreYou ??'},  status=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
+        if friendship_request.to_user.id != request.user.id:
+            return Response({'message':'WhoAreYou ??'},  status=status.HTTP_403_FORBIDDEN)
 
-        print request.data['id']
+        result = friendship_request.accept()
 
-        #get the data back
-        serializer = self.serializer_class(
-            data = request.data,
-            context={'to_user': request.user.id})
-        print "WHHHHHAAATT"
-        print serializer.initial_data
-        #build the request in the backend
-        if serializer.is_valid():
-            print serializer.data
-            serializer.accept(serializer.data)
+        if result:
             return Response(status = status.HTTP_201_CREATED)
 
         return Response({
-              'status': 'Bad request',
-              'message': serializer.errors,
-              'value': serializer.initial_data
+              'status': 'Bad request'
           }, status=status.HTTP_400_BAD_REQUEST)
 
 
     def reject(self, request, pk):
         """ reject a friendship request """
+
+        friendship_request = get_object_or_404(FriendshipRequest,id=pk)
+
+        if friendship_request.to_user.id != request.user.id:
+            return Response({'message':'WhoAreYou ??'},  status=status.HTTP_403_FORBIDDEN)
+
+        result = friendship_request.reject()
+        print result
+        if result:
+            return Response(status = status.HTTP_200_OK)
+
+        return Response({
+              'status': 'Bad request'
+          }, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 
 
