@@ -1,5 +1,10 @@
-PYTHON = ./venv/bin/python
-PIP = ./venv/bin/pip
+ifdef SYSTEMROOT
+	PYTHON = ./venv/Scripts/python
+	PIP = ./venv/Scripts/pip
+else
+	PYTHON = ./venv/bin/python
+	PIP = ./venv/bin/pip
+endif
 
 init:
 	rm -rf venv
@@ -37,3 +42,6 @@ build_client:
 	echo checking out ${latesttag}
 	cd ../webapp/ && git checkout ${latesttag}
 	cd ../webapp/ && npm run build:clean && npm run build && npm run build:copy
+
+test:
+	echo  $(PYTHON)
