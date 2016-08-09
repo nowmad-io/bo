@@ -5,7 +5,7 @@ init:
 	rm -rf venv
 	find . -name '*.pyc' -delete
 	@echo Creating venv with python `which python`
-	virtualenv -p `which python` venv --verbose
+	virtualenv venv --verbose
 
 fixtures_users:
 	$(PYTHON) manage.py dumpdata authentication.traveluser > fixtures/users.json
