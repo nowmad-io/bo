@@ -7,7 +7,6 @@ init:
 	@echo Creating venv with python `which python`
 	virtualenv -p `which python` venv --verbose
 
-
 fixtures_users:
 	$(PYTHON) manage.py dumpdata authentication.traveluser > fixtures/users.json
 
@@ -16,7 +15,6 @@ fixtures_locations:
 
 fixtures_reviews:
 	$(PYTHON) manage.py dumpdata core.reviews > fixtures/reviews.json
-
 
 start_me_up:
 	find . -name '*.pyc' -delete
@@ -32,3 +30,10 @@ start_me_up:
 
 server:
 	$(PYTHON) manage.py runserver
+
+build_client:
+	cd ../webapp/ && git fetch && git checkout master
+	cd ../webapp && latesttag=$(git describe --tags)
+	echo checking out ${latesttag}
+	cd ../webapp/ && git checkout ${latesttag}
+	cd ../webapp/ && npm run build:clean && npm run build && npm run build:copy
