@@ -24,7 +24,6 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
 
     def list(self, request):
         """ return the list of friendship request """
-        print "in standard"
         pass
 
     def retrieve(self, request, pk):
@@ -39,7 +38,7 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
             return Response({'message':'WhoAreYou ??'},  status=status.HTTP_403_FORBIDDEN)
 
         result = friendship_request.cancel()
-        print result
+
         if result:
             return Response(status = status.HTTP_201_CREATED)
 
@@ -47,6 +46,8 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
               'status': 'Bad request'
           }, status=status.HTTP_400_BAD_REQUEST)
 
+    def update(self, request, pk):
+        pass
 
     def create(self, request):
         """ create a friendship request """
@@ -66,7 +67,7 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
 
         #get the data back
         serializer = self.serializer_class(data = request.data)
-        print "what"
+
         #build the request in the backend
         if serializer.is_valid():
             serializer.save()
@@ -116,7 +117,7 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
             return Response({'message':'WhoAreYou ??'},  status=status.HTTP_403_FORBIDDEN)
 
         result = friendship_request.reject()
-        print result
+        
         if result:
             return Response(status = status.HTTP_200_OK)
 
@@ -152,6 +153,10 @@ class FriendViewSet(viewsets.ViewSet):
         serializer = UserSerializer(queryset, many=True)
 
         return Response(serializer.data)
+
+    def destroy(self, request):
+        """Remove a friend"""
+        pass
 
     # def create(self, request):
     #     """ cannot create friends directly, need to pass by a request """
