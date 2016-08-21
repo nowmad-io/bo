@@ -51,7 +51,21 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
           }, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, pk):
-        pass
+
+        friendship_request = get_object_or_404(FriendshipRequest,id=pk)
+    
+        if friendship_request.from_user.id != request.user.id:
+            return Response({'message':'WhoAreYou ??'},  status=status.HTTP_403_FORBIDDEN)
+
+
+        serializer = self.serializer_class(friendship_request, data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data, status=status.HTTP_202_ACCEPTED
+            )
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def create(self, request):
         """ create a friendship request """
@@ -128,11 +142,6 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
         return Response({
               'status': 'Bad request'
           }, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-
-
 
 
 class FriendViewSet(viewsets.ViewSet):
