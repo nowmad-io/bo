@@ -24,11 +24,15 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
 
     def list(self, request):
         """ return the list of friendship request """
-        pass
+        queryset = Friend.objects.requests(user = request.user)
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
 
     def retrieve(self, request, pk):
         """ get info from the friendhsip request with pk = pk"""
-        pass
+        f_request = get_object_or_404(FriendshipRequest, id=pk)
+        serializer = self.serializer_class(f_request)
+        return Response(serializer.data)
 
     def destroy(self, request, pk):
         """ delete friendship request with pk=pk """
@@ -117,7 +121,7 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
             return Response({'message':'WhoAreYou ??'},  status=status.HTTP_403_FORBIDDEN)
 
         result = friendship_request.reject()
-        
+
         if result:
             return Response(status = status.HTTP_200_OK)
 
