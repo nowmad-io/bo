@@ -7,8 +7,7 @@
         "location": 4,
         "privacy": 0,
         "created_by": 1,
-        "creation_date": "2016-01-23",
-        "category": []
+        "creation_date": "2016-01-23"
     }
 }, {
     "model": "core.review",
@@ -19,8 +18,7 @@
         "location": 5,
         "privacy": 0,
         "created_by": 1,
-        "creation_date": "2016-01-23",
-        "category": []
+        "creation_date": "2016-01-23"
     }
 }, {
     "model": "core.review",
@@ -31,8 +29,7 @@
         "location": 6,
         "privacy": 0,
         "created_by": 1,
-        "creation_date": "2016-07-12",
-        "category": []
+        "creation_date": "2016-07-12"
     }
 }, {
     "model": "core.review",
@@ -43,8 +40,7 @@
         "location": 7,
         "privacy": 0,
         "created_by": 2,
-        "creation_date": "2016-07-12",
-        "category": []
+        "creation_date": "2016-07-12"
     }
 }, {
     "model": "core.review",
@@ -55,8 +51,7 @@
         "location": 8,
         "privacy": 0,
         "created_by": 2,
-        "creation_date": "2016-07-12",
-        "category": []
+        "creation_date": "2016-07-12"
     }
 }, {
     "model": "core.review",
@@ -67,7 +62,6 @@
         "location": 9,
         "privacy": 0,
         "created_by": 3,
-        "creation_date": "2016-07-12",
-        "category": []
+        "creation_date": "2016-07-12"
     }
 }]

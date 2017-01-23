@@ -87,4 +87,16 @@ class ReviewViewSet(viewsets.ViewSet):
         pass
 
     def destroy(self, request, pk=None):
-        pass
+        try:
+            review = Review.objects.get(pk=pk, created_by=request.user)
+            review.delete()
+        except Review.DoesNotExist:
+            return Response({
+                'status': 'Not Found',
+                'message': 'Bookmark could not be find.'
+            }, status=HTTP_404_NOT_FOUND)
+
+        return Response({
+            'status': 'Success',
+            'message': 'Bookmark deleted'
+        }, status=status.HTTP_200_OK)

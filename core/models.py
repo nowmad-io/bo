@@ -43,7 +43,6 @@ class Review(models.Model):
     description = models.CharField(max_length=100, blank=True)
     location = models.ForeignKey('Location')
     privacy = models.IntegerField(default=50)
-    category = models.ManyToManyField(Category, blank=True)
     # image = models.ImageField(upload_to = "images")
 
 
