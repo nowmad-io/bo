@@ -31,6 +31,7 @@ start_me_up:
 
 	$(PYTHON) manage.py loaddata fixtures/locations.json
 	$(PYTHON) manage.py loaddata fixtures/users.json
+	$(PYTHON) manage.py loaddata fixtures/friends.json
 	$(PYTHON) manage.py loaddata fixtures/reviews.json
 
 server:

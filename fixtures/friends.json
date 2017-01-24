@@ -1,0 +1,28 @@
+[{
+        "model": "friends.friend",
+        "pk": 1,
+        "fields": {
+            "to_user": 3,
+            "from_user": 2,
+            "created": "2016-08-05T17:48:54Z"
+        }
+    },
+    {
+        "model": "friends.friend",
+        "pk": 2,
+        "fields": {
+            "to_user": 3,
+            "from_user": 1,
+            "created": "2016-08-05T17:49:10Z"
+        }
+    },
+    {
+        "model": "friends.friend",
+        "pk": 3,
+        "fields": {
+            "to_user": 1,
+            "from_user": 3,
+            "created": "2016-08-05T17:49:10Z"
+        }
+    }
+]

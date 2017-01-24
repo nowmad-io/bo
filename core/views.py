@@ -24,6 +24,16 @@ class UserViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save()
 
+# class UserViewSet(viewsets.ViewSet):
+#     permission_classes = (permissions.AllowAny,)
+#     serializer_class = UserSerializer
+#
+#     def add_friends(self, request):
+#         pass
+#
+#     def rmv_friends(self, request):
+#         pass
+
 class ReviewViewSet(viewsets.ViewSet):
     """
     Review View Set

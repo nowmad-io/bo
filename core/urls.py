@@ -1,17 +1,18 @@
 from django.conf.urls import include, url
-from . import views
-from views import ReviewViewSet
+from core.views import ReviewViewSet, UserViewSet, index
+from friends.views import FriendViewSet, FriendshipRequestViewSet
+
 
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-router.register(r'friends', views.UserViewSet)
-router.register(r'reviews', views.ReviewViewSet, 'reviews')
+router.register(r'reviews', ReviewViewSet, 'reviews')
 
 
 urlpatterns = [
-
+    url(r'^search/', include('search.urls')),
     url(r'^auth/', include('authentication.urls')),
-    url(r'^index/$', views.index, name='index'),
+    url(r'^index/$', index, name='index'),
     url(r'^', include(router.urls), name='api-root'),
+    url(r'^', include('friends.urls'), name='friends')
 ]
