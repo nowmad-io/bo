@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, permissions, viewsets
 from rest_framework import generics
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 
 from django.shortcuts import render
 from .serializers import FriendSerializer, FriendshipRequestSerializer
@@ -21,6 +22,7 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
     """
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = FriendshipRequestSerializer
+    authentication_classes = (TokenAuthentication, SessionAuthentication)
 
     def list(self, request):
         """ return the list of friendship request """
@@ -151,6 +153,7 @@ class FriendViewSet(viewsets.ViewSet):
     # permission_classes = (permissions.IsAuthenticated,)
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = FriendSerializer
+    authentication_classes = (TokenAuthentication, SessionAuthentication)
 
     def list(self, request):
         """List friends of authenticated user"""

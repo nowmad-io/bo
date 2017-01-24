@@ -50,7 +50,8 @@ INSTALLED_APPS = (
     'core',
     'authentication',
     'client',
-    'friends'
+    'friends',
+    'search',
 )
 
 MIDDLEWARE_CLASSES = (

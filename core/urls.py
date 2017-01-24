@@ -10,6 +10,7 @@ router.register(r'reviews', ReviewViewSet, 'reviews')
 
 
 urlpatterns = [
+    url(r'^search/', include('search.urls')),
     url(r'^auth/', include('authentication.urls')),
     url(r'^index/$', index, name='index'),
     url(r'^', include(router.urls), name='api-root'),
