@@ -49,3 +49,14 @@ Once you created a test database with a set of objects, you can export it as fix
 * ```GET api/friendships/reject/(?P<pk>[0-9]+)/``` = accept the friendship request
 * TODO/USEFULL ?: ```GET api/friendships/accepts/``` = lsit of accepted friendship request
 * TODO/USEFULL ?:```GET api/friendships/rejects/``` = list of rejected friendship request
+
+
+## Miscellaneous
+
+Error Dynos
+```
+> heroku ps --app travelnetwork
+> heroku ps:stop run.6004 --app travelnetwork
+> heroku login
+> heroku run bash --app travelnetwork
+```
