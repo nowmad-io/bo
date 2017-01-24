@@ -56,7 +56,7 @@ class ReviewViewSet(viewsets.ViewSet):
         if serializer.is_valid():
             serializer.save()
             return Response(
-                serializer.validated_data, status=status.HTTP_201_CREATED
+                serializer.data, status=status.HTTP_201_CREATED
             )
 
         return Response({
@@ -97,4 +97,16 @@ class ReviewViewSet(viewsets.ViewSet):
         pass
 
     def destroy(self, request, pk=None):
-        pass
+        try:
+            review = Review.objects.get(pk=pk, created_by=request.user)
+            review.delete()
+        except Review.DoesNotExist:
+            return Response({
+                'status': 'Not Found',
+                'message': 'Bookmark could not be find.'
+            }, status=HTTP_404_NOT_FOUND)
+
+        return Response({
+            'status': 'Success',
+            'message': 'Bookmark deleted'
+        }, status=status.HTTP_200_OK)

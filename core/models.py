@@ -40,10 +40,9 @@ class AllManager(models.Manager):
 
 class Review(models.Model):
     title = models.CharField(max_length=30)
-    description = models.CharField(max_length=100)
+    description = models.CharField(max_length=100, blank=True)
     location = models.ForeignKey('Location')
-    privacy = models.IntegerField(default = 50)
-    category = models.ManyToManyField(Category, blank=True)
+    privacy = models.IntegerField(default=50)
     # image = models.ImageField(upload_to = "images")
 
 
