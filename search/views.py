@@ -5,10 +5,11 @@ from rest_framework.authentication import TokenAuthentication, SessionAuthentica
 from core.serializers import ReviewSerializer
 from core.models import Review
 from friends.models import Friend
+from search.serializers import ReviewDetailsSerializer
 
 # Create your views here.
 class SearchReviews(generics.ListAPIView):
-    serializer_class = ReviewSerializer
+    serializer_class = ReviewDetailsSerializer
     authentication_classes = (TokenAuthentication, SessionAuthentication)
 
     def get_queryset(self):
