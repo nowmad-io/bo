@@ -6,7 +6,7 @@ class ReviewDetailsSerializer(ReviewSerializer):
     created_by = UserSerializer(many=False,)
 
     class Meta(ReviewSerializer.Meta):
-        fields = ('id', 'title', 'description', 'privacy', 'created_by')
+        fields = ('id', 'title', 'description', 'privacy', 'location', 'created_by')
 
 
 # class UserDetailsSerializer(UserSerializer):
