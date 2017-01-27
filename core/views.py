@@ -79,7 +79,7 @@ class ReviewViewSet(viewsets.ViewSet):
             return Response({
                 'status': 'Not Found',
                 'message': 'Review could not be find.'
-            }, status=HTTP_404_NOT_FOUND)
+            }, status=status.HTTP_404_NOT_FOUND)
 
         serializer = self.serializer_class(review, data = request.data, context={'request':request})
         if serializer.is_valid():
