@@ -10,8 +10,7 @@
     "first_name": "Xavier",
     "last_name": "Chemla",
     "is_active": true,
-    "is_admin": true,
-    "location": 1
+    "is_admin": true
   }
 },
 {
@@ -25,8 +24,7 @@
     "first_name": "",
     "last_name": "",
     "is_active": true,
-    "is_admin": true,
-    "location": 2
+    "is_admin": true
   }
 },
 {
@@ -40,8 +38,7 @@
     "first_name": "foo",
     "last_name": "bar",
     "is_active": true,
-    "is_admin": false,
-    "location": 3
+    "is_admin": false
   }
 }
 ]

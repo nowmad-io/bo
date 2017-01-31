@@ -20,8 +20,6 @@ from friends.signals import (
     friendship_removed
 )
 
-AUTH_USER_MODEL = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
-
 CACHE_TYPES = {
     'friends': 'f-%s',
     'requests': 'fr-%s',
@@ -66,8 +64,8 @@ def bust_cache(type, user_pk):
 @python_2_unicode_compatible
 class FriendshipRequest(models.Model):
     """ Model to represent friendship requests """
-    from_user = models.ForeignKey(AUTH_USER_MODEL, related_name='friendship_requests_sent')
-    to_user = models.ForeignKey(AUTH_USER_MODEL, related_name='friendship_requests_received')
+    from_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='friendship_requests_sent')
+    to_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='friendship_requests_received')
 
     message = models.TextField(_('Message'), blank=True)
 
@@ -340,8 +338,8 @@ class FriendshipManager(models.Manager):
 @python_2_unicode_compatible
 class Friend(models.Model):
     """ Model to represent Friendships """
-    to_user = models.ForeignKey(AUTH_USER_MODEL, related_name='friends')
-    from_user = models.ForeignKey(AUTH_USER_MODEL, related_name='_unused_friend_relation')
+    to_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='friends')
+    from_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='_unused_friend_relation')
     created = models.DateTimeField(default=timezone.now)
 
     objects = FriendshipManager()
