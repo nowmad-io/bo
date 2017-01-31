@@ -1,5 +1,5 @@
 from django.conf.urls import include, url
-from core.views import ReviewViewSet, UserViewSet, index
+from core.views import ReviewViewSet, UserViewSet, index, CategoryViewSet
 from friends.views import FriendViewSet, FriendshipRequestViewSet
 
 
@@ -7,7 +7,7 @@ from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'reviews', ReviewViewSet, 'reviews')
-
+router.register(r'categories', CategoryViewSet, 'categories')
 
 urlpatterns = [
     url(r'^search/', include('search.urls')),

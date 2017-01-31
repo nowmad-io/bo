@@ -2,9 +2,11 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
-from serializers import UserSerializer, ReviewSerializer
+from serializers import UserSerializer, ReviewSerializer, CategorySerializer
 from rest_framework.decorators import list_route
-from models import Review
+from models import Review, Category
+
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -18,7 +20,7 @@ def index(request):
     return HttpResponse("Hello, world. You're at the core index.")
 
 class UserViewSet(viewsets.ModelViewSet):
-    permission_classes = (permissions.AllowAny,)
+    authentication_classes = (TokenAuthentication, SessionAuthentication)
     queryset = User.objects.all()
     serializer_class = UserSerializer
     def perform_create(self, serializer):
@@ -34,12 +36,29 @@ class UserViewSet(viewsets.ModelViewSet):
 #     def rmv_friends(self, request):
 #         pass
 
+class CategoryViewSet(viewsets.ViewSet):
+    """
+        Category View Set
+    """
+
+    #Manage the permission to the view set, only when authenticated
+    permission_classes = (permissions.IsAuthenticated,)
+    # two kind of authentication, token to be easier for test
+    authentication_classes = (TokenAuthentication, SessionAuthentication)
+    serializer_class = CategorySerializer
+
+    def list (self, request):
+        queryset = Category.objects.all()
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
+
 class ReviewViewSet(viewsets.ViewSet):
     """
     Review View Set
     """
-    # permission_classes = (permissions.IsAuthenticated,)
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (TokenAuthentication, SessionAuthentication)
     serializer_class = ReviewSerializer
 
     def list(self, request):
@@ -61,7 +80,10 @@ class ReviewViewSet(viewsets.ViewSet):
 
         return Response({
             'status': 'Bad request',
-            'message': 'Review could not be created with received data.'
+            'message': 'Review could not be created with received data.',
+            'data': str(request.data),
+            'validated_data': serializer.validated_data,
+            'errors': serializer.errors
         }, status=status.HTTP_400_BAD_REQUEST)
 
     def retrieve(self, request, pk=None):

@@ -9,6 +9,10 @@ from django.utils.translation import ugettext_lazy as _
 #     me =
 #     friends = models.ManyToManyField(travelUser)
 
+class Category(models.Model):
+    name = models.CharField(max_length=200)
+    icon = models.URLField(max_length=200, blank=True, null=True)
+
 
 class Location(models.Model):
     longitude = models.FloatField(blank=False, null=False, default=0)
@@ -17,13 +21,6 @@ class Location(models.Model):
 
     def __unicode__(self):
         return u"%i - %i" % (self.longitude, self.latitude)
-
-class Category(models.Model):
-    class Meta:
-        ordering = ['name']
-        verbose_name = _('user')
-
-    name = models.CharField(max_length=30)
 
 class PersonalManager(models.Manager):
     def query_set(self):
@@ -42,6 +39,7 @@ class Review(models.Model):
     title = models.CharField(max_length=30)
     description = models.CharField(max_length=100, blank=True)
     location = models.ForeignKey('Location')
+    categories = models.ManyToManyField('Category')
     privacy = models.IntegerField(default=50)
     # image = models.ImageField(upload_to = "images")
 
