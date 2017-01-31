@@ -6,21 +6,4 @@
     "name": "bar",
     "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png"
   }
-},
-{
-  "model": "core.category",
-  "pk": 2,
-  "fields": {
-    "name": "point_of_interest",
-    "icon": null
-  }
-},
-{
-  "model": "core.category",
-  "pk": 3,
-  "fields": {
-    "name": "establishment",
-    "icon": null
-  }
 }
-]
