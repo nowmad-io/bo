@@ -13,13 +13,19 @@ init:
 	virtualenv venv --verbose
 
 fixtures_users:
-	$(PYTHON) manage.py dumpdata authentication.traveluser > fixtures/users.json
+	$(PYTHON) manage.py dumpdata authentication.traveluser --indent 2 > fixtures/users.json
+
+fixtures_friends:
+	$(PYTHON) manage.py dumpdata friends.friend --indent 2 > fixtures/friends.json
 
 fixtures_locations:
-	$(PYTHON) manage.py dumpdata core.location > fixtures/locations.json
+	$(PYTHON) manage.py dumpdata core.location --indent 2 > fixtures/locations.json
 
 fixtures_reviews:
-	$(PYTHON) manage.py dumpdata core.reviews > fixtures/reviews.json
+	$(PYTHON) manage.py dumpdata core.review --indent 2 > fixtures/reviews.json
+
+fixtures_categories:
+	$(PYTHON) manage.py dumpdata core.category --indent 2 > fixtures/categories.json
 
 start_me_up:
 	find . -name '*.pyc' -delete
@@ -32,6 +38,7 @@ start_me_up:
 	$(PYTHON) manage.py loaddata fixtures/locations.json
 	$(PYTHON) manage.py loaddata fixtures/users.json
 	$(PYTHON) manage.py loaddata fixtures/friends.json
+	$(PYTHON) manage.py loaddata fixtures/categories.json
 	$(PYTHON) manage.py loaddata fixtures/reviews.json
 
 server:

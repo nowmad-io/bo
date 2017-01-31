@@ -70,5 +70,13 @@
     "longitude": 131.03688220000004,
     "latitude": -25.3444277
   }
+},
+{
+  "model": "core.location",
+  "pk": 10,
+  "fields": {
+    "longitude": -84.05398479999997,
+    "latitude": 9.937677599999999
+  }
 }
 ]

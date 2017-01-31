@@ -1,28 +1,56 @@
-[{
-        "model": "friends.friend",
-        "pk": 1,
-        "fields": {
-            "to_user": 3,
-            "from_user": 2,
-            "created": "2016-08-05T17:48:54Z"
-        }
-    },
-    {
-        "model": "friends.friend",
-        "pk": 2,
-        "fields": {
-            "to_user": 3,
-            "from_user": 1,
-            "created": "2016-08-05T17:49:10Z"
-        }
-    },
-    {
-        "model": "friends.friend",
-        "pk": 3,
-        "fields": {
-            "to_user": 1,
-            "from_user": 3,
-            "created": "2016-08-05T17:49:10Z"
-        }
-    }
+[
+{
+  "model": "friends.friend",
+  "pk": 4,
+  "fields": {
+    "to_user": 2,
+    "from_user": 4,
+    "created": "2017-01-31T09:18:27Z"
+  }
+},
+{
+  "model": "friends.friend",
+  "pk": 5,
+  "fields": {
+    "to_user": 4,
+    "from_user": 2,
+    "created": "2017-01-31T09:18:37Z"
+  }
+},
+{
+  "model": "friends.friend",
+  "pk": 6,
+  "fields": {
+    "to_user": 2,
+    "from_user": 1,
+    "created": "2017-01-31T09:18:40Z"
+  }
+},
+{
+  "model": "friends.friend",
+  "pk": 7,
+  "fields": {
+    "to_user": 1,
+    "from_user": 2,
+    "created": "2017-01-31T09:18:48Z"
+  }
+},
+{
+  "model": "friends.friend",
+  "pk": 8,
+  "fields": {
+    "to_user": 4,
+    "from_user": 1,
+    "created": "2017-01-31T09:18:51Z"
+  }
+},
+{
+  "model": "friends.friend",
+  "pk": 9,
+  "fields": {
+    "to_user": 1,
+    "from_user": 4,
+    "created": "2017-01-31T09:18:58Z"
+  }
+}
 ]

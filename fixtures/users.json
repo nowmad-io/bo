@@ -4,7 +4,7 @@
   "pk": 1,
   "fields": {
     "password": "pbkdf2_sha256$24000$MfpALK3OF2pm$zI/VrQL+R5crCI1woOIPf1poeil+tfvDZghfY2pkJW4=",
-    "last_login": null,
+    "last_login": "2017-01-31T09:23:36.674Z",
     "email": "x@x.com",
     "date_of_birth": null,
     "first_name": "Xavier",
@@ -18,7 +18,7 @@
   "pk": 2,
   "fields": {
     "password": "pbkdf2_sha256$24000$RMDusmWa4vXZ$I+PLhFctIYFErhx/NcczsEHflkXN9dqG8iPLuXTNHLw=",
-    "last_login": "2016-08-05T17:48:09.446Z",
+    "last_login": "2017-01-31T09:21:36.135Z",
     "email": "j@j.com",
     "date_of_birth": null,
     "first_name": "",
@@ -37,6 +37,20 @@
     "date_of_birth": null,
     "first_name": "foo",
     "last_name": "bar",
+    "is_active": true,
+    "is_admin": false
+  }
+},
+{
+  "model": "authentication.traveluser",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$24000$DJ8Uazci18u1$boJFncIfIYwvMbf27T+CjuS0NTPSGYakpibZq/QRusg=",
+    "last_login": null,
+    "email": "s@s.com",
+    "date_of_birth": null,
+    "first_name": "",
+    "last_name": "",
     "is_active": true,
     "is_admin": false
   }
