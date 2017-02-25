@@ -36,8 +36,8 @@ class AllManager(models.Manager):
 
 
 class Review(models.Model):
-    title = models.CharField(max_length=30)
-    description = models.CharField(max_length=100, blank=True)
+    title = models.CharField(max_length=200)
+    description = models.CharField(max_length=500, blank=True)
     location = models.ForeignKey('Location')
     categories = models.ManyToManyField('Category')
     privacy = models.IntegerField(default=50)
