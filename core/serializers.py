@@ -59,7 +59,6 @@ class ReviewSerializer(serializers.ModelSerializer):
 
         #we add the category, one by one
         for category in category_list:
-            print category['name']
             newCategory, created = Category.objects.get_or_create(name=category['name'])
 
             if 'icon' in category and category['icon'] is not None:
@@ -82,7 +81,4 @@ class ReviewSerializer(serializers.ModelSerializer):
         instance.location = location
 
         instance.save()
-
-        print("###################")
-        print("instance", instance)
         return instance
