@@ -107,7 +107,7 @@ class ReviewViewSet(viewsets.ViewSet):
         if serializer.is_valid():
             serializer.save()
             return Response(
-                serializer.validated_data, status=status.HTTP_202_ACCEPTED
+                serializer.data, status=status.HTTP_202_ACCEPTED
             )
 
         return Response({

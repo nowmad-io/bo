@@ -34,23 +34,16 @@ class LocationSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     location = LocationSerializer(many=False,)
     categories = CategorySerializer(many=True)
+    created_by = UserSerializer(default=serializers.CurrentUserDefault(), read_only=True)
 
     class Meta:
         model = Review
-        fields = ('id', 'title', 'description', 'privacy', 'location', 'categories')
+        fields = ('id', 'title', 'description', 'privacy', 'location', 'categories', 'created_by')
 
     def create(self, validated_data):
         #validated_data contains all data from the serializer
 
         category_list=[]
-
-
-        #set up created_by attribute with logged user or None
-        user = None
-        request = self.context['request']
-        if request and hasattr(request, "user"):
-            user = request.user
-            validated_data['created_by'] = user
 
         # create location manually (DRF doesn't handle nested creation or update)
         location_data = validated_data.pop('location')
@@ -89,4 +82,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         instance.location = location
 
         instance.save()
+
+        print("###################")
+        print("instance", instance)
         return instance
