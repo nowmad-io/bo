@@ -51,6 +51,7 @@ coverage.xml
 # Django stuff:
 *.log
 config.py
+venv
 
 
 # Sphinx documentation
@@ -63,3 +64,5 @@ target/
 db.sqlite3
 
 *.DS_Store
+
+documentation/

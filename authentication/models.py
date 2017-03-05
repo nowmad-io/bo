@@ -1,6 +1,5 @@
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
-from core.models import Location
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
@@ -8,7 +7,7 @@ from django.contrib.auth.models import (
 
 class travelUserManager(BaseUserManager):
 
-    def create_user(self, email, first_name='', last_name='', location=None, date_of_birth=None, password=None):
+    def create_user(self, email, first_name='', last_name='', date_of_birth=None, password=None):
 
         """
         Creates and saves a User with the given email, date of
@@ -21,8 +20,7 @@ class travelUserManager(BaseUserManager):
             email=self.normalize_email(email),
             date_of_birth=date_of_birth,
             first_name=first_name,
-            last_name=last_name,
-            location=location
+            last_name=last_name
         )
 
         user.set_password(password)
@@ -54,8 +52,6 @@ class travelUser(AbstractBaseUser):
     last_name = models.CharField(blank=True,  max_length=30)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    location = models.ForeignKey(Location, blank=True, null=True)
-
     objects = travelUserManager()
 
     USERNAME_FIELD = 'email'
@@ -94,6 +90,9 @@ class travelUser(AbstractBaseUser):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
         return True
+
+    def get_friends(self):
+        return self.friends.all()
 
     @property
     def is_staff(self):

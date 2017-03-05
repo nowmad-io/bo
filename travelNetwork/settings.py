@@ -22,8 +22,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
-
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
@@ -51,7 +49,8 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'core',
     'authentication',
-    'client'
+    'friends',
+    'search',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -80,6 +79,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'debug': DEBUG,
         },
     },
 ]
