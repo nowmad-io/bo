@@ -55,7 +55,7 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
     def update(self, request, pk):
 
         friendship_request = get_object_or_404(FriendshipRequest,id=pk)
-    
+
         if friendship_request.from_user.id != request.user.id:
             return Response({'message':'WhoAreYou ??'},  status=status.HTTP_403_FORBIDDEN)
 
@@ -99,7 +99,7 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
         }, status=status.HTTP_400_BAD_REQUEST)
 
     def incoming_list(self, request):
-        """ print the list of incoming transaction """
+        """ the list of incoming transaction """
         queryset = Friend.objects.unrejected_requests(user = request.user)
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)

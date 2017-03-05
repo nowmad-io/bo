@@ -149,14 +149,10 @@ class FriendshipManager(models.Manager):
         """ Return a list of all friends """
         key = cache_key('friends', user.pk)
         friends = cache.get(key)
-        print "key = " + key
-        print "friends = " + str(friends)
         if friends is None:
             qs = Friend.objects.select_related('from_user', 'to_user').filter(to_user=user).all()
             friends = [u.from_user for u in qs]
             cache.set(key, friends)
-
-        print friends
 
         return friends
 

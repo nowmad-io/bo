@@ -25,5 +25,4 @@ class RegistrationView(utils.SendEmailViewMixin, generics.CreateAPIView):
     def get_email_context(self, user):
         context = super(RegistrationView, self).get_email_context(user)
         context['url'] = settings.get('ACTIVATION_URL').format(**context)
-        print context
         return context
