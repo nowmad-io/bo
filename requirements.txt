@@ -9,7 +9,7 @@ dj-database-url
 django-braces
 django-cors-headers
 djangorestframework
-djoser==0.4.0
+djoser
 
 gunicorn
 psycopg2

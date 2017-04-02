@@ -4,7 +4,7 @@ from django.contrib.auth.tokens import default_token_generator
 from djoser import utils, serializers, signals, settings
 
 # Create your views here.
-class RegistrationView(utils.SendEmailViewMixin, generics.CreateAPIView):
+class RegistrationView(utils.UserEmailFactoryBase, generics.CreateAPIView):
     """
     Use this endpoint to register new user.
     """
