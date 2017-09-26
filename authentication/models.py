@@ -4,7 +4,6 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 
-
 class travelUserManager(BaseUserManager):
 
     def create_user(self, email, first_name='', last_name='', date_of_birth=None, password=None):

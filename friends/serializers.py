@@ -5,10 +5,11 @@ from .models import Friend, FriendshipRequest
 from core.serializers import UserSerializer
 import json
 
-
 User = get_user_model()
 
 class FriendshipRequestSerializer(serializers.ModelSerializer):
+    from_user = UserSerializer()
+    to_user = UserSerializer()
 
     class Meta:
         model = FriendshipRequest

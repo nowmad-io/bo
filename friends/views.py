@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
+from django.contrib.auth import get_user_model
 
 from rest_framework.decorators import list_route
 from rest_framework.response import Response
@@ -15,6 +16,8 @@ from core.serializers import UserSerializer
 from .models import Friend, FriendshipRequest
 import json
 # Create your views here.
+
+User = get_user_model()
 
 class FriendshipRequestViewSet(viewsets.ViewSet):
     """
@@ -41,7 +44,10 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
         friendship_request = get_object_or_404(FriendshipRequest,id=pk)
 
         if friendship_request.from_user.id != request.user.id:
-            return Response({'message':'WhoAreYou ??'},  status=status.HTTP_403_FORBIDDEN)
+            return Response({
+                'status': 'Forbidden',
+                'message': 'Friends request can only destroy by current user.'
+            }, status=status.HTTP_403_FORBIDDEN)
 
         result = friendship_request.cancel()
 
@@ -57,7 +63,10 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
         friendship_request = get_object_or_404(FriendshipRequest,id=pk)
 
         if friendship_request.from_user.id != request.user.id:
-            return Response({'message':'WhoAreYou ??'},  status=status.HTTP_403_FORBIDDEN)
+            return Response({
+                'status': 'Forbidden',
+                'message': 'Friends request can only updated from current user.'
+            }, status=status.HTTP_403_FORBIDDEN)
 
 
         serializer = self.serializer_class(friendship_request, data = request.data)
@@ -80,10 +89,11 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
             request.data['message']= "come on, let\'s be friends !"
 
         #check the user performing the request is the user authenticated
-        if request.data['from_user'] != request.user.id:
-            return Response({'message':'WhoAreYou ??'},  status=status.HTTP_403_FORBIDDEN)
-
-
+        if int(request.data['from_user']) != request.user.id:
+            return Response({
+                'status': 'Forbidden',
+                'message': 'Friends request can only created from current user.'
+            }, status=status.HTTP_403_FORBIDDEN)
 
         #get the data back
         serializer = self.serializer_class(data = request.data)
@@ -116,7 +126,10 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
         friendship_request = get_object_or_404(FriendshipRequest,id=pk)
 
         if friendship_request.to_user.id != request.user.id:
-            return Response({'message':'WhoAreYou ??'},  status=status.HTTP_403_FORBIDDEN)
+            return Response({
+                'status': 'Forbidden',
+                'message': 'Friends request can only sent from current user.'
+            }, status=status.HTTP_403_FORBIDDEN)
 
         result = friendship_request.accept()
 
@@ -134,7 +147,10 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
         friendship_request = get_object_or_404(FriendshipRequest,id=pk)
 
         if friendship_request.to_user.id != request.user.id:
-            return Response({'message':'WhoAreYou ??'},  status=status.HTTP_403_FORBIDDEN)
+            return Response({
+                'status': 'Forbidden',
+                'message': 'Friends request can only be rejected by the current user.'
+            }, status=status.HTTP_403_FORBIDDEN)
 
         result = friendship_request.reject()
 
@@ -150,7 +166,6 @@ class FriendViewSet(viewsets.ViewSet):
     """
     friend View Set
     """
-    # permission_classes = (permissions.IsAuthenticated,)
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = FriendSerializer
     authentication_classes = (TokenAuthentication, SessionAuthentication)
@@ -174,6 +189,18 @@ class FriendViewSet(viewsets.ViewSet):
         """Remove a friend"""
         pass
 
-    # def create(self, request):
-    #     """ cannot create friends directly, need to pass by a request """
-    #     pass
+class FriendSearchViewSet(viewsets.ViewSet):
+    """
+    friend search View Set
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = FriendSerializer
+    authentication_classes = (TokenAuthentication, SessionAuthentication)
+
+    def list(self, request):
+        email = self.request.query_params.get('email', None)
+        queryset = User.objects.filter(email=email)
+        print('queryset', queryset)
+
+        serializer = UserSerializer(queryset, many=True)
+        return Response(serializer.data)
