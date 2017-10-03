@@ -76,20 +76,26 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
                 serializer.data, status=status.HTTP_202_ACCEPTED
             )
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({
+            'status': 'Bad request',
+            'message': 'Review could not be created with received data.',
+            'data': str(request.data),
+            'validated_data': serializer.validated_data,
+            'errors': serializer.errors
+        }, status=status.HTTP_400_BAD_REQUEST)
 
     def create(self, request):
         """ create a friendship request """
 
         #chek if there is a from_user and a message
-        if 'from_user' not in request.data:
-            request.data['from_user']=request.user.id
+        if 'from_user_id' not in request.data:
+            request.data['from_user_id']=request.user.id
 
         if 'message' not in request.data:
             request.data['message']= "come on, let\'s be friends !"
 
         #check the user performing the request is the user authenticated
-        if int(request.data['from_user']) != request.user.id:
+        if int(request.data['from_user_id']) != request.user.id:
             return Response({
                 'status': 'Forbidden',
                 'message': 'Friends request can only created from current user.'
@@ -105,7 +111,10 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
 
         return Response({
             'status': 'Bad request',
-            'message': 'Friendship request could not be sent :('
+            'message': 'Review could not be created with received data.',
+            'data': str(request.data),
+            'validated_data': serializer.validated_data,
+            'errors': serializer.errors
         }, status=status.HTTP_400_BAD_REQUEST)
 
     def incoming_list(self, request):
