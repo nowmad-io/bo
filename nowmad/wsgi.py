@@ -8,10 +8,12 @@ https://docs.djangoproject.com/en/1.6/howto/deployment/wsgi/
 """
 
 import os
+from django.core.wsgi import get_wsgi_application
+from socketio import Middleware
+
+from sockets.views import sio
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "nowmad.settings")
 
-from django.core.wsgi import get_wsgi_application
-from whitenoise.django import DjangoWhiteNoise
-
-application = get_wsgi_application()
-application = DjangoWhiteNoise(application)
+wsgi_application = get_wsgi_application()
+application = Middleware(sio, wsgi_application)
