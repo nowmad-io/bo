@@ -1,11 +1,12 @@
 dj-database-url==0.4.2
 Django==1.11.6
-django-braces==1.11.0
 django-cors-headers==2.1.0
 djangorestframework==3.7.0
 djoser==0.7.0
-gunicorn==19.7.1
-psycopg2==2.7.3.1
+enum-compat==0.0.2
+enum34==1.1.6
+eventlet==0.21.0
+greenlet==0.4.12
 python-engineio==1.7.0
 python-socketio==1.8.1
 pytz==2017.2

@@ -42,7 +42,7 @@ start_me_up:
 	$(PYTHON) manage.py loaddata fixtures/reviews.json
 
 server:
-	$(PYTHON) manage.py runserver localhost:8080
+	$(PYTHON) manage.py runserver
 
 build_client:
 	cd ../webapp/ && git fetch && git checkout master
