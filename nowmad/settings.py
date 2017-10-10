@@ -1,5 +1,5 @@
 """
-Django settings for travelNetwork project, on Heroku. Fore more info, see:
+Django settings for nowmad project, on Heroku. Fore more info, see:
 https://github.com/heroku/heroku-django-template
 
 For more information on this file, see
@@ -65,7 +65,7 @@ MIDDLEWARE_CLASSES = (
     'corsheaders.middleware.CorsMiddleware'
 )
 
-ROOT_URLCONF = 'travelNetwork.urls'
+ROOT_URLCONF = 'nowmad.urls'
 
 TEMPLATES = [
     {
@@ -86,7 +86,7 @@ TEMPLATES = [
 
 AUTH_USER_MODEL = 'authentication.travelUser'
 
-WSGI_APPLICATION = 'travelNetwork.wsgi.application'
+WSGI_APPLICATION = 'nowmad.wsgi.application'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/

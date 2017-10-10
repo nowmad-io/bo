@@ -1,4 +1,4 @@
-# TravelNetwork
+# Nowmad
 
 ## Start developping:
 * Set up the virtual env:
@@ -55,8 +55,8 @@ Once you created a test database with a set of objects, you can export it as fix
 
 Error Dynos
 ```
-> heroku ps --app travelnetwork
-> heroku ps:stop run.6004 --app travelnetwork
+> heroku ps --app nowmad
+> heroku ps:stop run.6004 --app nowmad
 > heroku login
-> heroku run bash --app travelnetwork
+> heroku run bash --app nowmad
 ```
