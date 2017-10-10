@@ -10,3 +10,4 @@ python-engineio==1.7.0
 python-socketio==1.8.1
 pytz==2017.2
 six==1.11.0
+whitenoise==3.3.1
