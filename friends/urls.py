@@ -1,4 +1,4 @@
-from django.conf.urls import url, patterns
+from django.conf.urls import url
 from friends.views import FriendViewSet, FriendshipRequestViewSet, FriendSearchViewSet
 
 friends_list = FriendViewSet.as_view({
