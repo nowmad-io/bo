@@ -51,6 +51,7 @@ class travelUser(AbstractBaseUser):
     last_name = models.CharField(blank=True,  max_length=30)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    sid = models.CharField(blank=True, max_length=100)
     objects = travelUserManager()
 
     USERNAME_FIELD = 'email'
@@ -71,6 +72,10 @@ class travelUser(AbstractBaseUser):
     def get_short_name(self):
         # The user is identified by their email address
         return self.email
+
+    def get_sid(self):
+        # The user is identified by their email address
+        return self.sid
 
     def __str__(self):              # __unicode__ on Python 2
         return self.email

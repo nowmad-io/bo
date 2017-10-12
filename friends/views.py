@@ -14,6 +14,8 @@ from django.shortcuts import render
 from .serializers import FriendSerializer, FriendshipRequestSerializer
 from core.serializers import UserSerializer
 from .models import Friend, FriendshipRequest
+from sockets.views import NewFriend
+
 import json
 # Create your views here.
 
@@ -91,15 +93,18 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
         if 'from_user_id' not in request.data:
             request.data['from_user_id']=request.user.id
 
+        if 'to_user_id' not in request.data:
+            request.data['from_user_id']=request.user.id
+
         if 'message' not in request.data:
             request.data['message']= "come on, let\'s be friends !"
 
-        #check the user performing the request is the user authenticated
-        if int(request.data['from_user_id']) != request.user.id:
-            return Response({
-                'status': 'Forbidden',
-                'message': 'Friends request can only created from current user.'
-            }, status=status.HTTP_403_FORBIDDEN)
+        # #check the user performing the request is the user authenticated
+        # if int(request.data['from_user_id']) != request.user.id:
+        #     return Response({
+        #         'status': 'Forbidden',
+        #         'message': 'Friends request can only created from current user.'
+        #     }, status=status.HTTP_403_FORBIDDEN)
 
         #get the data back
         serializer = self.serializer_class(data = request.data)
@@ -143,6 +148,9 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
         result = friendship_request.accept()
 
         if result:
+            friend = User.objects.get(pk=friendship_request.from_user.id)
+            serializer = UserSerializer(friend, many=False)
+            NewFriend(request.user, serializer.data)
             return Response(status = status.HTTP_201_CREATED)
 
         return Response({
