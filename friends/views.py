@@ -14,7 +14,7 @@ from django.shortcuts import render
 from .serializers import FriendSerializer, FriendshipRequestSerializer
 from core.serializers import UserSerializer
 from .models import Friend, FriendshipRequest
-from sockets.views import NewFriend
+from sockets.views import FriendAccept, FriendCreate, FriendReject
 
 import json
 # Create your views here.
@@ -93,18 +93,15 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
         if 'from_user_id' not in request.data:
             request.data['from_user_id']=request.user.id
 
-        if 'to_user_id' not in request.data:
-            request.data['from_user_id']=request.user.id
-
         if 'message' not in request.data:
             request.data['message']= "come on, let\'s be friends !"
 
-        # #check the user performing the request is the user authenticated
-        # if int(request.data['from_user_id']) != request.user.id:
-        #     return Response({
-        #         'status': 'Forbidden',
-        #         'message': 'Friends request can only created from current user.'
-        #     }, status=status.HTTP_403_FORBIDDEN)
+        #check the user performing the request is the user authenticated
+        if int(request.data['from_user_id']) != request.user.id:
+            return Response({
+                'status': 'Forbidden',
+                'message': 'Friends request can only created from current user.'
+            }, status=status.HTTP_403_FORBIDDEN)
 
         #get the data back
         serializer = self.serializer_class(data = request.data)
@@ -112,11 +109,15 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
         #build the request in the backend
         if serializer.is_valid():
             serializer.save()
+
+            friend = User.objects.get(pk=request.data['to_user_id'])
+            FriendCreate([request.user, friend], serializer.data)
+
             return Response(status = status.HTTP_201_CREATED)
 
         return Response({
             'status': 'Bad request',
-            'message': 'Review could not be created with received data.',
+            'message': 'Friendshipds could not be created with received data.',
             'data': str(request.data),
             'validated_data': serializer.validated_data,
             'errors': serializer.errors
@@ -149,8 +150,10 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
 
         if result:
             friend = User.objects.get(pk=friendship_request.from_user.id)
-            serializer = UserSerializer(friend, many=False)
-            NewFriend(request.user, serializer.data)
+            serializer_friend = UserSerializer(friend, many=False)
+            serializer_user = UserSerializer(request.user, many=False)
+            FriendAccept(request.user, friend, serializer_user.data, serializer_friend.data)
+
             return Response(status = status.HTTP_201_CREATED)
 
         return Response({
@@ -169,9 +172,12 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
                 'message': 'Friends request can only be rejected by the current user.'
             }, status=status.HTTP_403_FORBIDDEN)
 
+        serializer = self.serializer_class(friendship_request)
         result = friendship_request.reject()
 
         if result:
+            friend = User.objects.get(pk=friendship_request.from_user.id)
+            FriendReject([request.user, friend], serializer.data)
             return Response(status = status.HTTP_200_OK)
 
         return Response({
@@ -217,7 +223,6 @@ class FriendSearchViewSet(viewsets.ViewSet):
     def list(self, request):
         email = self.request.query_params.get('email', None)
         queryset = User.objects.filter(email=email)
-        print('queryset', queryset)
 
         serializer = UserSerializer(queryset, many=True)
         return Response(serializer.data)

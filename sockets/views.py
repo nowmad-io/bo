@@ -12,9 +12,19 @@ import socketio
 sio = socketio.Server(async_mode=async_mode)
 namespace = '/sockets'
 
-def NewFriend(user, friend):
-    sid = user.sid
-    sio.emit('friend', {'data': friend}, room=sid, namespace=namespace)
+def FriendAccept(user, friend, serialiser_user ,serializer_friend):
+    sio.emit('friend.new', {'friend': serializer_friend}, room=user.sid, namespace=namespace)
+    sio.emit('friend.new', {'friend': serialiser_user}, room=friend.sid, namespace=namespace)
+
+def FriendCreate(users, request):
+    for user in users:
+        sid = user.sid
+        sio.emit('friend.create', {'request': request}, room=sid, namespace=namespace)
+
+def FriendReject(users, request):
+    for user in users:
+        sid = user.sid
+        sio.emit('friend.reject', {'request': request}, room=sid, namespace=namespace)
 
 @sio.on('authenticate', namespace=namespace)
 def authenticate(sid, message):
