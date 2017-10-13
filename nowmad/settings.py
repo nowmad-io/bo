@@ -1,5 +1,5 @@
 """
-Django settings for travelNetwork project, on Heroku. Fore more info, see:
+Django settings for nowmad project, on Heroku. Fore more info, see:
 https://github.com/heroku/heroku-django-template
 
 For more information on this file, see
@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 import os
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+DEFAULT_PORT = int(os.environ.get('DEFAULT_PORT', '5000'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -22,21 +22,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ],
-
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-    ),
-}
-
 # Application definition
 
 INSTALLED_APPS = (
+    'sockets',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,9 +33,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     'djoser',
-    'rest_framework.authtoken',
     'core',
     'authentication',
     'friends',
@@ -65,7 +54,7 @@ MIDDLEWARE_CLASSES = (
     'corsheaders.middleware.CorsMiddleware'
 )
 
-ROOT_URLCONF = 'travelNetwork.urls'
+ROOT_URLCONF = 'nowmad.urls'
 
 TEMPLATES = [
     {
@@ -84,9 +73,21 @@ TEMPLATES = [
     },
 ]
 
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+}
+
 AUTH_USER_MODEL = 'authentication.travelUser'
 
-WSGI_APPLICATION = 'travelNetwork.wsgi.application'
+WSGI_APPLICATION = 'nowmad.wsgi.application'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/

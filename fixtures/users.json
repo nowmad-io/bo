@@ -7,8 +7,8 @@
     "last_login": "2017-01-31T09:23:36.674Z",
     "email": "x@x.com",
     "date_of_birth": null,
-    "first_name": "Xavier",
-    "last_name": "Chemla",
+    "first_name": "xavier",
+    "last_name": "chemla",
     "is_active": true,
     "is_admin": true
   }
@@ -21,8 +21,8 @@
     "last_login": "2017-01-31T09:21:36.135Z",
     "email": "j@j.com",
     "date_of_birth": null,
-    "first_name": "",
-    "last_name": "",
+    "first_name": "julien",
+    "last_name": "rougeron",
     "is_active": true,
     "is_admin": true
   }
@@ -49,8 +49,8 @@
     "last_login": null,
     "email": "s@s.com",
     "date_of_birth": null,
-    "first_name": "",
-    "last_name": "",
+    "first_name": "shandra",
+    "last_name": "menendez",
     "is_active": true,
     "is_admin": false
   }

@@ -29,7 +29,7 @@ fixtures_categories:
 
 start_me_up:
 	find . -name '*.pyc' -delete
-	rm -vf travelNetwork/db.sqlite3
+	rm -vf nowmad/db.sqlite3
 	$(PIP) install -r requirements.txt -U
 	$(PYTHON) manage.py makemigrations corsheaders
 	$(PYTHON) manage.py makemigrations
@@ -42,7 +42,7 @@ start_me_up:
 	$(PYTHON) manage.py loaddata fixtures/reviews.json
 
 server:
-	$(PYTHON) manage.py runserver
+	DEFAULT_PORT=8080 $(PYTHON) manage.py runserver
 
 build_client:
 	cd ../webapp/ && git fetch && git checkout master

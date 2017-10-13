@@ -1,1 +1,1 @@
-web: gunicorn travelNetwork.wsgi --log-file -
+web: gunicorn nowmad.wsgi --log-file -

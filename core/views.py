@@ -26,16 +26,6 @@ class UserViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save()
 
-# class UserViewSet(viewsets.ViewSet):
-#     permission_classes = (permissions.AllowAny,)
-#     serializer_class = UserSerializer
-#
-#     def add_friends(self, request):
-#         pass
-#
-#     def rmv_friends(self, request):
-#         pass
-
 class CategoryViewSet(viewsets.ViewSet):
     """
         Category View Set
@@ -112,7 +102,10 @@ class ReviewViewSet(viewsets.ViewSet):
 
         return Response({
             'status': 'Bad request',
-            'message': 'Review could not be updated with received data.'
+            'message': 'Review could not be created with received data.',
+            'data': str(request.data),
+            'validated_data': serializer.validated_data,
+            'errors': serializer.errors
         }, status=status.HTTP_400_BAD_REQUEST)
 
     def partial_update(self, request, pk=None):
