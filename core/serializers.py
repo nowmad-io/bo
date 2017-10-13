@@ -5,26 +5,15 @@ from core.models import Review, Location, Category
 
 User = get_user_model()
 
-# Serializers define the API representation.
-# class UserSerializer(serializers.Serializer):
-#     first_name = serializers.CharField()
-#     last_name = serializers.CharField()
-#     email = serializers.EmailField()
-#
-#     def create(self, *args, **kwargs):
-#         return  User().save(*args, **kwargs)
-
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ('id', 'name', 'icon')
 
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'first_name', 'last_name', 'email')
-
 
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -41,8 +30,6 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'description', 'privacy', 'location', 'categories', 'created_by')
 
     def create(self, validated_data):
-        #validated_data contains all data from the serializer
-
         category_list=[]
 
         # create location manually (DRF doesn't handle nested creation or update)
@@ -66,7 +53,6 @@ class ReviewSerializer(serializers.ModelSerializer):
                 newCategory.save()
 
             review.categories.add(newCategory)
-
 
         return review
 

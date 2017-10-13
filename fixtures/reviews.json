@@ -6,7 +6,6 @@
     "title": "Cafe Kracovia",
     "description": "",
     "location": 10,
-    "privacy": 50,
     "created_by": 2,
     "creation_date": "2017-01-31",
     "categories": [
@@ -21,7 +20,6 @@
     "title": "On the Road Pub",
     "description": "",
     "location": 6,
-    "privacy": 50,
     "created_by": 1,
     "creation_date": "2017-01-31",
     "categories": [
