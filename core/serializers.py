@@ -27,7 +27,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        fields = ('id', 'title', 'description', 'privacy', 'location', 'categories', 'created_by')
+        fields = ('id', 'title', 'description', 'location', 'categories', 'created_by')
 
     def create(self, validated_data):
         category_list=[]
@@ -59,7 +59,6 @@ class ReviewSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance.title = validated_data.get('title', instance.title)
         instance.description = validated_data.get('description', instance.description)
-        instance.privacy = validated_data.get('privacy', instance.privacy)
 
         # handle manually location
         location_data = validated_data.pop('location')
