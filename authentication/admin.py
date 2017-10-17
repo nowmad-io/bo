@@ -67,6 +67,7 @@ class travelUserAdmin(UserAdmin):
         ('Personal info', {'fields': ('first_name','last_name','date_of_birth',)}),
         ('Permissions', {'fields': ('is_admin',)}),
         ('Sockets', {'fields': ('sid',)}),
+        ('Picture', {'fields': ('picture',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.

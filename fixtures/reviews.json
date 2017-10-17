@@ -1,11 +1,11 @@
 [
 {
   "model": "core.review",
-  "pk": 7,
+  "pk": 1,
   "fields": {
     "title": "Cafe Kracovia",
     "description": "",
-    "location": 10,
+    "location": 2,
     "created_by": 2,
     "creation_date": "2017-01-31",
     "categories": [
@@ -15,11 +15,39 @@
 },
 {
   "model": "core.review",
-  "pk": 8,
+  "pk": 2,
   "fields": {
     "title": "On the Road Pub",
     "description": "",
-    "location": 6,
+    "location": 1,
+    "created_by": 1,
+    "creation_date": "2017-01-31",
+    "categories": [
+      1
+    ]
+  }
+},
+{
+  "model": "core.review",
+  "pk": 3,
+  "fields": {
+    "title": "Bar Zabaleta",
+    "description": "",
+    "location": 3,
+    "created_by": 1,
+    "creation_date": "2017-01-31",
+    "categories": [
+      1
+    ]
+  }
+},
+{
+  "model": "core.review",
+  "pk": 4,
+  "fields": {
+    "title": "Clocher d'Ars-en-Ré",
+    "description": "",
+    "location": 4,
     "created_by": 1,
     "creation_date": "2017-01-31",
     "categories": [

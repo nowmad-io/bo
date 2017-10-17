@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django.contrib.auth.models import (
@@ -5,9 +6,7 @@ from django.contrib.auth.models import (
 )
 
 class travelUserManager(BaseUserManager):
-
     def create_user(self, email, first_name='', last_name='', date_of_birth=None, password=None):
-
         """
         Creates and saves a User with the given email, date of
         birth and password.
@@ -40,7 +39,6 @@ class travelUserManager(BaseUserManager):
 
 
 class travelUser(AbstractBaseUser):
-
     email = models.EmailField(
         verbose_name='email address',
         max_length=255,
@@ -52,6 +50,7 @@ class travelUser(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     sid = models.CharField(blank=True, max_length=100)
+    picture = models.ImageField(blank=True, max_length=100, upload_to='thumbnails')
     objects = travelUserManager()
 
     USERNAME_FIELD = 'email'
