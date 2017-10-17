@@ -1,19 +1,14 @@
 from django.conf.urls import url, include
 from django.contrib.auth import get_user_model
 from rest_framework import serializers, viewsets
-from core.models import Review, Location, Category
 
-User = get_user_model()
+from core.models import Review, Location, Category
+from authentication.serializers import UserSerializer
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ('id', 'name', 'icon')
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('id', 'first_name', 'last_name', 'email', 'picture')
 
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:

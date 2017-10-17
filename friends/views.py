@@ -12,7 +12,7 @@ from rest_framework.authentication import TokenAuthentication, SessionAuthentica
 
 from django.shortcuts import render
 from .serializers import FriendSerializer, FriendshipRequestSerializer
-from core.serializers import UserSerializer
+from authentication.serializers import UserSerializer
 from .models import Friend, FriendshipRequest
 from sockets.views import FriendAccept, FriendCreate, FriendReject
 

@@ -2,16 +2,17 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
-from serializers import UserSerializer, ReviewSerializer, CategorySerializer
+
 from rest_framework.decorators import list_route
-from models import Review, Category
-
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
-
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, permissions, viewsets
 from rest_framework import generics
+
+from serializers import ReviewSerializer, CategorySerializer
+from authentication.serializers import UserSerializer
+from models import Review, Category
 
 User = get_user_model()
 
