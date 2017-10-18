@@ -45,8 +45,7 @@ INSTALLED_APPS = (
     'djoser',
     'core',
     'authentication',
-    'friends',
-    'search',
+    'friends'
 )
 
 MIDDLEWARE_CLASSES = (
