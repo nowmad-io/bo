@@ -48,5 +48,15 @@
     "longitude": 1.0,
     "latitude": 1.0
   }
+},
+{
+  "model": "core.place",
+  "pk": 6,
+  "fields": {
+    "name": "",
+    "address": "",
+    "longitude": 2.0,
+    "latitude": 2.0
+  }
 }
 ]

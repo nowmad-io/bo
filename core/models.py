@@ -21,7 +21,10 @@ class Review(models.Model):
     place = models.ForeignKey('Place', related_name='reviews')
     categories = models.ManyToManyField('Category')
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_reviews')
-    creation_date = models.DateField(auto_now_add=True)
+    creation_date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('-creation_date',)
 
     def __unicode__(self):
             return self.short_description

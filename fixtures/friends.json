@@ -34,5 +34,23 @@
     "from_user": 2,
     "created": "2017-01-31T09:18:48Z"
   }
+},
+{
+  "model": "friends.friend",
+  "pk": 8,
+  "fields": {
+    "to_user": 3,
+    "from_user": 1,
+    "created": "2017-10-18T22:18:43.750Z"
+  }
+},
+{
+  "model": "friends.friend",
+  "pk": 9,
+  "fields": {
+    "to_user": 1,
+    "from_user": 3,
+    "created": "2017-10-18T22:18:43.753Z"
+  }
 }
 ]

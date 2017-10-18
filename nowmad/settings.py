@@ -32,13 +32,13 @@ else:
 
 # Application definition
 INSTALLED_APPS = (
+    'sockets',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'sockets',
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',

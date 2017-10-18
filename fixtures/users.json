@@ -4,7 +4,7 @@
   "pk": 1,
   "fields": {
     "password": "pbkdf2_sha256$36000$ESTgwlp2cWVa$zDqchFWlrB+fLMPQdd1YezmIl9mqaafku7D+rKTM7E4=",
-    "last_login": "2017-10-18T18:00:43.199Z",
+    "last_login": "2017-10-18T22:19:58.739Z",
     "email": "x@x.com",
     "date_of_birth": null,
     "first_name": "xavier",
@@ -20,14 +20,14 @@
   "pk": 2,
   "fields": {
     "password": "pbkdf2_sha256$36000$IB4JnRf6dHLQ$2c7t28Y36tmSE/fK8t358X2eTaWStyIY4p0GqfDdjUY=",
-    "last_login": "2017-10-18T17:30:04.150Z",
+    "last_login": "2017-10-18T23:13:50.097Z",
     "email": "j@j.com",
     "date_of_birth": null,
     "first_name": "julien",
     "last_name": "rougeron",
     "is_active": true,
     "is_admin": true,
-    "sid": "",
+    "sid": "0f2ce307be1e411dba2fc8f73a214c4b",
     "picture": "thumbnails/clock.png"
   }
 },
@@ -35,14 +35,14 @@
   "model": "authentication.traveluser",
   "pk": 3,
   "fields": {
-    "password": "pbkdf2_sha256$24000$1mOIwqUK7tPk$4xkwfvtHww+wAW7su6RXbBew01DDjO7A6pDtdZ53KdY=",
-    "last_login": "2016-07-12T01:28:01.080Z",
+    "password": "pbkdf2_sha256$36000$YbI3yI5uJ22u$wxzxvBeXJO1FJCQMlHIxlR6Cau/ocA5tapsKcMg6rSY=",
+    "last_login": "2017-10-18T22:18:18.202Z",
     "email": "test@test.com",
     "date_of_birth": null,
     "first_name": "foo",
     "last_name": "bar",
     "is_active": true,
-    "is_admin": false,
+    "is_admin": true,
     "sid": "",
     "picture": "thumbnails/testtest.com.png"
   }
@@ -52,7 +52,7 @@
   "pk": 4,
   "fields": {
     "password": "pbkdf2_sha256$36000$erGbMDB1ZeGl$2NmcBdDn2xHxeLHZO1Hi0dqTLKwwW8XqinxRokeL3uU=",
-    "last_login": "2017-10-18T19:18:56.092Z",
+    "last_login": "2017-10-18T22:19:33.925Z",
     "email": "s@s.com",
     "date_of_birth": null,
     "first_name": "shandra",
