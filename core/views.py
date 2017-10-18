@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from django.db.models import Prefetch, Count
 
+from itertools import chain
 from rest_framework.decorators import list_route
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.response import Response
@@ -27,17 +28,22 @@ class PlaceListView(generics.ListAPIView):
         """
 
         friends = Friend.objects.friends(self.request.user)
-        friends.append(self.request.user)
+        all_friends = list(friends)
 
+        for friend in friends:
+            friend_friends = Friend.objects.friends(friend)
+            all_friends = list(chain(all_friends, friend_friends))
 
-        friends_reviews = Review.objects.filter(created_by__in=friends)
+        all_friends.append(self.request.user)
+
+        friends_reviews = Review.objects.filter(created_by__in=all_friends)
 
         queryset = Place.objects.filter(
             reviews__in=friends_reviews
         ).prefetch_related(
             Prefetch(
                 'reviews',
-                queryset=Review.objects.filter(created_by__in=friends)
+                queryset=Review.objects.filter(created_by__in=all_friends)
             )
         ).distinct()
 
