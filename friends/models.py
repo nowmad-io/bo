@@ -145,12 +145,12 @@ class FriendshipRequest(models.Model):
 class FriendshipManager(models.Manager):
     """ Friendship manager """
 
-    def friends(self, user):
+    def friends(self, user, blacklist=[]):
         """ Return a list of all friends """
         key = cache_key('friends', user.pk)
         friends = cache.get(key)
         if friends is None:
-            qs = Friend.objects.select_related('from_user', 'to_user').filter(to_user=user).all()
+            qs = Friend.objects.select_related('from_user', 'to_user').filter(to_user=user).exclude(to_user__in=blacklist).all()
             friends = [u.from_user for u in qs]
             cache.set(key, friends)
 

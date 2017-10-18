@@ -1,8 +1,11 @@
 from django.conf.urls import url, include
 from django.contrib.auth import get_user_model
+
+from itertools import chain
 from rest_framework import serializers, viewsets
 
 from core.models import Review, Place, Category
+from friends.models import Friend
 from authentication.serializers import UserSerializer
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -19,10 +22,11 @@ class ReviewSerializer(serializers.ModelSerializer):
     place = PlaceSerializer(many=False, write_only=True)
     categories = CategorySerializer(many=True)
     created_by = UserSerializer(default=serializers.CurrentUserDefault(), read_only=True)
+    user_type = serializers.SerializerMethodField()
 
     class Meta:
         model = Review
-        fields = ('id', 'short_description', 'information', 'place', 'categories', 'created_by')
+        fields = ('id', 'short_description', 'information', 'place', 'categories', 'created_by', 'user_type')
 
     def create(self, validated_data):
         category_list=[]
@@ -57,6 +61,27 @@ class ReviewSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
+
+    def get_user_type(self, obj):
+        currentUser = self.context['request'].user
+        friends = Friend.objects.friends(currentUser)
+        friends_friends = list()
+
+        for friend in friends:
+            friend_friends = Friend.objects.friends(friend, [currentUser])
+            friends_friends = list(chain(friends_friends, friend_friends))
+
+        if (obj.created_by == currentUser):
+            return 'me'
+
+        if (obj.created_by in friends):
+            return 'friend'
+
+        if (obj.created_by in friends_friends):
+            return 'friends_friend'
+
+        return ''
+
 
 class PlacesSerializer(serializers.ModelSerializer):
     reviews = ReviewSerializer(many=True, read_only=True)
