@@ -32,13 +32,13 @@ else:
 
 # Application definition
 INSTALLED_APPS = (
-    'sockets',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'sockets',
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
@@ -118,6 +118,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+AVATAR_URL = 'https://ui-avatars.com/api/?background=0D8ABC&color=fff&size=256&name='
 
 CORS_ORIGIN_ALLOW_ALL = True
 

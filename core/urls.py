@@ -1,7 +1,7 @@
 from django.conf.urls import include, url
 from rest_framework import routers
 
-from core.views import ReviewViewSet, UserViewSet, index, CategoryViewSet
+from core.views import ReviewViewSet, index, CategoryViewSet
 from friends.views import FriendViewSet, FriendshipRequestViewSet
 
 router = routers.DefaultRouter()

@@ -11,7 +11,6 @@ from rest_framework import status, permissions, viewsets
 from rest_framework import generics
 
 from serializers import ReviewSerializer, CategorySerializer
-from authentication.serializers import UserSerializer
 from models import Review, Category
 
 User = get_user_model()
@@ -19,13 +18,6 @@ User = get_user_model()
 # Create your views here.
 def index(request):
     return HttpResponse("Hello, world. You're at the core index.")
-
-class UserViewSet(viewsets.ModelViewSet):
-    authentication_classes = (TokenAuthentication, SessionAuthentication)
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    def perform_create(self, serializer):
-        serializer.save()
 
 class CategoryViewSet(viewsets.ViewSet):
     """
