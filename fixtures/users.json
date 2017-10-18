@@ -3,28 +3,32 @@
   "model": "authentication.traveluser",
   "pk": 1,
   "fields": {
-    "password": "pbkdf2_sha256$24000$MfpALK3OF2pm$zI/VrQL+R5crCI1woOIPf1poeil+tfvDZghfY2pkJW4=",
-    "last_login": "2017-01-31T09:23:36.674Z",
+    "password": "pbkdf2_sha256$36000$ESTgwlp2cWVa$zDqchFWlrB+fLMPQdd1YezmIl9mqaafku7D+rKTM7E4=",
+    "last_login": "2017-10-18T18:00:43.199Z",
     "email": "x@x.com",
     "date_of_birth": null,
     "first_name": "xavier",
     "last_name": "chemla",
     "is_active": true,
-    "is_admin": true
+    "is_admin": true,
+    "sid": "",
+    "picture": "thumbnails/xx.com.png"
   }
 },
 {
   "model": "authentication.traveluser",
   "pk": 2,
   "fields": {
-    "password": "pbkdf2_sha256$24000$RMDusmWa4vXZ$I+PLhFctIYFErhx/NcczsEHflkXN9dqG8iPLuXTNHLw=",
-    "last_login": "2017-01-31T09:21:36.135Z",
+    "password": "pbkdf2_sha256$36000$IB4JnRf6dHLQ$2c7t28Y36tmSE/fK8t358X2eTaWStyIY4p0GqfDdjUY=",
+    "last_login": "2017-10-18T17:30:04.150Z",
     "email": "j@j.com",
     "date_of_birth": null,
     "first_name": "julien",
     "last_name": "rougeron",
     "is_active": true,
-    "is_admin": true
+    "is_admin": true,
+    "sid": "",
+    "picture": "thumbnails/clock.png"
   }
 },
 {
@@ -38,21 +42,25 @@
     "first_name": "foo",
     "last_name": "bar",
     "is_active": true,
-    "is_admin": false
+    "is_admin": false,
+    "sid": "",
+    "picture": "thumbnails/testtest.com.png"
   }
 },
 {
   "model": "authentication.traveluser",
   "pk": 4,
   "fields": {
-    "password": "pbkdf2_sha256$24000$DJ8Uazci18u1$boJFncIfIYwvMbf27T+CjuS0NTPSGYakpibZq/QRusg=",
-    "last_login": null,
+    "password": "pbkdf2_sha256$36000$erGbMDB1ZeGl$2NmcBdDn2xHxeLHZO1Hi0dqTLKwwW8XqinxRokeL3uU=",
+    "last_login": "2017-10-18T19:18:56.092Z",
     "email": "s@s.com",
     "date_of_birth": null,
     "first_name": "shandra",
     "last_name": "menendez",
     "is_active": true,
-    "is_admin": false
+    "is_admin": true,
+    "sid": "",
+    "picture": "thumbnails/ss.com.png"
   }
 }
 ]

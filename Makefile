@@ -18,8 +18,8 @@ fixtures_users:
 fixtures_friends:
 	$(PYTHON) manage.py dumpdata friends.friend --indent 2 > fixtures/friends.json
 
-fixtures_locations:
-	$(PYTHON) manage.py dumpdata core.location --indent 2 > fixtures/locations.json
+fixtures_places:
+	$(PYTHON) manage.py dumpdata core.place --indent 2 > fixtures/places.json
 
 fixtures_reviews:
 	$(PYTHON) manage.py dumpdata core.review --indent 2 > fixtures/reviews.json
@@ -35,7 +35,7 @@ start_me_up:
 	$(PYTHON) manage.py makemigrations
 	$(PYTHON) manage.py migrate --run-syncdb --noinput
 
-	$(PYTHON) manage.py loaddata fixtures/locations.json
+	$(PYTHON) manage.py loaddata fixtures/places.json
 	$(PYTHON) manage.py loaddata fixtures/users.json
 	$(PYTHON) manage.py loaddata fixtures/friends.json
 	$(PYTHON) manage.py loaddata fixtures/categories.json

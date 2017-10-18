@@ -2,35 +2,35 @@ from django.conf.urls import url, include
 from django.contrib.auth import get_user_model
 from rest_framework import serializers, viewsets
 
-from core.models import Review, Location, Category
+from core.models import Review, Place, Category
 from authentication.serializers import UserSerializer
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ('id', 'name', 'icon')
+        fields = ('id', 'name')
 
-class LocationSerializer(serializers.ModelSerializer):
+class PlaceSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Location
-        fields = ('longitude', 'latitude')
+        model = Place
+        fields = ('name', 'longitude', 'latitude', 'address')
 
 class ReviewSerializer(serializers.ModelSerializer):
-    location = LocationSerializer(many=False,)
+    place = PlaceSerializer(many=False, write_only=True)
     categories = CategorySerializer(many=True)
     created_by = UserSerializer(default=serializers.CurrentUserDefault(), read_only=True)
 
     class Meta:
         model = Review
-        fields = ('id', 'title', 'description', 'location', 'categories', 'created_by')
+        fields = ('id', 'short_description', 'information', 'place', 'categories', 'created_by')
 
     def create(self, validated_data):
         category_list=[]
 
-        # create location manually (DRF doesn't handle nested creation or update)
-        location_data = validated_data.pop('location')
-        location, _ = Location.objects.get_or_create(**location_data)
-        validated_data['location'] = location
+        # create place manually (DRF doesn't handle nested creation or update)
+        place_data = validated_data.pop('place')
+        place, _ = Place.objects.get_or_create(**place_data)
+        validated_data['place'] = place
 
         #we remove the category properties
         if 'categories' in validated_data:
@@ -42,23 +42,25 @@ class ReviewSerializer(serializers.ModelSerializer):
         #we add the category, one by one
         for category in category_list:
             newCategory, created = Category.objects.get_or_create(name=category['name'])
-
-            if 'icon' in category and category['icon'] is not None:
-                newCategory.icon = category['icon']
-                newCategory.save()
-
             review.categories.add(newCategory)
 
         return review
 
     def update(self, instance, validated_data):
-        instance.title = validated_data.get('title', instance.title)
-        instance.description = validated_data.get('description', instance.description)
+        instance.short_description = validated_data.get('short_description', instance.short_description)
+        instance.information = validated_data.get('information', instance.information)
 
-        # handle manually location
-        location_data = validated_data.pop('location')
-        location, _ = Location.objects.get_or_create(**location_data)
-        instance.location = location
+        # handle manually place
+        place_data = validated_data.pop('place')
+        place, _ = Place.objects.get_or_create(**place_data)
+        instance.place = place
 
         instance.save()
         return instance
+
+class PlacesSerializer(serializers.ModelSerializer):
+    reviews = ReviewSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Place
+        fields = ('name', 'longitude', 'latitude', 'address', 'reviews')

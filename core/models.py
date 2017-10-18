@@ -5,24 +5,23 @@ from django.utils.translation import ugettext_lazy as _
 
 class Category(models.Model):
     name = models.CharField(max_length=200)
-    icon = models.URLField(max_length=200, blank=True, null=True)
 
-class Location(models.Model):
+class Place(models.Model):
+    name = models.CharField(max_length=200, blank=True)
+    address = models.CharField(max_length=400, blank=True)
     longitude = models.FloatField(blank=False, null=False, default=0)
     latitude = models.FloatField(blank=False, null=False, default=0)
 
     def __unicode__(self):
-        return u"%i - %i" % (self.longitude, self.latitude)
+        return u"%s - %i - %i" % (self.name, self.longitude, self.latitude)
 
 class Review(models.Model):
-    title = models.CharField(max_length=200)
-    description = models.CharField(max_length=500, blank=True)
-    location = models.ForeignKey('Location')
+    short_description = models.CharField(max_length=200)
+    information = models.CharField(max_length=500, blank=True)
+    place = models.ForeignKey('Place', related_name='reviews')
     categories = models.ManyToManyField('Category')
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='first_reviewer')
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_reviews')
     creation_date = models.DateField(auto_now_add=True)
 
-    objects = models.Manager()
-
     def __unicode__(self):
-            return self.title
+            return self.short_description

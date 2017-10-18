@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
+from django.db.models import Prefetch, Count
 
 from rest_framework.decorators import list_route
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
@@ -10,14 +11,37 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, permissions, viewsets
 from rest_framework import generics
 
-from serializers import ReviewSerializer, CategorySerializer
-from models import Review, Category
+from serializers import ReviewSerializer, CategorySerializer, PlacesSerializer
+from .models import Place, Review, Category
+from friends.models import Friend
 
 User = get_user_model()
 
-# Create your views here.
-def index(request):
-    return HttpResponse("Hello, world. You're at the core index.")
+class PlaceListView(generics.ListAPIView):
+    serializer_class = PlacesSerializer
+    authentication_classes = (TokenAuthentication, SessionAuthentication)
+
+    def get_queryset(self):
+        """
+        Get places where a friends put a review
+        """
+
+        friends = Friend.objects.friends(self.request.user)
+        friends.append(self.request.user)
+
+
+        friends_reviews = Review.objects.filter(created_by__in=friends)
+
+        queryset = Place.objects.filter(
+            reviews__in=friends_reviews
+        ).prefetch_related(
+            Prefetch(
+                'reviews',
+                queryset=Review.objects.filter(created_by__in=friends)
+            )
+        ).distinct()
+
+        return queryset
 
 class CategoryViewSet(viewsets.ViewSet):
     """

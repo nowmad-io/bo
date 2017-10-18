@@ -3,9 +3,9 @@
   "model": "core.review",
   "pk": 1,
   "fields": {
-    "title": "Cafe Kracovia",
-    "description": "",
-    "location": 2,
+    "short_description": "Cafe Kracovia",
+    "information": "",
+    "place": 2,
     "created_by": 2,
     "creation_date": "2017-01-31",
     "categories": [
@@ -17,9 +17,9 @@
   "model": "core.review",
   "pk": 2,
   "fields": {
-    "title": "On the Road Pub",
-    "description": "",
-    "location": 1,
+    "short_description": "On the Road Pub",
+    "information": "",
+    "place": 1,
     "created_by": 1,
     "creation_date": "2017-01-31",
     "categories": [
@@ -31,9 +31,9 @@
   "model": "core.review",
   "pk": 3,
   "fields": {
-    "title": "Bar Zabaleta",
-    "description": "",
-    "location": 3,
+    "short_description": "Bar Zabaleta",
+    "information": "",
+    "place": 3,
     "created_by": 1,
     "creation_date": "2017-01-31",
     "categories": [
@@ -45,14 +45,50 @@
   "model": "core.review",
   "pk": 4,
   "fields": {
-    "title": "Clocher d'Ars-en-Ré",
-    "description": "",
-    "location": 4,
+    "short_description": "Clocher d'Ars-en-R\u00e9",
+    "information": "",
+    "place": 4,
     "created_by": 1,
     "creation_date": "2017-01-31",
     "categories": [
       1
     ]
+  }
+},
+{
+  "model": "core.review",
+  "pk": 5,
+  "fields": {
+    "short_description": "review of shandra on cafe krakovia",
+    "information": "",
+    "place": 2,
+    "created_by": 4,
+    "creation_date": "2017-10-18",
+    "categories": []
+  }
+},
+{
+  "model": "core.review",
+  "pk": 6,
+  "fields": {
+    "short_description": "other shandra review",
+    "information": "",
+    "place": 5,
+    "created_by": 4,
+    "creation_date": "2017-10-18",
+    "categories": []
+  }
+},
+{
+  "model": "core.review",
+  "pk": 7,
+  "fields": {
+    "short_description": "review of xavier on krakovia",
+    "information": "",
+    "place": 2,
+    "created_by": 1,
+    "creation_date": "2017-10-18",
+    "categories": []
   }
 }
 ]

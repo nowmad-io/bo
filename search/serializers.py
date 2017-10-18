@@ -8,4 +8,4 @@ class ReviewDetailsSerializer(ReviewSerializer):
     created_by = UserSerializer(many=False,)
 
     class Meta(ReviewSerializer.Meta):
-        fields = ('id', 'title', 'description', 'location', 'created_by', 'categories')
+        fields = ('id', 'title', 'description', 'place', 'created_by', 'categories')
