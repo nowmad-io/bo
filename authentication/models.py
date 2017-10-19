@@ -18,8 +18,8 @@ class travelUserManager(BaseUserManager):
 
         user = self.model(
             email=self.normalize_email(email),
-            first_name=first_name,
-            last_name=last_name
+            first_name=first_name.capitalize(),
+            last_name=last_name.capitalize()
         )
 
         result = urllib.urlretrieve(settings.AVATAR_URL + '%(first_name)s+%(last_name)s' % {'first_name': first_name, "last_name": last_name})
