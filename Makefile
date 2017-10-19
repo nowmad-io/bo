@@ -1,8 +1,8 @@
 ifdef SYSTEMROOT
-	PYTHON = ./venv/Scripts/python
+	PYTHON = DEBUG=True ./venv/Scripts/python
 	PIP = ./venv/Scripts/pip
 else
-	PYTHON = ./venv/bin/python
+	PYTHON = DEBUG=True ./venv/bin/python
 	PIP = ./venv/bin/pip
 endif
 
@@ -41,7 +41,7 @@ start_me_up:
 	$(PYTHON) manage.py loaddata fixtures/reviews.json
 
 server:
-	DEBUG=True DEFAULT_PORT=8080 $(PYTHON) manage.py runserver
+	DEFAULT_PORT=8080 $(PYTHON) manage.py runserver
 
 build_client:
 	cd ../webapp/ && git fetch && git checkout master
