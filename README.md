@@ -51,12 +51,29 @@ Once you created a test database with a set of objects, you can export it as fix
 * TODO/USEFULL ?:```GET api/friendships/rejects/``` = list of rejected friendship request
 
 
-## Miscellaneous
+## Heroku
 
-Error Dynos
+### Login
 ```
-> heroku ps --app nowmad
-> heroku ps:stop run.6004 --app nowmad
-> heroku login
-> heroku run bash --app nowmad
+$ heroku login
+```
+
+### Clean Dynos
+```
+$ heroku ps --app api-nowmad
+$ heroku ps:stop run.6004 --app api-nowmad
+```
+
+### Run command
+```
+$ heroku run command
+```
+eg:
+```
+$ heroku run python manage.py migrate --app api-nowmad
+```
+
+### Open bash
+```
+$ heroku run bash --app api-nowmad
 ```
