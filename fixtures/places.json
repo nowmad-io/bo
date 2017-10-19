@@ -1,0 +1,62 @@
+[
+{
+  "model": "core.place",
+  "pk": 1,
+  "fields": {
+    "name": "",
+    "address": "",
+    "longitude": 2.344335600000022,
+    "latitude": 48.88396849999999
+  }
+},
+{
+  "model": "core.place",
+  "pk": 2,
+  "fields": {
+    "name": "",
+    "address": "",
+    "longitude": -84.05398479999997,
+    "latitude": 9.937677599999999
+  }
+},
+{
+  "model": "core.place",
+  "pk": 3,
+  "fields": {
+    "name": "",
+    "address": "",
+    "longitude": -1.9734938000000284,
+    "latitude": 43.3251606
+  }
+},
+{
+  "model": "core.place",
+  "pk": 4,
+  "fields": {
+    "name": "",
+    "address": "",
+    "longitude": -1.5155770000000075,
+    "latitude": 46.20780999999999
+  }
+},
+{
+  "model": "core.place",
+  "pk": 5,
+  "fields": {
+    "name": "",
+    "address": "",
+    "longitude": 1.0,
+    "latitude": 1.0
+  }
+},
+{
+  "model": "core.place",
+  "pk": 6,
+  "fields": {
+    "name": "",
+    "address": "",
+    "longitude": 2.0,
+    "latitude": 2.0
+  }
+}
+]

@@ -45,8 +45,7 @@ INSTALLED_APPS = (
     'djoser',
     'core',
     'authentication',
-    'friends',
-    'search',
+    'friends'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -112,9 +111,14 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 STATICFILES_DIRS = (
-os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static'),
 )
+
+AVATAR_URL = 'https://ui-avatars.com/api/?background=0D8ABC&color=fff&size=256&name='
 
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -147,7 +151,8 @@ DATABASES = {
 }
 
 # Parse database configuration from $DATABASE_URL
-DATABASES['default'] =  dj_database_url.config()
+if not DEBUG:
+    DATABASES['default'] =  dj_database_url.config()
 
 # Enable Persistent Connections
 DATABASES['default']['CONN_MAX_AGE'] = 500

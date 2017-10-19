@@ -12,7 +12,7 @@ from rest_framework.authentication import TokenAuthentication, SessionAuthentica
 
 from django.shortcuts import render
 from .serializers import FriendSerializer, FriendshipRequestSerializer
-from core.serializers import UserSerializer
+from authentication.serializers import UserSerializer
 from .models import Friend, FriendshipRequest
 from sockets.views import FriendAccept, FriendCreate, FriendReject
 
@@ -221,8 +221,22 @@ class FriendSearchViewSet(viewsets.ViewSet):
     authentication_classes = (TokenAuthentication, SessionAuthentication)
 
     def list(self, request):
-        email = self.request.query_params.get('email', None)
-        queryset = User.objects.filter(email=email)
+        query = self.request.query_params.get('query', '')
+        friendsId = list()
+        friends = Friend.objects.friends(request.user)
+        for friend in friends:
+            friendsId.append(friend.id)
+
+        queryset = (
+            User.objects.filter(email__icontains=query) |
+            User.objects.filter(first_name__icontains=query) |
+            User.objects.filter(last_name__icontains=query)
+        ).exclude(
+            pk=request.user.id
+        ).exclude(
+            pk__in=friendsId
+        )
 
         serializer = UserSerializer(queryset, many=True)
+
         return Response(serializer.data)

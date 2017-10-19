@@ -1,13 +1,14 @@
+from django.conf import settings
+from django.core.files import File
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
+import urllib
 
 class travelUserManager(BaseUserManager):
-
-    def create_user(self, email, first_name='', last_name='', date_of_birth=None, password=None):
-
+    def create_user(self, email, first_name='', last_name='', password=None):
         """
         Creates and saves a User with the given email, date of
         birth and password.
@@ -17,21 +18,24 @@ class travelUserManager(BaseUserManager):
 
         user = self.model(
             email=self.normalize_email(email),
-            date_of_birth=date_of_birth,
             first_name=first_name,
             last_name=last_name
         )
 
+        result = urllib.urlretrieve(settings.AVATAR_URL + '%(first_name)s+%(last_name)s' % {'first_name': first_name, "last_name": last_name})
+        user.picture.save(email + '.png', File(open(result[0])))
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password):
+    def create_superuser(self, email, password, first_name, last_name):
         """
         Creates and saves a superuser with the given email, date of
         birth and password.
         """
         user = self.create_user(email,
+            first_name=first_name,
+            last_name=last_name,
             password=password,
         )
         user.is_admin = True
@@ -40,7 +44,6 @@ class travelUserManager(BaseUserManager):
 
 
 class travelUser(AbstractBaseUser):
-
     email = models.EmailField(
         verbose_name='email address',
         max_length=255,
@@ -52,6 +55,7 @@ class travelUser(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     sid = models.CharField(blank=True, max_length=100)
+    picture = models.ImageField(blank=True, max_length=100, upload_to='thumbnails')
     objects = travelUserManager()
 
     USERNAME_FIELD = 'email'

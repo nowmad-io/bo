@@ -6,7 +6,6 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 from authentication.models import travelUser
 
-
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
     fields, plus a repeated password."""
@@ -33,7 +32,6 @@ class UserCreationForm(forms.ModelForm):
             user.save()
         return user
 
-
 class UserChangeForm(forms.ModelForm):
     """A form for updating users. Includes all the fields on
     the user, but replaces the password field with admin's
@@ -51,7 +49,6 @@ class UserChangeForm(forms.ModelForm):
         # field does not have access to the initial value
         return self.initial["password"]
 
-
 class travelUserAdmin(UserAdmin):
     # The forms to add and change user instances
     form = UserChangeForm
@@ -67,6 +64,7 @@ class travelUserAdmin(UserAdmin):
         ('Personal info', {'fields': ('first_name','last_name','date_of_birth',)}),
         ('Permissions', {'fields': ('is_admin',)}),
         ('Sockets', {'fields': ('sid',)}),
+        ('Picture', {'fields': ('picture',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.

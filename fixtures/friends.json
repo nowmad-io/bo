@@ -39,9 +39,9 @@
   "model": "friends.friend",
   "pk": 8,
   "fields": {
-    "to_user": 4,
+    "to_user": 3,
     "from_user": 1,
-    "created": "2017-01-31T09:18:51Z"
+    "created": "2017-10-18T22:18:43.750Z"
   }
 },
 {
@@ -49,8 +49,8 @@
   "pk": 9,
   "fields": {
     "to_user": 1,
-    "from_user": 4,
-    "created": "2017-01-31T09:18:58Z"
+    "from_user": 3,
+    "created": "2017-10-18T22:18:43.753Z"
   }
 }
 ]
