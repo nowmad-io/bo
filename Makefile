@@ -31,7 +31,6 @@ start_me_up:
 	find . -name '*.pyc' -delete
 	rm -vf nowmad/db.sqlite3
 	$(PIP) install -r requirements.txt -U
-	$(PYTHON) manage.py makemigrations corsheaders
 	$(PYTHON) manage.py makemigrations
 	$(PYTHON) manage.py migrate --run-syncdb --noinput
 
