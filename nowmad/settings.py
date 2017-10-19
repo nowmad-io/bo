@@ -21,7 +21,7 @@ DEFAULT_PORT = int(os.environ.get('DEFAULT_PORT', '5000'))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', True)
+DEBUG = os.environ.get('DEBUG', False)
 
 import os
 

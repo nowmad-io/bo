@@ -41,7 +41,7 @@ start_me_up:
 	$(PYTHON) manage.py loaddata fixtures/reviews.json
 
 server:
-	DEFAULT_PORT=8080 $(PYTHON) manage.py runserver
+	DEBUG=True DEFAULT_PORT=8080 $(PYTHON) manage.py runserver
 
 build_client:
 	cd ../webapp/ && git fetch && git checkout master
