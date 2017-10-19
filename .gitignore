@@ -53,6 +53,12 @@ coverage.xml
 config.py
 venv
 
+nowmad/media/thumbnails/*
+!nowmad/media/thumbnails/clock.png
+!nowmad/media/thumbnails/ss.com.png
+!nowmad/media/thumbnails/testtest.com.png
+!nowmad/media/thumbnails/xx.com.png
+!nowmad/media/thumbnails/clock.png
 
 # Sphinx documentation
 docs/_build/
