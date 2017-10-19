@@ -33,10 +33,11 @@ class travelUserManager(BaseUserManager):
         Creates and saves a superuser with the given email, date of
         birth and password.
         """
-        user = self.create_user(email,
+        user = self.create_user(
+            email=email,
+            password=password,
             first_name=first_name,
             last_name=last_name,
-            password=password,
         )
         user.is_admin = True
         user.save(using=self._db)
@@ -59,7 +60,7 @@ class travelUser(AbstractBaseUser):
     objects = travelUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
     def get_first_name(self):
         # The user is identified by their email address

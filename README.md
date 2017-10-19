@@ -58,6 +58,19 @@ Once you created a test database with a set of objects, you can export it as fix
 $ heroku login
 ```
 
+### first launch
+* Create new app in heroku
+* Set up django en var SECRET_KEY from heroku dahsboard or using `heroku config:set SECRET_KEY=secret --app api-nowmad`
+* Deploy connecting to github repo
+* Check if migrations has been ran
+* create super user `heroku run python manage.py createsuperuser --app api-nowmad`
+* Set up custom domains if necessary [gandi-net-and-heroku-domain-routing](https://stackoverflow.com/questions/22854091/gandi-net-and-heroku-domain-routing)
+
+
+```
+$ heroku run bash --app api-nowmad
+```
+
 ### Clean Dynos
 ```
 $ heroku ps --app api-nowmad
