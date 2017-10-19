@@ -221,8 +221,22 @@ class FriendSearchViewSet(viewsets.ViewSet):
     authentication_classes = (TokenAuthentication, SessionAuthentication)
 
     def list(self, request):
-        query = self.request.query_params.get('query', None)
-        queryset = User.objects.filter(email__icontains=query) | User.objects.filter(first_name__icontains=query) | User.objects.filter(first_name__icontains=query)
+        query = self.request.query_params.get('query', '')
+        friendsId = list()
+        friends = Friend.objects.friends(request.user)
+        for friend in friends:
+            friendsId.append(friend.id)
+
+        queryset = (
+            User.objects.filter(email__icontains=query) |
+            User.objects.filter(first_name__icontains=query) |
+            User.objects.filter(last_name__icontains=query)
+        ).exclude(
+            pk=request.user.id
+        ).exclude(
+            pk__in=friendsId
+        )
+
         serializer = UserSerializer(queryset, many=True)
 
         return Response(serializer.data)
