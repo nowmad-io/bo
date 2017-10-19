@@ -16,7 +16,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class PlaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Place
-        fields = ('name', 'longitude', 'latitude', 'address')
+        fields = ('id', 'name', 'longitude', 'latitude', 'address')
 
 class ReviewSerializer(serializers.ModelSerializer):
     place = PlaceSerializer(many=False, write_only=True)
@@ -88,4 +88,4 @@ class PlacesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Place
-        fields = ('name', 'longitude', 'latitude', 'address', 'reviews')
+        fields = ('id', 'name', 'longitude', 'latitude', 'address', 'reviews')
