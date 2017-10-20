@@ -6,6 +6,9 @@ from django.utils.translation import ugettext_lazy as _
 class Category(models.Model):
     name = models.CharField(max_length=200)
 
+    def __unicode__(self):
+        return self.name
+
 class Place(models.Model):
     name = models.CharField(max_length=200, blank=True)
     address = models.CharField(max_length=400, blank=True)
@@ -20,6 +23,7 @@ class Review(models.Model):
     information = models.CharField(max_length=500, blank=True)
     place = models.ForeignKey('Place', related_name='reviews')
     categories = models.ManyToManyField('Category')
+    pictures = models.ManyToManyField('Picture', blank=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_reviews')
     creation_date = models.DateTimeField(auto_now_add=True)
 
@@ -27,4 +31,8 @@ class Review(models.Model):
         ordering = ('-creation_date',)
 
     def __unicode__(self):
-            return self.short_description
+        return self.short_description
+
+class Picture(models.Model):
+    source = models.ImageField(max_length=200, upload_to='places')
+    caption = models.CharField(max_length=300, blank=True)
