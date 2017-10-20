@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from itertools import chain
 from rest_framework import serializers, viewsets
 
-from core.models import Review, Place, Category
+from core.models import Review, Place, Category, Picture
 from friends.models import Friend
 from authentication.serializers import UserSerializer
 
@@ -18,15 +18,21 @@ class PlaceSerializer(serializers.ModelSerializer):
         model = Place
         fields = ('id', 'name', 'longitude', 'latitude', 'address')
 
+class PictureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Picture
+        fields = ('source', 'caption')
+
 class ReviewSerializer(serializers.ModelSerializer):
     place = PlaceSerializer(many=False, write_only=True)
     categories = CategorySerializer(many=True)
+    pictures = PictureSerializer(many=True)
     created_by = UserSerializer(default=serializers.CurrentUserDefault(), read_only=True)
     user_type = serializers.SerializerMethodField()
 
     class Meta:
         model = Review
-        fields = ('id', 'short_description', 'information', 'place', 'categories', 'created_by', 'user_type', 'creation_date')
+        fields = ('id', 'short_description', 'information', 'place', 'categories', 'pictures', 'created_by', 'user_type', 'creation_date')
 
     def create(self, validated_data):
         category_list=[]
@@ -53,11 +59,6 @@ class ReviewSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance.short_description = validated_data.get('short_description', instance.short_description)
         instance.information = validated_data.get('information', instance.information)
-
-        # handle manually place
-        place_data = validated_data.pop('place')
-        place, _ = Place.objects.get_or_create(**place_data)
-        instance.place = place
 
         instance.save()
         return instance
