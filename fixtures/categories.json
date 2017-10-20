@@ -3,7 +3,28 @@
   "model": "core.category",
   "pk": 1,
   "fields": {
-    "name": "bar"
+    "name": "Adventure"
+  }
+},
+{
+  "model": "core.category",
+  "pk": 2,
+  "fields": {
+    "name": "Nature shows"
+  }
+},
+{
+  "model": "core.category",
+  "pk": 3,
+  "fields": {
+    "name": "Culture"
+  }
+},
+{
+  "model": "core.category",
+  "pk": 4,
+  "fields": {
+    "name": "City"
   }
 }
 ]
