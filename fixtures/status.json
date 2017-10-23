@@ -1,0 +1,23 @@
+[
+{
+  "model": "core.status",
+  "pk": 1,
+  "fields": {
+    "name": "Travelling here"
+  }
+},
+{
+  "model": "core.status",
+  "pk": 2,
+  "fields": {
+    "name": "Living here"
+  }
+},
+{
+  "model": "core.status",
+  "pk": 3,
+  "fields": {
+    "name": "Local"
+  }
+}
+]
