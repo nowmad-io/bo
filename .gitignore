@@ -53,6 +53,7 @@ coverage.xml
 config.py
 venv
 
+nowmad/media/places/*
 nowmad/media/thumbnails/*
 !nowmad/media/thumbnails/clock.png
 !nowmad/media/thumbnails/ss.com.png

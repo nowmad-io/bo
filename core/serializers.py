@@ -1,5 +1,6 @@
 from django.conf.urls import url, include
 from django.contrib.auth import get_user_model
+from drf_extra_fields.fields import Base64ImageField
 
 from itertools import chain
 from rest_framework import serializers, viewsets
@@ -18,10 +19,9 @@ class PlaceSerializer(serializers.ModelSerializer):
         model = Place
         fields = ('id', 'name', 'longitude', 'latitude', 'address')
 
-class PictureSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Picture
-        fields = ('source', 'caption')
+class PictureSerializer(serializers.Serializer):
+    source = Base64ImageField()
+    caption = serializers.CharField()
 
 class ReviewSerializer(serializers.ModelSerializer):
     place = PlaceSerializer(many=False, write_only=True)
