@@ -4,18 +4,13 @@ from django.contrib.auth import get_user_model
 from itertools import chain
 from rest_framework import serializers, viewsets
 
-from core.models import Review, Place, Category, Picture, Status
+from core.models import Review, Place, Category, Picture
 from friends.models import Friend
 from authentication.serializers import UserSerializer
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ('id', 'name')
-
-class StatusSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Status
         fields = ('id', 'name')
 
 class PlaceSerializer(serializers.ModelSerializer):
@@ -30,7 +25,6 @@ class PictureSerializer(serializers.ModelSerializer):
 
 class ReviewSerializer(serializers.ModelSerializer):
     place = PlaceSerializer(many=False, write_only=True)
-    status = StatusSerializer(many=False)
     categories = CategorySerializer(many=True)
     pictures = PictureSerializer(many=True)
     created_by = UserSerializer(default=serializers.CurrentUserDefault(), read_only=True)
@@ -56,10 +50,6 @@ class ReviewSerializer(serializers.ModelSerializer):
         if 'pictures' in validated_data:
             pictures_list = validated_data.pop('pictures')
 
-        # remove the status properties
-        if 'status' in validated_data:
-            status = validated_data.pop('status')
-
         #we create the review object
         review = Review.objects.create(**validated_data)
 
@@ -71,9 +61,6 @@ class ReviewSerializer(serializers.ModelSerializer):
         for picture in pictures_list:
             newPicture = Picture.objects.create(**picture)
             review.pictures.add(newPicture)
-
-        getStatus = Status.objects.get(**status)
-        review.status = getStatus
 
         return review
 

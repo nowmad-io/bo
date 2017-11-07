@@ -6,7 +6,6 @@
     "short_description": "Cafe Kracovia",
     "information": "",
     "place": 2,
-    "status": 1,
     "created_by": 2,
     "creation_date": "2017-01-03T23:36:35.412560Z",
     "categories": [
@@ -21,7 +20,6 @@
     "short_description": "On the Road Pub",
     "information": "",
     "place": 1,
-    "status": 2,
     "created_by": 1,
     "creation_date": "2017-01-10T23:36:35.412560Z",
     "categories": [
@@ -36,7 +34,6 @@
     "short_description": "Bar Zabaleta",
     "information": "",
     "place": 3,
-    "status": 3,
     "created_by": 1,
     "creation_date": "2017-01-15T23:36:35.412560Z",
     "categories": [
@@ -51,7 +48,6 @@
     "short_description": "Clocher d'Ars-en-R\u00e9",
     "information": "",
     "place": 4,
-    "status": 1,
     "created_by": 1,
     "creation_date": "2017-01-20T23:36:35.412560Z",
     "categories": [
@@ -66,7 +62,6 @@
     "short_description": "review of shandra on cafe krakovia",
     "information": "",
     "place": 2,
-    "status": 2,
     "created_by": 4,
     "creation_date": "2017-10-21T23:36:35.412560Z",
     "categories": [
@@ -82,7 +77,6 @@
     "short_description": "other shandra review",
     "information": "",
     "place": 5,
-    "status": 3,
     "created_by": 4,
     "creation_date": "2017-10-02T23:36:35.412560Z",
     "categories": [
@@ -98,7 +92,6 @@
     "short_description": "review of xavier on krakovia",
     "information": "",
     "place": 2,
-    "status": 1,
     "created_by": 1,
     "creation_date": "2017-10-18T23:36:35.412560Z",
     "categories": [
@@ -115,7 +108,6 @@
     "short_description": "review from test@test.com",
     "information": "",
     "place": 6,
-    "status": 2,
     "created_by": 3,
     "creation_date": "2017-10-15T23:36:35.412560Z",
     "categories": [

@@ -15,9 +15,6 @@ init:
 fixtures_users:
 	$(PYTHON) manage.py dumpdata authentication.traveluser --indent 2 > fixtures/users.json
 
-fixtures_status:
-	$(PYTHON) manage.py dumpdata core.status --indent 2 > fixtures/status.json
-
 fixtures_friends:
 	$(PYTHON) manage.py dumpdata friends.friend --indent 2 > fixtures/friends.json
 
@@ -46,7 +43,6 @@ start_me_up:
 	$(PYTHON) manage.py makemigrations
 	$(PYTHON) manage.py migrate --run-syncdb --noinput
 
-	make loaddata MODEL="status"
 	make loaddata MODEL="categories"
 	make loaddata MODEL="places"
 	make loaddata MODEL="users"

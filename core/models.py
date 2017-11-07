@@ -28,7 +28,7 @@ class Review(models.Model):
     short_description = models.CharField(max_length=200)
     information = models.CharField(max_length=500, blank=True)
     place = models.ForeignKey('Place', related_name='reviews')
-    status = models.ForeignKey('Status')
+    status = models.CharField(max_length=200)
     categories = models.ManyToManyField('Category')
     pictures = models.ManyToManyField('Picture', blank=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_reviews')
