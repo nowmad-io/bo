@@ -2,11 +2,10 @@ from django.conf.urls import url, include
 from django.contrib.auth import get_user_model
 from rest_framework import serializers, viewsets
 from .models import Friend, FriendshipRequest
-from authentication.serializers import UserSerializer
+from core.serializers import UserSerializer
 import json
 
 User = get_user_model()
-
 
 class FriendshipRequestSerializer(serializers.ModelSerializer):
     from_user = UserSerializer(read_only=True)

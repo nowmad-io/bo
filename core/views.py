@@ -80,7 +80,7 @@ class ReviewViewSet(viewsets.ViewSet):
         else:
             queryset = Review.objects.all()
 
-        serializer = ReviewSerializer(queryset, many=True)
+        serializer = self.serializer_class(queryset, many=True, context={'request':request})
         return Response(serializer.data)
 
     def create(self, request):

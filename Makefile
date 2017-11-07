@@ -27,6 +27,15 @@ fixtures_reviews:
 fixtures_categories:
 	$(PYTHON) manage.py dumpdata core.category --indent 2 > fixtures/categories.json
 
+migrate:
+	$(PYTHON) manage.py migrate --run-syncdb --noinput
+
+makemigrations:
+	$(PYTHON) manage.py makemigrations
+
+loaddata:
+	$(PYTHON) manage.py loaddata fixtures/$(MODEL).json
+
 start_me_up:
 	find . -name '*.pyc' -delete
 	rm -vf nowmad/db.sqlite3
@@ -34,11 +43,11 @@ start_me_up:
 	$(PYTHON) manage.py makemigrations
 	$(PYTHON) manage.py migrate --run-syncdb --noinput
 
-	$(PYTHON) manage.py loaddata fixtures/places.json
-	$(PYTHON) manage.py loaddata fixtures/users.json
-	$(PYTHON) manage.py loaddata fixtures/friends.json
-	$(PYTHON) manage.py loaddata fixtures/categories.json
-	$(PYTHON) manage.py loaddata fixtures/reviews.json
+	make loaddata MODEL="categories"
+	make loaddata MODEL="places"
+	make loaddata MODEL="users"
+	make loaddata MODEL="friends"
+	make loaddata MODEL="reviews"
 
 server:
 	DEFAULT_PORT=8080 $(PYTHON) manage.py runserver
