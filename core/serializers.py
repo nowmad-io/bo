@@ -21,12 +21,12 @@ class PlaceSerializer(serializers.ModelSerializer):
 
 class PictureSerializer(serializers.Serializer):
     source = Base64ImageField()
-    caption = serializers.CharField()
+    caption = serializers.CharField(allow_blank=True)
 
 class ReviewSerializer(serializers.ModelSerializer):
     place = PlaceSerializer(many=False, write_only=True)
     categories = CategorySerializer(many=True)
-    pictures = PictureSerializer(many=True)
+    pictures = PictureSerializer(required=False, many=True)
     created_by = UserSerializer(default=serializers.CurrentUserDefault(), read_only=True)
     user_type = serializers.SerializerMethodField()
 
@@ -54,6 +54,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         review = Review.objects.create(**validated_data)
 
         #we add the category, one by one
+        newCategories = []
         for category in category_list:
             getCategory = Category.objects.get(name=category['name'])
             review.categories.add(getCategory)
