@@ -12,7 +12,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, permissions, viewsets
 from rest_framework import generics
 
-from serializers import ReviewSerializer, CategorySerializer, PlacesSerializer
+from serializers import ReviewSerializer, ReviewsSerializer, CategorySerializer, PlacesSerializer
 from .models import Place, Review, Category
 from friends.models import Friend
 
@@ -73,6 +73,7 @@ class ReviewViewSet(viewsets.ViewSet):
     permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = (TokenAuthentication, SessionAuthentication)
     serializer_class = ReviewSerializer
+    serializer_class_list = ReviewSerializer
 
     def list(self, request):
         if request.user.is_authenticated():

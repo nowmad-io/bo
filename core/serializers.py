@@ -9,6 +9,26 @@ from core.models import Review, Place, Category, Picture
 from friends.models import Friend
 from authentication.serializers import UserSerializer
 
+def getUserType(self, obj):
+    currentUser = self.context['request'].user
+    friends = Friend.objects.friends(currentUser)
+    friends_friends = list()
+
+    for friend in friends:
+        friend_friends = Friend.objects.friends(friend, [currentUser])
+        friends_friends = list(chain(friends_friends, friend_friends))
+
+    if (obj.created_by == currentUser):
+        return 'me'
+
+    if (obj.created_by in friends):
+        return 'friend'
+
+    if (obj.created_by in friends_friends):
+        return 'friends_friend'
+
+    return ''
+
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
@@ -23,8 +43,21 @@ class PictureSerializer(serializers.Serializer):
     source = Base64ImageField()
     caption = serializers.CharField(allow_blank=True)
 
+class ReviewsSerializer(serializers.ModelSerializer):
+    categories = CategorySerializer(many=True)
+    pictures = PictureSerializer(required=False, many=True)
+    created_by = UserSerializer(default=serializers.CurrentUserDefault(), read_only=True)
+    user_type = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Review
+        fields = ('id', 'short_description', 'information', 'categories', 'pictures', 'status', 'created_by', 'user_type', 'creation_date')
+
+    def get_user_type(self, obj):
+        return getUserType(self, obj)
+
 class ReviewSerializer(serializers.ModelSerializer):
-    place = PlaceSerializer(many=False, write_only=True)
+    place = PlaceSerializer(many=False)
     categories = CategorySerializer(many=True)
     pictures = PictureSerializer(required=False, many=True)
     created_by = UserSerializer(default=serializers.CurrentUserDefault(), read_only=True)
@@ -73,28 +106,11 @@ class ReviewSerializer(serializers.ModelSerializer):
         return instance
 
     def get_user_type(self, obj):
-        currentUser = self.context['request'].user
-        friends = Friend.objects.friends(currentUser)
-        friends_friends = list()
-
-        for friend in friends:
-            friend_friends = Friend.objects.friends(friend, [currentUser])
-            friends_friends = list(chain(friends_friends, friend_friends))
-
-        if (obj.created_by == currentUser):
-            return 'me'
-
-        if (obj.created_by in friends):
-            return 'friend'
-
-        if (obj.created_by in friends_friends):
-            return 'friends_friend'
-
-        return ''
+        return getUserType(self, obj)
 
 
 class PlacesSerializer(serializers.ModelSerializer):
-    reviews = ReviewSerializer(many=True, read_only=True)
+    reviews = ReviewsSerializer(many=True, read_only=True)
 
     class Meta:
         model = Place
