@@ -43,3 +43,9 @@ class Review(models.Model):
 class Picture(models.Model):
     source = models.ImageField(max_length=200, upload_to='places')
     caption = models.CharField(max_length=300, blank=True)
+
+class InterestedPeople(models.Model):
+    email = models.CharField(max_length=200, blank=True)
+
+    def __unicode__(self):
+        return self.email
