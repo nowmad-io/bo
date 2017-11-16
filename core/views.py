@@ -1,8 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from django.db.models import Prefetch, Count
+from django.views import View
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 from itertools import chain
 from rest_framework.decorators import list_route
@@ -13,7 +16,7 @@ from rest_framework import status, permissions, viewsets
 from rest_framework import generics
 
 from serializers import ReviewSerializer, ReviewsSerializer, CategorySerializer, PlacesSerializer
-from .models import Place, Review, Category
+from .models import Place, Review, Category, InterestedPeople
 from friends.models import Friend
 
 User = get_user_model()
@@ -149,3 +152,13 @@ class ReviewViewSet(viewsets.ViewSet):
             'status': 'Success',
             'message': 'Bookmark deleted'
         }, status=status.HTTP_200_OK)
+
+class NotifyMe(View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(NotifyMe, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+        email = request.POST.get("email", "")
+        newInterested, _ = InterestedPeople.objects.get_or_create(email=email)
+        return JsonResponse({email: email})
