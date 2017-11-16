@@ -90,3 +90,6 @@ $ heroku run python manage.py migrate --app api-nowmad
 ```
 $ heroku run bash --app api-nowmad
 ```
+
+### Set up SSL
+* https://vimeo.com/209534466
