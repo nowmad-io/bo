@@ -30,15 +30,19 @@ class PlaceListView(generics.ListAPIView):
         Get places where a friends put a review
         """
         query = self.request.query_params.get('query', '')
+        email = self.request.query_params.get('user', '')
 
-        friends = Friend.objects.friends(self.request.user)
-        all_friends = list(friends)
+        if email:
+            all_friends = list([User.objects.get(email=email)])
+        else:
+            friends = Friend.objects.friends(self.request.user)
+            all_friends = list(friends)
 
-        for friend in friends:
-            friend_friends = Friend.objects.friends(friend)
-            all_friends = list(chain(all_friends, friend_friends))
+            for friend in friends:
+                friend_friends = Friend.objects.friends(friend)
+                all_friends = list(chain(all_friends, friend_friends))
 
-        all_friends.append(self.request.user)
+            all_friends.append(self.request.user)
 
         pre_queryset = Review.objects.filter(created_by__in=all_friends)
 
