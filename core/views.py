@@ -157,40 +157,6 @@ class ReviewViewSet(viewsets.ViewSet):
             'message': 'Bookmark deleted'
         }, status=status.HTTP_200_OK)
 
-class ReviewsSearch(viewsets.ViewSet):
-    """
-    Reviews search View Set
-    """
-    permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = PlacesSerializer
-    authentication_classes = (TokenAuthentication, SessionAuthentication)
-
-    def list(self, request):
-        query = self.request.query_params.get('query', '')
-        friends = Friend.objects.friends(self.request.user)
-        all_friends = list(friends)
-
-        for friend in friends:
-            friend_friends = Friend.objects.friends(friend)
-            all_friends = list(chain(all_friends, friend_friends))
-
-        all_friends.append(self.request.user)
-
-        friends_reviews = Review.objects.filter(created_by__in=all_friends)
-
-        queryset = Place.objects.filter(
-            reviews__in=friends_reviews
-        ).prefetch_related(
-            Prefetch(
-                'reviews',
-                queryset=Review.objects.filter(created_by__in=all_friends) | Review.objects.filter(short_description__icontains=query) | Review.objects.filter(information__icontains=query)
-            )
-        ).distinct()
-
-        serializer = self.serializer_class(queryset, many=True)
-
-        return Response(serializer.data)
-
 class NotifyMe(View):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
