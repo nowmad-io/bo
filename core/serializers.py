@@ -9,6 +9,8 @@ from core.models import Review, Place, Category, Picture
 from friends.models import Friend
 from authentication.serializers import UserSerializer
 
+User = get_user_model()
+
 def getUserType(self, obj):
     currentUser = self.context['request'].user
     friends = Friend.objects.friends(currentUser)
@@ -115,3 +117,23 @@ class PlacesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Place
         fields = ('id', 'name', 'longitude', 'latitude', 'address', 'reviews')
+
+class PlacesSearchSerializer(serializers.ModelSerializer):
+    reviews = serializers.SerializerMethodField()
+    all_reviews = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Place
+        fields = ('id', 'name', 'longitude', 'latitude', 'address', 'reviews', 'all_reviews')
+
+    def get_reviews(self, obj):
+        queryset = obj.reviews
+        email = self.context['request'].query_params.get('user', '')
+        if email:
+            user = User.objects.get(email=email)
+            queryset = queryset.filter(created_by = user)
+
+        return ReviewsSerializer(queryset, many=True, context=self.context).data
+
+    def get_all_reviews(self, obj):
+        return ReviewsSerializer(obj.reviews, many=True, context=self.context).data

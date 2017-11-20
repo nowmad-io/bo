@@ -15,7 +15,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, permissions, viewsets
 from rest_framework import generics
 
-from serializers import ReviewSerializer, ReviewsSerializer, CategorySerializer, PlacesSerializer
+from serializers import ReviewSerializer, ReviewsSerializer, CategorySerializer, PlacesSerializer, PlacesSearchSerializer
 from .models import Place, Review, Category, InterestedPeople
 from friends.models import Friend
 
@@ -24,6 +24,15 @@ User = get_user_model()
 class PlaceListView(generics.ListAPIView):
     serializer_class = PlacesSerializer
     authentication_classes = (TokenAuthentication, SessionAuthentication)
+
+    def get_serializer_class(self):
+        query = self.request.query_params.get('query', '')
+        email = self.request.query_params.get('user', '')
+
+        if query or email:
+            return PlacesSearchSerializer
+        else:
+            return PlacesSerializer
 
     def get_queryset(self):
         """
@@ -51,11 +60,6 @@ class PlaceListView(generics.ListAPIView):
 
         queryset = Place.objects.filter(
             reviews__in=pre_queryset
-        ).prefetch_related(
-            Prefetch(
-                'reviews',
-                queryset=pre_queryset
-            )
         ).distinct()
 
         return queryset
