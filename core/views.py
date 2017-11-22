@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
-from django.db.models import Prefetch, Count
+from django.db.models import Prefetch, Count, Q
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
@@ -15,7 +15,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, permissions, viewsets
 from rest_framework import generics
 
-from serializers import ReviewSerializer, ReviewsSerializer, CategorySerializer, PlacesSerializer
+from serializers import ReviewSerializer, ReviewsSerializer, CategorySerializer, PlacesSerializer, PlacesSearchSerializer
 from .models import Place, Review, Category, InterestedPeople
 from friends.models import Friend
 
@@ -25,29 +25,41 @@ class PlaceListView(generics.ListAPIView):
     serializer_class = PlacesSerializer
     authentication_classes = (TokenAuthentication, SessionAuthentication)
 
+    def get_serializer_class(self):
+        query = self.request.query_params.get('query', '')
+        email = self.request.query_params.get('user', '')
+
+        if query or email:
+            return PlacesSearchSerializer
+        else:
+            return PlacesSerializer
+
     def get_queryset(self):
         """
         Get places where a friends put a review
         """
+        query = self.request.query_params.get('query', '')
+        email = self.request.query_params.get('user', '')
 
-        friends = Friend.objects.friends(self.request.user)
-        all_friends = list(friends)
+        if email:
+            all_friends = list([User.objects.get(email=email)])
+        else:
+            friends = Friend.objects.friends(self.request.user)
+            all_friends = list(friends)
 
-        for friend in friends:
-            friend_friends = Friend.objects.friends(friend)
-            all_friends = list(chain(all_friends, friend_friends))
+            for friend in friends:
+                friend_friends = Friend.objects.friends(friend)
+                all_friends = list(chain(all_friends, friend_friends))
 
-        all_friends.append(self.request.user)
+            all_friends.append(self.request.user)
 
-        friends_reviews = Review.objects.filter(created_by__in=all_friends)
+        pre_queryset = Review.objects.filter(created_by__in=all_friends)
+
+        if query:
+            pre_queryset = pre_queryset.filter(Q(short_description__icontains=query) | Q(information__icontains=query))
 
         queryset = Place.objects.filter(
-            reviews__in=friends_reviews
-        ).prefetch_related(
-            Prefetch(
-                'reviews',
-                queryset=Review.objects.filter(created_by__in=all_friends)
-            )
+            reviews__in=pre_queryset
         ).distinct()
 
         return queryset

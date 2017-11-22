@@ -2,7 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 
+from itertools import chain
 from rest_framework.decorators import list_route
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -195,9 +197,29 @@ class FriendViewSet(viewsets.ViewSet):
 
     def list(self, request):
         """List friends of authenticated user"""
+        query = self.request.query_params.get('query', '')
 
         if request.user.is_authenticated():
-            queryset = Friend.objects.friends(request.user)
+            friendsId = list()
+            friends = Friend.objects.friends(request.user)
+
+            for friend in friends:
+                friendsId.append(friend.id)
+                friends_of_friend = Friend.objects.friends(friend)
+
+                for friend_friend in friends_of_friend:
+                    friendsId.append(friend_friend.id)
+
+            queryset = User.objects.filter(
+                pk__in=friendsId
+            ).filter(
+                Q(email__icontains=query) |
+                Q(first_name__icontains=query) |
+                Q(last_name__icontains=query)
+            ).exclude(
+                pk=request.user.id
+            ).distinct()
+
         else:
             return Response({
                 'status': 'Unauthorized',
