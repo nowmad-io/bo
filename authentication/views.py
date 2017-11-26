@@ -33,5 +33,5 @@ class MeView(viewsets.ModelViewSet):
                 'message': 'You are Anonymous',
             }, status=status.HTTP_200_OK)
 
-        serializer = self.serializer_class(request.user, many=False)
+        serializer = self.serializer_class(request.user, many=False, context= { 'request': request })
         return Response(serializer.data, status=status.HTTP_200_OK)

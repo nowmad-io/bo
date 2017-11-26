@@ -106,7 +106,7 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
             }, status=status.HTTP_403_FORBIDDEN)
 
         #get the data back
-        serializer = self.serializer_class(data = request.data)
+        serializer = self.serializer_class(data = request.data, context={ 'request': request })
 
         #build the request in the backend
         if serializer.is_valid():
@@ -128,13 +128,13 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
     def incoming_list(self, request):
         """ the list of incoming transaction """
         queryset = Friend.objects.unrejected_requests(user = request.user)
-        serializer = self.serializer_class(queryset, many=True)
+        serializer = self.serializer_class(queryset, many=True, context={ 'request': request })
         return Response(serializer.data)
 
     def outgoing_list(self, request):
         """List friends request of authenticated user"""
         queryset = Friend.objects.sent_requests(user = request.user)
-        serializer = self.serializer_class(queryset, many=True)
+        serializer = self.serializer_class(queryset, many=True, context={ 'request': request })
         return Response(serializer.data)
 
     def accept(self, request, pk):
@@ -152,8 +152,8 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
 
         if result:
             friend = User.objects.get(pk=friendship_request.from_user.id)
-            serializer_friend = UserSerializer(friend, many=False)
-            serializer_user = UserSerializer(request.user, many=False)
+            serializer_friend = UserSerializer(friend, many=False, context={ 'request': request })
+            serializer_user = UserSerializer(request.user, many=False, context={ 'request': request })
             FriendAccept(request.user, friend, serializer_user.data, serializer_friend.data)
 
             return Response(status = status.HTTP_201_CREATED)
@@ -226,7 +226,7 @@ class FriendViewSet(viewsets.ViewSet):
                 'message': 'Authentification required.'
             }, status=status.HTTP_401_UNAUTHORIZED)
 
-        serializer = UserSerializer(queryset, many=True)
+        serializer = UserSerializer(queryset, many=True, context={ 'request': request })
 
         return Response(serializer.data)
 
@@ -259,6 +259,6 @@ class FriendSearchViewSet(viewsets.ViewSet):
             pk__in=friendsId
         )
 
-        serializer = UserSerializer(queryset, many=True)
+        serializer = UserSerializer(queryset, many=True, context={ 'request': request })
 
         return Response(serializer.data)
