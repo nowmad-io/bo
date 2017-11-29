@@ -16,7 +16,7 @@ from django.shortcuts import render
 from .serializers import FriendSerializer, FriendshipRequestSerializer, FriendSearchSerializer
 from authentication.serializers import UserSerializer
 from .models import Friend, FriendshipRequest
-from sockets.views import FriendAccept, FriendCreate, FriendReject
+from sockets.views import FriendAccept, FriendCreate, FriendReject, FriendCancel
 
 import json
 # Create your views here.
@@ -180,6 +180,29 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
         if result:
             friend = User.objects.get(pk=friendship_request.from_user.id)
             FriendReject([request.user, friend], serializer.data)
+            return Response(status = status.HTTP_200_OK)
+
+        return Response({
+              'status': 'Bad request'
+          }, status=status.HTTP_400_BAD_REQUEST)
+
+    def cancel(self, request, pk):
+        """ cancel a friendship request """
+
+        friendship_request = get_object_or_404(FriendshipRequest,id=pk)
+
+        if friendship_request.from_user.id != request.user.id:
+            return Response({
+                'status': 'Forbidden',
+                'message': 'Friends request can only be cancelled by the current user.'
+            }, status=status.HTTP_403_FORBIDDEN)
+
+        serializer = self.serializer_class(friendship_request)
+        result = friendship_request.cancel()
+
+        if result:
+            friend = User.objects.get(pk=friendship_request.to_user.id)
+            FriendCancel([request.user, friend], serializer.data)
             return Response(status = status.HTTP_200_OK)
 
         return Response({

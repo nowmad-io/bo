@@ -36,6 +36,10 @@ friendship_rejection = FriendshipRequestViewSet.as_view({
     'get': 'reject'
 })
 
+friendship_cancel = FriendshipRequestViewSet.as_view({
+    'get': 'cancel'
+})
+
 urlpatterns = ([
     url(r'^friends/$', friends_list, name='friends-list'),
     url(r'^friends/search/$', friends_search, name='friends-search'),
@@ -44,5 +48,6 @@ urlpatterns = ([
     url(r'^friendships/outgoing/$', friendship_outgoing, name='Friendship-outgoing'),
     url(r'^friendships/(?P<pk>[0-9]+)/$', friendship_details, name='Friendship-details'),
     url(r'^friendships/accept/(?P<pk>[0-9]+)/$', friendship_validation, name='Friendship-acceptation'),
-    url(r'^friendships/reject/(?P<pk>[0-9]+)/$', friendship_rejection, name='Friendship-rejection')
+    url(r'^friendships/reject/(?P<pk>[0-9]+)/$', friendship_rejection, name='Friendship-rejection'),
+    url(r'^friendships/cancel/(?P<pk>[0-9]+)/$', friendship_cancel, name='Friendship-cancel')
 ])

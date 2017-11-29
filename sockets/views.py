@@ -26,6 +26,11 @@ def FriendReject(users, request):
         sid = user.sid
         sio.emit('friend.reject', {'request': request}, room=sid, namespace=namespace)
 
+def FriendCancel(users, request):
+    for user in users:
+        sid = user.sid
+        sio.emit('friend.cancel', {'request': request}, room=sid, namespace=namespace)
+
 @sio.on('authenticate', namespace=namespace)
 def authenticate(sid, message):
     user = Token.objects.get(key=message['token']).user
