@@ -13,7 +13,7 @@ from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 
 from django.shortcuts import render
-from .serializers import FriendSerializer, FriendshipRequestSerializer
+from .serializers import FriendSerializer, FriendshipRequestSerializer, FriendSearchSerializer
 from authentication.serializers import UserSerializer
 from .models import Friend, FriendshipRequest
 from sockets.views import FriendAccept, FriendCreate, FriendReject
@@ -212,10 +212,6 @@ class FriendViewSet(viewsets.ViewSet):
 
             queryset = User.objects.filter(
                 pk__in=friendsId
-            ).filter(
-                Q(email__icontains=query) |
-                Q(first_name__icontains=query) |
-                Q(last_name__icontains=query)
             ).exclude(
                 pk=request.user.id
             ).distinct()
@@ -239,26 +235,55 @@ class FriendSearchViewSet(viewsets.ViewSet):
     friend search View Set
     """
     permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = FriendSerializer
+    serializer_class = FriendSearchSerializer
     authentication_classes = (TokenAuthentication, SessionAuthentication)
 
     def list(self, request):
         query = self.request.query_params.get('query', '')
+
         friendsId = list()
+        friendsFriendsId = list()
         friends = Friend.objects.friends(request.user)
+
         for friend in friends:
             friendsId.append(friend.id)
+            friends_of_friend = Friend.objects.friends(friend)
+
+            for friend_friend in friends_of_friend:
+                friendsFriendsId.append(friend_friend.id)
 
         queryset = (
             User.objects.filter(email__icontains=query) |
             User.objects.filter(first_name__icontains=query) |
             User.objects.filter(last_name__icontains=query)
-        ).exclude(
-            pk=request.user.id
-        ).exclude(
-            pk__in=friendsId
         )
 
-        serializer = UserSerializer(queryset, many=True, context={ 'request': request })
+        friendsSet = queryset.filter(
+            pk__in=friendsId
+        ).exclude(
+            pk=request.user.id
+        ).distinct()
+
+        friendsFriendsSet = queryset.filter(
+            pk__in=friendsFriendsId
+        ).exclude(
+            pk__in=friendsId
+        ).exclude(
+            pk=request.user.id
+        ).distinct()
+
+        othersSet = queryset.exclude(
+            pk__in=friendsId
+        ).exclude(
+            pk__in=friendsFriendsId
+        ).exclude(
+            pk=request.user.id
+        ).distinct()
+
+        serializer = self.serializer_class({
+            'friends': friendsSet,
+            'friends_friends': friendsFriendsSet,
+            'others': othersSet,
+        }, context={ 'request': request })
 
         return Response(serializer.data)
