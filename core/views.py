@@ -22,6 +22,7 @@ from friends.models import Friend
 User = get_user_model()
 
 class PlaceListView(generics.ListAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
     serializer_class = PlacesSerializer
     authentication_classes = (TokenAuthentication, SessionAuthentication)
 

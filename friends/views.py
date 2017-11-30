@@ -13,10 +13,10 @@ from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 
 from django.shortcuts import render
-from .serializers import FriendSerializer, FriendshipRequestSerializer
+from .serializers import FriendSerializer, FriendshipRequestSerializer, FriendSearchSerializer
 from authentication.serializers import UserSerializer
 from .models import Friend, FriendshipRequest
-from sockets.views import FriendAccept, FriendCreate, FriendReject
+from sockets.views import FriendAccept, FriendCreate, FriendReject, FriendCancel
 
 import json
 # Create your views here.
@@ -106,7 +106,7 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
             }, status=status.HTTP_403_FORBIDDEN)
 
         #get the data back
-        serializer = self.serializer_class(data = request.data)
+        serializer = self.serializer_class(data = request.data, context={ 'request': request })
 
         #build the request in the backend
         if serializer.is_valid():
@@ -128,13 +128,13 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
     def incoming_list(self, request):
         """ the list of incoming transaction """
         queryset = Friend.objects.unrejected_requests(user = request.user)
-        serializer = self.serializer_class(queryset, many=True)
+        serializer = self.serializer_class(queryset, many=True, context={ 'request': request })
         return Response(serializer.data)
 
     def outgoing_list(self, request):
         """List friends request of authenticated user"""
         queryset = Friend.objects.sent_requests(user = request.user)
-        serializer = self.serializer_class(queryset, many=True)
+        serializer = self.serializer_class(queryset, many=True, context={ 'request': request })
         return Response(serializer.data)
 
     def accept(self, request, pk):
@@ -152,8 +152,8 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
 
         if result:
             friend = User.objects.get(pk=friendship_request.from_user.id)
-            serializer_friend = UserSerializer(friend, many=False)
-            serializer_user = UserSerializer(request.user, many=False)
+            serializer_friend = UserSerializer(friend, many=False, context={ 'request': request })
+            serializer_user = UserSerializer(request.user, many=False, context={ 'request': request })
             FriendAccept(request.user, friend, serializer_user.data, serializer_friend.data)
 
             return Response(status = status.HTTP_201_CREATED)
@@ -186,6 +186,30 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
               'status': 'Bad request'
           }, status=status.HTTP_400_BAD_REQUEST)
 
+    def cancel(self, request, pk):
+        """ cancel a friendship request """
+
+        friendship_request = get_object_or_404(FriendshipRequest,id=pk)
+
+        if friendship_request.from_user.id != request.user.id:
+            return Response({
+                'status': 'Forbidden',
+                'message': 'Friends request can only be cancelled by the current user.'
+            }, status=status.HTTP_403_FORBIDDEN)
+
+        serializer = self.serializer_class(friendship_request)
+        data = serializer.data
+        result = friendship_request.cancel()
+
+        if result:
+            friend = User.objects.get(pk=friendship_request.to_user.id)
+            FriendCancel([request.user, friend], data)
+            return Response(status = status.HTTP_200_OK)
+
+        return Response({
+              'status': 'Bad request'
+          }, status=status.HTTP_400_BAD_REQUEST)
+
 
 class FriendViewSet(viewsets.ViewSet):
     """
@@ -212,10 +236,6 @@ class FriendViewSet(viewsets.ViewSet):
 
             queryset = User.objects.filter(
                 pk__in=friendsId
-            ).filter(
-                Q(email__icontains=query) |
-                Q(first_name__icontains=query) |
-                Q(last_name__icontains=query)
             ).exclude(
                 pk=request.user.id
             ).distinct()
@@ -226,7 +246,7 @@ class FriendViewSet(viewsets.ViewSet):
                 'message': 'Authentification required.'
             }, status=status.HTTP_401_UNAUTHORIZED)
 
-        serializer = UserSerializer(queryset, many=True)
+        serializer = UserSerializer(queryset, many=True, context={ 'request': request })
 
         return Response(serializer.data)
 
@@ -239,26 +259,55 @@ class FriendSearchViewSet(viewsets.ViewSet):
     friend search View Set
     """
     permission_classes = (permissions.IsAuthenticated,)
-    serializer_class = FriendSerializer
+    serializer_class = FriendSearchSerializer
     authentication_classes = (TokenAuthentication, SessionAuthentication)
 
     def list(self, request):
         query = self.request.query_params.get('query', '')
+
         friendsId = list()
+        friendsFriendsId = list()
         friends = Friend.objects.friends(request.user)
+
         for friend in friends:
             friendsId.append(friend.id)
+            friends_of_friend = Friend.objects.friends(friend)
+
+            for friend_friend in friends_of_friend:
+                friendsFriendsId.append(friend_friend.id)
 
         queryset = (
             User.objects.filter(email__icontains=query) |
             User.objects.filter(first_name__icontains=query) |
             User.objects.filter(last_name__icontains=query)
-        ).exclude(
-            pk=request.user.id
-        ).exclude(
-            pk__in=friendsId
         )
 
-        serializer = UserSerializer(queryset, many=True)
+        friendsSet = queryset.filter(
+            pk__in=friendsId
+        ).exclude(
+            pk=request.user.id
+        ).distinct()
+
+        friendsFriendsSet = queryset.filter(
+            pk__in=friendsFriendsId
+        ).exclude(
+            pk__in=friendsId
+        ).exclude(
+            pk=request.user.id
+        ).distinct()
+
+        othersSet = queryset.exclude(
+            pk__in=friendsId
+        ).exclude(
+            pk__in=friendsFriendsId
+        ).exclude(
+            pk=request.user.id
+        ).distinct()
+
+        serializer = self.serializer_class({
+            'friends': friendsSet,
+            'friends_friends': friendsFriendsSet,
+            'others': othersSet,
+        }, context={ 'request': request })
 
         return Response(serializer.data)

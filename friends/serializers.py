@@ -32,3 +32,8 @@ class FriendSerializer(serializers.ModelSerializer):
     class Meta:
         model = Friend
         fields = ('from_user', 'to_user')
+
+class FriendSearchSerializer(serializers.Serializer):
+    friends = UserSerializer(many=True)
+    friends_friends = UserSerializer(many=True)
+    others = UserSerializer(many=True)
