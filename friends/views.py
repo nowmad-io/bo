@@ -198,11 +198,12 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
             }, status=status.HTTP_403_FORBIDDEN)
 
         serializer = self.serializer_class(friendship_request)
+        data = serializer.data
         result = friendship_request.cancel()
 
         if result:
             friend = User.objects.get(pk=friendship_request.to_user.id)
-            FriendCancel([request.user, friend], serializer.data)
+            FriendCancel([request.user, friend], data)
             return Response(status = status.HTTP_200_OK)
 
         return Response({
