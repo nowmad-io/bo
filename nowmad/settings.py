@@ -23,6 +23,8 @@ DEFAULT_PORT = int(os.environ.get('DEFAULT_PORT', '5000'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', False)
 
+HEROKU = os.environ.get('HEROKU', False)
+
 import os
 
 if DEBUG:
@@ -153,7 +155,7 @@ DATABASES = {
 }
 
 # Parse database configuration from $DATABASE_URL
-if not DEBUG:
+if HEROKU:
     DATABASES['default'] =  dj_database_url.config()
 
 # Enable Persistent Connections
