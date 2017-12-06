@@ -91,5 +91,10 @@ $ heroku run python manage.py migrate --app api-nowmad
 $ heroku run bash --app api-nowmad
 ```
 
+### Open bash
+```
+$ heroku pg:reset DATABASE --app api-nowmad
+```
+
 ### Set up SSL
 * https://vimeo.com/209534466
