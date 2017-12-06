@@ -9,8 +9,8 @@ endif
 init:
 	rm -rf venv
 	find . -name '*.pyc' -delete
-	@echo Creating venv with python `which python3`
-	virtualenv -p `which python3` venv --verbose
+	@echo Creating venv with python3.6 `which python3.6`
+	virtualenv -p `which python3.6` venv --verbose
 
 fixtures_users:
 	$(PYTHON) manage.py dumpdata authentication.traveluser --indent 2 > fixtures/users.json
