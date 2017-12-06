@@ -64,8 +64,8 @@ def bust_cache(type, user_pk):
 @python_2_unicode_compatible
 class FriendshipRequest(models.Model):
     """ Model to represent friendship requests """
-    from_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='friendship_requests_sent')
-    to_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='friendship_requests_received')
+    from_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='friendship_requests_sent', on_delete=models.CASCADE)
+    to_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='friendship_requests_received', on_delete=models.CASCADE)
 
     message = models.TextField(_('Message'), blank=True)
 
@@ -334,8 +334,8 @@ class FriendshipManager(models.Manager):
 @python_2_unicode_compatible
 class Friend(models.Model):
     """ Model to represent Friendships """
-    to_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='friends')
-    from_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='_unused_friend_relation')
+    to_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='friends', on_delete=models.CASCADE)
+    from_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='_unused_friend_relation', on_delete=models.CASCADE)
     created = models.DateTimeField(default=timezone.now)
 
     objects = FriendshipManager()

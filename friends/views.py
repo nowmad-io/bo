@@ -223,7 +223,7 @@ class FriendViewSet(viewsets.ViewSet):
         """List friends of authenticated user"""
         query = self.request.query_params.get('query', '')
 
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             friendsId = list()
             friends = Friend.objects.friends(request.user)
 

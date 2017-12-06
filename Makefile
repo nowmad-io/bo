@@ -1,8 +1,8 @@
 ifdef SYSTEMROOT
-	PYTHON = DEBUG=True ./venv/Scripts/python
+	PYTHON = DEBUG=True ./venv/Scripts/python3.6
 	PIP = ./venv/Scripts/pip
 else
-	PYTHON = DEBUG=True ./venv/bin/python
+	PYTHON = DEBUG=True ./venv/bin/python3.6
 	PIP = ./venv/bin/pip
 endif
 

@@ -92,7 +92,7 @@ class ReviewViewSet(viewsets.ViewSet):
     serializer_class_list = ReviewSerializer
 
     def list(self, request):
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             queryset = Review.objects.filter(created_by = request.user)
         else:
             queryset = Review.objects.all()

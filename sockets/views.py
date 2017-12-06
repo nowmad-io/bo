@@ -7,7 +7,7 @@ import os
 
 from django.http import HttpResponse
 from rest_framework.authtoken.models import Token
-import socketio
+import socketio 
 
 sio = socketio.Server(async_mode=async_mode)
 namespace = '/sockets'
