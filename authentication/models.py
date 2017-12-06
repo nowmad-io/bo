@@ -1,11 +1,12 @@
 from django.conf import settings
 from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
-import urllib
+import urllib.request
 
 class travelUserManager(BaseUserManager):
     def create_user(self, email, first_name='', last_name='', password=None):
@@ -22,8 +23,11 @@ class travelUserManager(BaseUserManager):
             last_name=last_name.capitalize()
         )
 
-        result = urllib.urlretrieve(settings.AVATAR_URL + '%(first_name)s+%(last_name)s' % {'first_name': first_name, "last_name": last_name})
-        user.picture.save(email + '.png', File(open(result[0])))
+        img_temp = NamedTemporaryFile(delete=True)
+        img_temp.write(urllib.request.urlopen(settings.AVATAR_URL + '%(first_name)s+%(last_name)s' % {'first_name': first_name, "last_name": last_name}).read())
+        img_temp.flush()
+        
+        user.picture.save(email + '.png', File(img_temp))
         user.set_password(password)
         user.save(using=self._db)
         return user
