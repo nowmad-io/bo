@@ -11,26 +11,17 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 import os
 import dj_database_url
+from decouple import config
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-DEFAULT_PORT = int(os.environ.get('DEFAULT_PORT', '5000'))
+DEFAULT_PORT = config('DEFAULT_PORT', '5000', cast=int)
+DEBUG = config('DEBUG', cast=bool)
+HEROKU = config('HEROKU', cast=bool)
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
+SECRET_KEY = config('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', False)
-
-HEROKU = os.environ.get('HEROKU', False)
-
-import os
-
-if DEBUG:
-    SECRET_KEY = 'i+acxn5(akgsn!sr4^qgf(^m&*@+g1@u^t@=8s@axc41ml*f=s'
-else:
-    SECRET_KEY = os.environ['SECRET_KEY']
+if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -49,7 +40,8 @@ INSTALLED_APPS = (
     'djoser',
     'core',
     'authentication',
-    'friends'
+    'friends',
+    'storages'
 )
 
 MIDDLEWARE = (
@@ -107,19 +99,32 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-STATICFILES_DIRS = (
+STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
-)
+]
+
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+
+if HEROKU:
+    AWS_STORAGE_BUCKET_NAME = 'nowmad-media'
+else:
+    AWS_STORAGE_BUCKET_NAME = 'nowmad-dev'
+
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+
+AWS_PUBLIC_MEDIA_LOCATION = 'public'
+DEFAULT_FILE_STORAGE = 'nowmad.storage_backends.PublicMediaStorage'
+
+AWS_PRIVATE_MEDIA_LOCATION = 'private'
+PRIVATE_FILE_STORAGE = 'nowmad.storage_backends.PrivateMediaStorage'
 
 AVATAR_URL = 'https://ui-avatars.com/api/?background=0D8ABC&color=fff&size=256&name='
 
@@ -165,8 +170,3 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
-
-
-# Simplified static file serving.
-# https://warehouse.python.org/project/whitenoise/
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'

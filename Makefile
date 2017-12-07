@@ -1,8 +1,8 @@
 ifdef SYSTEMROOT
-	PYTHON = DEBUG=True ./venv/Scripts/python3.6
+	PYTHON = ./venv/Scripts/python3.6
 	PIP = ./venv/Scripts/pip
 else
-	PYTHON = DEBUG=True ./venv/bin/python3.6
+	PYTHON = ./venv/bin/python3.6
 	PIP = ./venv/bin/pip
 endif
 
@@ -50,7 +50,7 @@ start_me_up:
 	make loaddata MODEL="reviews"
 
 server:
-	DEFAULT_PORT=8080 $(PYTHON) manage.py runserver
+	$(PYTHON) manage.py runserver
 
 build_client:
 	cd ../webapp/ && git fetch && git checkout master
