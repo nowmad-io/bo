@@ -98,7 +98,7 @@ $ heroku pg:reset DATABASE --app api-nowmad
 
 ### Create superuser
 ```
-$ heroku run python manage.py createsuperuser
+$ heroku run python manage.py createsuperuser --app api-nowmad
 ```
 
 ### Set up SSL
