@@ -15,7 +15,7 @@ from decouple import config
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-DEFAULT_PORT = config('DEFAULT_PORT', '5000', cast=int)
+DEFAULT_PORT = config('DEFAULT_PORT', default='5000', cast=int)
 DEBUG = config('DEBUG', cast=bool)
 HEROKU = config('HEROKU', cast=bool)
 
@@ -103,7 +103,7 @@ STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'nowmad/static'),
 ]
 
 AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
