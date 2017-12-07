@@ -11,26 +11,17 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 import os
 import dj_database_url
+from decouple import config
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-DEFAULT_PORT = int(os.environ.get('DEFAULT_PORT', '5000'))
+DEFAULT_PORT = config('DEFAULT_PORT', '5000', cast=int)
+DEBUG = config('DEBUG', cast=bool)
+HEROKU = config('HEROKU', cast=bool)
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
+SECRET_KEY = config('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', False)
-
-HEROKU = os.environ.get('HEROKU', False)
-
-import os
-
-if DEBUG:
-    SECRET_KEY = 'i+acxn5(akgsn!sr4^qgf(^m&*@+g1@u^t@=8s@axc41ml*f=s'
-else:
-    SECRET_KEY = os.environ['SECRET_KEY']
+if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -108,11 +99,6 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 
@@ -120,8 +106,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', False)
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', False)
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
 
 if HEROKU:
     AWS_STORAGE_BUCKET_NAME = 'nowmad-media'
