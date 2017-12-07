@@ -1,5 +1,5 @@
 dj-database-url==0.4.2
-Django==2.0
+Django==1.11.8
 django-cors-headers==2.1.0
 django-extra-fields==0.9
 django-templated-mail==1.0.0
