@@ -15,7 +15,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, permissions, viewsets
 from rest_framework import generics
 
-from serializers import ReviewSerializer, ReviewsSerializer, CategorySerializer, PlacesSerializer, PlacesSearchSerializer
+from .serializers import ReviewSerializer, ReviewsSerializer, CategorySerializer, PlacesSerializer, PlacesSearchSerializer
 from .models import Place, Review, Category, InterestedPeople
 from friends.models import Friend
 
@@ -92,7 +92,7 @@ class ReviewViewSet(viewsets.ViewSet):
     serializer_class_list = ReviewSerializer
 
     def list(self, request):
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             queryset = Review.objects.filter(created_by = request.user)
         else:
             queryset = Review.objects.all()

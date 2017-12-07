@@ -27,11 +27,11 @@ class Place(models.Model):
 class Review(models.Model):
     short_description = models.CharField(max_length=200)
     information = models.CharField(max_length=500, blank=True)
-    place = models.ForeignKey('Place', related_name='reviews')
+    place = models.ForeignKey('Place', related_name='reviews', on_delete=models.CASCADE)
     status = models.CharField(max_length=200)
     categories = models.ManyToManyField('Category')
     pictures = models.ManyToManyField('Picture', blank=True)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_reviews')
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_reviews', on_delete=models.CASCADE)
     creation_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
