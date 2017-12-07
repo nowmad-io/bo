@@ -8,6 +8,9 @@ from django.contrib.auth.models import (
 )
 import urllib.request
 
+from nowmad.storage_backends import PublicMediaStorage
+
+
 class travelUserManager(BaseUserManager):
     def create_user(self, email, first_name='', last_name='', password=None):
         """
@@ -26,7 +29,7 @@ class travelUserManager(BaseUserManager):
         img_temp = NamedTemporaryFile(delete=True)
         img_temp.write(urllib.request.urlopen(settings.AVATAR_URL + '%(first_name)s+%(last_name)s' % {'first_name': first_name, "last_name": last_name}).read())
         img_temp.flush()
-        
+
         user.picture.save(email + '.png', File(img_temp))
         user.set_password(password)
         user.save(using=self._db)
@@ -60,7 +63,7 @@ class travelUser(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     sid = models.CharField(blank=True, max_length=100)
-    picture = models.ImageField(blank=True, max_length=100, upload_to='thumbnails')
+    picture = models.ImageField(blank=True, max_length=100, upload_to='thumbnails', storage=PublicMediaStorage())
     objects = travelUserManager()
 
     USERNAME_FIELD = 'email'

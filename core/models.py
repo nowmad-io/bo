@@ -3,6 +3,8 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
+from nowmad.storage_backends import PublicMediaStorage
+
 class Category(models.Model):
     name = models.CharField(max_length=200)
 
@@ -41,7 +43,7 @@ class Review(models.Model):
         return self.short_description
 
 class Picture(models.Model):
-    source = models.ImageField(max_length=200, upload_to='places')
+    source = models.ImageField(max_length=200, upload_to='places', storage=PublicMediaStorage())
     caption = models.CharField(max_length=300, blank=True)
 
 class InterestedPeople(models.Model):
