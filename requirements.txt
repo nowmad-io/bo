@@ -29,4 +29,3 @@ pytz==2017.3
 s3transfer==0.1.12
 six==1.11.0
 urllib3==1.22
-whitenoise==3.3.1
