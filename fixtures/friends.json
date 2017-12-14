@@ -1,7 +1,7 @@
 [
 {
   "model": "friends.friend",
-  "pk": 4,
+  "pk": 1,
   "fields": {
     "to_user": 2,
     "from_user": 4,
@@ -10,7 +10,7 @@
 },
 {
   "model": "friends.friend",
-  "pk": 5,
+  "pk": 2,
   "fields": {
     "to_user": 4,
     "from_user": 2,
@@ -19,7 +19,7 @@
 },
 {
   "model": "friends.friend",
-  "pk": 6,
+  "pk": 3,
   "fields": {
     "to_user": 2,
     "from_user": 1,
@@ -28,7 +28,7 @@
 },
 {
   "model": "friends.friend",
-  "pk": 7,
+  "pk": 4,
   "fields": {
     "to_user": 1,
     "from_user": 2,
@@ -37,7 +37,7 @@
 },
 {
   "model": "friends.friend",
-  "pk": 8,
+  "pk": 5,
   "fields": {
     "to_user": 3,
     "from_user": 1,
@@ -46,7 +46,7 @@
 },
 {
   "model": "friends.friend",
-  "pk": 9,
+  "pk": 6,
   "fields": {
     "to_user": 1,
     "from_user": 3,

@@ -27,7 +27,6 @@ if not DEBUG:
 
 # Application definition
 INSTALLED_APPS = (
-    'sockets',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

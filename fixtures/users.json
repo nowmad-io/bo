@@ -11,7 +11,6 @@
     "last_name": "Chemla",
     "is_active": true,
     "is_admin": true,
-    "sid": "",
     "picture": "thumbnails/xx.com.png"
   }
 },
@@ -27,7 +26,6 @@
     "last_name": "Rougeron",
     "is_active": true,
     "is_admin": true,
-    "sid": "0f2ce307be1e411dba2fc8f73a214c4b",
     "picture": "thumbnails/clock.png"
   }
 },
@@ -43,7 +41,7 @@
     "last_name": "Bar",
     "is_active": true,
     "is_admin": true,
-    "sid": "",
+
     "picture": "thumbnails/testtest.com.png"
   }
 },
@@ -59,7 +57,6 @@
     "last_name": "Menendez",
     "is_active": true,
     "is_admin": true,
-    "sid": "",
     "picture": "thumbnails/ss.com.png"
   }
 }

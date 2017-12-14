@@ -38,7 +38,7 @@ loaddata:
 
 start_me_up:
 	find . -name '*.pyc' -delete
-	rm -vf nowmad/db.sqlite3
+	rm -vf db.sqlite3
 	$(PIP) install -r requirements.txt -U
 	$(PYTHON) manage.py makemigrations
 	$(PYTHON) manage.py migrate --run-syncdb --noinput
