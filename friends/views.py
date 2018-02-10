@@ -148,9 +148,8 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
 
         if result:
             friend = User.objects.get(pk=friendship_request.from_user.id)
-            serializer_friend = UserSerializer(friend, many=False, context={ 'request': request })
-            serializer_user = UserSerializer(request.user, many=False, context={ 'request': request })
-            return Response(status = status.HTTP_201_CREATED)
+            serializer = UserSerializer(friend, many=False, context={ 'request': request })
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response({
               'status': 'Bad request'
