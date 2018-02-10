@@ -62,7 +62,6 @@ class travelUser(AbstractBaseUser):
     last_name = models.CharField(blank=True,  max_length=30)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    sid = models.CharField(blank=True, max_length=100)
     picture = models.ImageField(blank=True, max_length=100, upload_to='thumbnails', storage=PublicMediaStorage())
     objects = travelUserManager()
 

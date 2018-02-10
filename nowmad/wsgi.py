@@ -15,10 +15,5 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "nowmad.settings")
 django.setup()
 
 from django.core.wsgi import get_wsgi_application
-from whitenoise.django import DjangoWhiteNoise
-from socketio import Middleware
 
-from sockets.views import sio
-
-wsgi_application = get_wsgi_application()
-application = Middleware(sio, DjangoWhiteNoise(wsgi_application))
+application = get_wsgi_application()

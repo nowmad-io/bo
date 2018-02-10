@@ -13,8 +13,6 @@ djoser==1.1.4
 docutils==0.14
 enum-compat==0.0.2
 enum34==1.1.6
-eventlet==0.21.0
-greenlet==0.4.12
 gunicorn==19.7.1
 idna==2.6
 jmespath==0.9.3
@@ -23,10 +21,7 @@ Pillow==4.3.0
 psycopg2==2.7.3.2
 python-dateutil==2.6.1
 python-decouple==3.1
-python-engineio==2.0.1
-python-socketio==1.8.3
 pytz==2017.3
 s3transfer==0.1.12
 six==1.11.0
 urllib3==1.22
-whitenoise==3.3.1

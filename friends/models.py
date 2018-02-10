@@ -13,13 +13,6 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.db import models
 from friends.exceptions import AlreadyExistsError, AlreadyFriendsError
 
-from friends.signals import (
-    friendship_request_created, friendship_request_rejected,
-    friendship_request_canceled,
-    friendship_request_viewed, friendship_request_accepted,
-    friendship_removed
-)
-
 CACHE_TYPES = {
     'friends': 'f-%s',
     'requests': 'fr-%s',
@@ -93,12 +86,6 @@ class FriendshipRequest(models.Model):
             to_user=self.from_user
         )
 
-        friendship_request_accepted.send(
-            sender=self,
-            from_user=self.from_user,
-            to_user=self.to_user
-        )
-
         self.delete()
 
         # Delete any reverse requests
@@ -123,21 +110,19 @@ class FriendshipRequest(models.Model):
         """ reject this friendship request """
         self.rejected = timezone.now()
         self.save()
-        friendship_request_rejected.send(sender=self)
+
         bust_cache('requests', self.to_user.pk)
         return True
 
     def cancel(self):
         """ cancel this friendship request """
         self.delete()
-        friendship_request_canceled.send(sender=self)
         bust_cache('requests', self.to_user.pk)
         bust_cache('sent_requests', self.from_user.pk)
         return True
 
     def mark_viewed(self):
         self.viewed = timezone.now()
-        friendship_request_viewed.send(sender=self)
         self.save()
         bust_cache('requests', self.to_user.pk)
         return True
@@ -289,7 +274,6 @@ class FriendshipManager(models.Manager):
 
         bust_cache('requests', to_user.pk)
         bust_cache('sent_requests', from_user.pk)
-        friendship_request_created.send(sender=request)
 
         return request
 
@@ -302,11 +286,6 @@ class FriendshipManager(models.Manager):
             ).distinct().all()
 
             if qs:
-                friendship_removed.send(
-                    sender=qs[0],
-                    from_user=from_user,
-                    to_user=to_user
-                )
                 qs.delete()
                 bust_cache('friends', to_user.pk)
                 bust_cache('friends', from_user.pk)

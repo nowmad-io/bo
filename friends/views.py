@@ -16,7 +16,6 @@ from django.shortcuts import render
 from .serializers import FriendSerializer, FriendshipRequestSerializer, FriendSearchSerializer
 from authentication.serializers import UserSerializer
 from .models import Friend, FriendshipRequest
-from sockets.views import FriendAccept, FriendCreate, FriendReject, FriendCancel
 
 import json
 # Create your views here.
@@ -111,11 +110,8 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
         #build the request in the backend
         if serializer.is_valid():
             serializer.save()
-
             friend = User.objects.get(pk=request.data['to_user_id'])
-            FriendCreate([request.user, friend], serializer.data)
-
-            return Response(status = status.HTTP_201_CREATED)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response({
             'status': 'Bad request',
@@ -152,11 +148,8 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
 
         if result:
             friend = User.objects.get(pk=friendship_request.from_user.id)
-            serializer_friend = UserSerializer(friend, many=False, context={ 'request': request })
-            serializer_user = UserSerializer(request.user, many=False, context={ 'request': request })
-            FriendAccept(request.user, friend, serializer_user.data, serializer_friend.data)
-
-            return Response(status = status.HTTP_201_CREATED)
+            serializer = UserSerializer(friend, many=False, context={ 'request': request })
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response({
               'status': 'Bad request'
@@ -179,8 +172,7 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
 
         if result:
             friend = User.objects.get(pk=friendship_request.from_user.id)
-            FriendReject([request.user, friend], serializer.data)
-            return Response(status = status.HTTP_200_OK)
+            return Response(serializer.data)
 
         return Response({
               'status': 'Bad request'
@@ -203,8 +195,7 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
 
         if result:
             friend = User.objects.get(pk=friendship_request.to_user.id)
-            FriendCancel([request.user, friend], data)
-            return Response(status = status.HTTP_200_OK)
+            return Response(serializer.data)
 
         return Response({
               'status': 'Bad request'
