@@ -111,7 +111,7 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
         if serializer.is_valid():
             serializer.save()
             friend = User.objects.get(pk=request.data['to_user_id'])
-            return Response(status = status.HTTP_201_CREATED)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response({
             'status': 'Bad request',
@@ -173,7 +173,7 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
 
         if result:
             friend = User.objects.get(pk=friendship_request.from_user.id)
-            return Response(status = status.HTTP_200_OK)
+            return Response(serializer.data)
 
         return Response({
               'status': 'Bad request'
@@ -196,7 +196,7 @@ class FriendshipRequestViewSet(viewsets.ViewSet):
 
         if result:
             friend = User.objects.get(pk=friendship_request.to_user.id)
-            return Response(status = status.HTTP_200_OK)
+            return Response(serializer.data)
 
         return Response({
               'status': 'Bad request'
