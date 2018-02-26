@@ -114,7 +114,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         for category in categories:
             newCategories.append(Category.objects.get(name=category['name']))
 
-        instance.categories = newCategories;
+        instance.categories.set(newCategories)
 
         newPictures = []
         pictures = validated_data.get('pictures', instance.pictures)
@@ -124,7 +124,7 @@ class ReviewSerializer(serializers.ModelSerializer):
             else:
                 newPictures.append(Picture.objects.create(**picture))
 
-        instance.pictures = newPictures;
+        instance.pictures.set(newPictures);
 
         instance.save()
         return instance
