@@ -35,6 +35,7 @@ class Review(models.Model):
     pictures = models.ManyToManyField('Picture', blank=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_reviews', on_delete=models.CASCADE)
     creation_date = models.DateTimeField(auto_now_add=True)
+    public = models.BooleanField(default=False)
 
     class Meta:
         ordering = ('-creation_date',)
