@@ -61,7 +61,7 @@ class travelUserAdmin(UserAdmin):
     list_filter = ('is_admin',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('first_name','last_name','date_of_birth',)}),
+        ('Personal info', {'fields': ('first_name','last_name','date_of_birth','public_default',)}),
         ('Permissions', {'fields': ('is_admin',)}),
         ('Picture', {'fields': ('picture',)}),
     )

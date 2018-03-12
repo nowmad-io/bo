@@ -54,7 +54,7 @@ class PlaceListView(generics.ListAPIView):
 
             all_friends.append(self.request.user)
 
-        pre_queryset = Review.objects.filter(created_by__in=all_friends)
+        pre_queryset = Review.objects.filter(Q(created_by__in=all_friends) | Q(public=True))
 
         if query:
             pre_queryset = pre_queryset.filter(Q(short_description__icontains=query) | Q(information__icontains=query))
