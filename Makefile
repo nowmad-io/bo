@@ -40,6 +40,7 @@ start_me_up:
 	find . -name '*.pyc' -delete
 	rm -vf db.sqlite3
 	$(PIP) install -r requirements.txt -U
+	$(PIP) freeze > requirements.txt
 	$(PYTHON) manage.py makemigrations
 	$(PYTHON) manage.py migrate --run-syncdb --noinput
 
