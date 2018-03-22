@@ -51,7 +51,7 @@ start_me_up:
 	make loaddata MODEL="reviews"
 
 server:
-	$(PYTHON) manage.py runserver
+	$(PYTHON) manage.py runserver 0.0.0.0:8000
 
 build_client:
 	cd ../webapp/ && git fetch && git checkout master
