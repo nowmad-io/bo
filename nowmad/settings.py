@@ -73,6 +73,8 @@ TEMPLATES = [
     },
 ]
 
+AUTH_USER_MODEL = 'authentication.travelUser'
+
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
@@ -84,26 +86,6 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ),
 }
-
-AUTH_USER_MODEL = 'authentication.travelUser'
-
-WSGI_APPLICATION = 'nowmad.wsgi.application'
-
-# Internationalization
-# https://docs.djangoproject.com/en/1.8/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
-USE_I18N = True
-USE_L10N = True
-USE_TZ = True
-
-STATIC_ROOT = 'staticfiles'
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'nowmad/static'),
-]
 
 AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
@@ -126,6 +108,24 @@ AWS_PRIVATE_MEDIA_LOCATION = 'private'
 PRIVATE_FILE_STORAGE = 'nowmad.storage_backends.PrivateMediaStorage'
 
 AVATAR_URL = 'https://ui-avatars.com/api/?background=0D8ABC&color=fff&size=256&name='
+
+WSGI_APPLICATION = 'nowmad.wsgi.application'
+
+# Internationalization
+# https://docs.djangoproject.com/en/1.8/topics/i18n/
+
+LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'UTC'
+USE_I18N = True
+USE_L10N = True
+USE_TZ = True
+
+STATIC_ROOT = 'staticfiles'
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'nowmad/static'),
+]
 
 CORS_ORIGIN_ALLOW_ALL = True
 
