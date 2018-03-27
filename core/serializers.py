@@ -39,7 +39,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class PlaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Place
-        fields = ('id', 'name', 'longitude', 'latitude', 'address')
+        fields = ('id', 'place_id', 'name', 'longitude', 'latitude', 'address')
 
 class PictureSerializer(serializers.ModelSerializer):
     source = Base64ImageField(required=False)
@@ -58,7 +58,7 @@ class ReviewsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        fields = ('id', 'short_description', 'information', 'categories', 'pictures', 'status', 'created_by', 'user_type', 'creation_date')
+        fields = ('id', 'short_description', 'information', 'categories', 'pictures', 'status', 'created_by', 'user_type', 'creation_date', 'link_1', 'link_2')
 
     def get_user_type(self, obj):
         return getUserType(self, obj)
@@ -72,7 +72,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        fields = ('id', 'short_description', 'information', 'place', 'categories', 'pictures', 'status', 'created_by', 'user_type', 'creation_date', 'public')
+        fields = ('id', 'short_description', 'information', 'place', 'categories', 'pictures', 'status', 'created_by', 'user_type', 'creation_date', 'public', 'link_1', 'link_2')
 
     def create(self, validated_data):
         category_list=[]
@@ -138,7 +138,7 @@ class PlacesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Place
-        fields = ('id', 'name', 'longitude', 'latitude', 'address', 'reviews')
+        fields = ('id', 'place_id', 'name', 'longitude', 'latitude', 'address', 'reviews')
 
 class PlacesSearchSerializer(serializers.ModelSerializer):
     reviews = serializers.SerializerMethodField()
@@ -146,7 +146,7 @@ class PlacesSearchSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Place
-        fields = ('id', 'name', 'longitude', 'latitude', 'address', 'reviews', 'all_reviews')
+        fields = ('id', 'place_id', 'name', 'longitude', 'latitude', 'address', 'reviews', 'all_reviews')
 
     def get_reviews(self, obj):
         queryset = obj.reviews

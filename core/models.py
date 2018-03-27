@@ -18,6 +18,7 @@ class Status(models.Model):
         return self.name
 
 class Place(models.Model):
+    place_id = models.CharField(max_length=200, blank=True)
     name = models.CharField(max_length=200, blank=True)
     address = models.CharField(max_length=400, blank=True)
     longitude = models.FloatField(blank=False, null=False, default=0)
@@ -36,6 +37,8 @@ class Review(models.Model):
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_reviews', on_delete=models.CASCADE)
     creation_date = models.DateTimeField(auto_now_add=True)
     public = models.BooleanField(default=False)
+    link_1 = models.URLField(blank=True)
+    link_2 = models.URLField(blank=True)
 
     class Meta:
         ordering = ('-creation_date',)
