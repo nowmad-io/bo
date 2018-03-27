@@ -18,6 +18,7 @@ class Status(models.Model):
         return self.name
 
 class Place(models.Model):
+    place_id = models.CharField(max_length=200, blank=True)
     name = models.CharField(max_length=200, blank=True)
     address = models.CharField(max_length=400, blank=True)
     longitude = models.FloatField(blank=False, null=False, default=0)
