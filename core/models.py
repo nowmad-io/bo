@@ -37,6 +37,8 @@ class Review(models.Model):
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_reviews', on_delete=models.CASCADE)
     creation_date = models.DateTimeField(auto_now_add=True)
     public = models.BooleanField(default=False)
+    link_1 = models.URLField(blank=True)
+    link_2 = models.URLField(blank=True)
 
     class Meta:
         ordering = ('-creation_date',)

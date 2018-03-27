@@ -58,7 +58,7 @@ class ReviewsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        fields = ('id', 'short_description', 'information', 'categories', 'pictures', 'status', 'created_by', 'user_type', 'creation_date')
+        fields = ('id', 'short_description', 'information', 'categories', 'pictures', 'status', 'created_by', 'user_type', 'creation_date', 'link_1', 'link_2')
 
     def get_user_type(self, obj):
         return getUserType(self, obj)
@@ -72,7 +72,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        fields = ('id', 'short_description', 'information', 'place', 'categories', 'pictures', 'status', 'created_by', 'user_type', 'creation_date', 'public')
+        fields = ('id', 'short_description', 'information', 'place', 'categories', 'pictures', 'status', 'created_by', 'user_type', 'creation_date', 'public', 'link_1', 'link_2')
 
     def create(self, validated_data):
         category_list=[]
