@@ -89,7 +89,6 @@ class ReviewViewSet(viewsets.ViewSet):
     permission_classes = (permissions.IsAuthenticated,)
     authentication_classes = (TokenAuthentication, SessionAuthentication)
     serializer_class = ReviewSerializer
-    serializer_class_list = ReviewSerializer
 
     def list(self, request):
         if request.user.is_authenticated:
