@@ -1,8 +1,9 @@
 [
 {
   "model": "core.place",
-  "pk": 1,
+  "pk": "3eQT8vwSsuNH7QHWmKa8pM",
   "fields": {
+    "place_id": "",
     "name": "",
     "address": "",
     "longitude": 2.344335600000022,
@@ -11,8 +12,9 @@
 },
 {
   "model": "core.place",
-  "pk": 2,
+  "pk": "9wh8YAYfnhsZhHRkVQqj75",
   "fields": {
+    "place_id": "",
     "name": "",
     "address": "",
     "longitude": -84.05398479999997,
@@ -21,8 +23,9 @@
 },
 {
   "model": "core.place",
-  "pk": 3,
+  "pk": "RvLgFY76fcU8NZLr7Tj5XL",
   "fields": {
+    "place_id": "",
     "name": "",
     "address": "",
     "longitude": -1.9734938000000284,
@@ -31,8 +34,9 @@
 },
 {
   "model": "core.place",
-  "pk": 4,
+  "pk": "TWKWYXjqRQXhuFdwyRpqwc",
   "fields": {
+    "place_id": "",
     "name": "",
     "address": "",
     "longitude": -1.5155770000000075,
@@ -41,8 +45,9 @@
 },
 {
   "model": "core.place",
-  "pk": 5,
+  "pk": "ezpehoe2eyQkngsDsgUWv9",
   "fields": {
+    "place_id": "",
     "name": "",
     "address": "",
     "longitude": 1.0,
@@ -51,8 +56,9 @@
 },
 {
   "model": "core.place",
-  "pk": 6,
+  "pk": "fma3Yo7RzswQht6Q7nPPjZ",
   "fields": {
+    "place_id": "",
     "name": "",
     "address": "",
     "longitude": 2.0,

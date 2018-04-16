@@ -1,11 +1,11 @@
 [
 {
   "model": "core.review",
-  "pk": 1,
+  "pk": "VED5aGFqRGFQTyvaaYFJdD",
   "fields": {
     "short_description": "Cafe Kracovia",
     "information": "",
-    "place": 2,
+    "place": "9wh8YAYfnhsZhHRkVQqj75",
     "created_by": 2,
     "creation_date": "2017-01-03T23:36:35.412560Z",
     "categories": [
@@ -15,11 +15,11 @@
 },
 {
   "model": "core.review",
-  "pk": 2,
+  "pk": "TMnhRQnLVAVJrxAkgNZagC",
   "fields": {
     "short_description": "On the Road Pub",
     "information": "",
-    "place": 1,
+    "place": "3eQT8vwSsuNH7QHWmKa8pM",
     "created_by": 1,
     "creation_date": "2017-01-10T23:36:35.412560Z",
     "categories": [
@@ -29,11 +29,11 @@
 },
 {
   "model": "core.review",
-  "pk": 3,
+  "pk": "KH7zLso3EVSV6mwEtjG3FM",
   "fields": {
     "short_description": "Bar Zabaleta",
     "information": "",
-    "place": 3,
+    "place": "RvLgFY76fcU8NZLr7Tj5XL",
     "created_by": 1,
     "creation_date": "2017-01-15T23:36:35.412560Z",
     "categories": [
@@ -43,11 +43,11 @@
 },
 {
   "model": "core.review",
-  "pk": 4,
+  "pk": "Rzmh6Zw8Hek2hfzHaAH5MW",
   "fields": {
     "short_description": "Clocher d'Ars-en-R\u00e9",
     "information": "",
-    "place": 4,
+    "place": "TWKWYXjqRQXhuFdwyRpqwc",
     "created_by": 1,
     "creation_date": "2017-01-20T23:36:35.412560Z",
     "categories": [
@@ -57,11 +57,11 @@
 },
 {
   "model": "core.review",
-  "pk": 5,
+  "pk": "8nL6w4dy3jdkmBFP9JGiAE",
   "fields": {
     "short_description": "review of shandra on cafe krakovia",
     "information": "",
-    "place": 2,
+    "place": "9wh8YAYfnhsZhHRkVQqj75",
     "created_by": 4,
     "creation_date": "2017-10-21T23:36:35.412560Z",
     "categories": [
@@ -72,11 +72,11 @@
 },
 {
   "model": "core.review",
-  "pk": 6,
+  "pk": "9UppYSDoJTUsUdCyQHs2NU",
   "fields": {
     "short_description": "other shandra review",
     "information": "",
-    "place": 5,
+    "place": "ezpehoe2eyQkngsDsgUWv9",
     "created_by": 4,
     "creation_date": "2017-10-02T23:36:35.412560Z",
     "categories": [
@@ -87,11 +87,11 @@
 },
 {
   "model": "core.review",
-  "pk": 7,
+  "pk": "ZCtvzYVsb96iXFzs3exVNZ",
   "fields": {
     "short_description": "review of xavier on krakovia",
     "information": "",
-    "place": 2,
+    "place": "9wh8YAYfnhsZhHRkVQqj75",
     "created_by": 1,
     "creation_date": "2017-10-18T23:36:35.412560Z",
     "categories": [
@@ -103,11 +103,11 @@
 },
 {
   "model": "core.review",
-  "pk": 8,
+  "pk": "peyAviPgTzqSpkZZU58VZG",
   "fields": {
     "short_description": "review from test@test.com",
     "information": "",
-    "place": 6,
+    "place": "fma3Yo7RzswQht6Q7nPPjZ",
     "created_by": 3,
     "creation_date": "2017-10-15T23:36:35.412560Z",
     "categories": [

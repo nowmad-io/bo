@@ -37,6 +37,8 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
 
 class PlaceSerializer(serializers.ModelSerializer):
+    id = serializers.CharField()
+
     class Meta:
         model = Place
         fields = ('id', 'place_id', 'name', 'longitude', 'latitude', 'address')
