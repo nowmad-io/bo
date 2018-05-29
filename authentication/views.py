@@ -5,20 +5,28 @@ from rest_framework import status, permissions, viewsets
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from djoser import utils, serializers, signals
+from djoser.conf import settings
 
 from .serializers import UserRegisterSerializer, UserSerializer
 
 User = get_user_model()
 
-class RegistrationView(viewsets.ModelViewSet):
+class RegistrationView(viewsets.ViewSet):
     permission_classes = (permissions.AllowAny,)
-    queryset = User.objects.all()
     serializer_class = UserRegisterSerializer
 
-    def perform_create(self, serializer):
+    def create(self, request):
+        serializer = self.serializer_class(data = request.data, context={'request':request})
+
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            user = User.objects.get(email=serializer.validated_data.get('email'))
+            token = utils.login_user(self.request, user)
+            token_serializer_class = settings.SERIALIZERS.token
+            return Response(
+                data=token_serializer_class(token).data,
+                status=status.HTTP_200_OK,
+            )
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

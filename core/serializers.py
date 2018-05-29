@@ -37,6 +37,8 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
 
 class PlaceSerializer(serializers.ModelSerializer):
+    id = serializers.CharField()
+
     class Meta:
         model = Place
         fields = ('id', 'place_id', 'name', 'longitude', 'latitude', 'address')
@@ -58,7 +60,7 @@ class ReviewsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        fields = ('id', 'short_description', 'information', 'categories', 'pictures', 'status', 'created_by', 'user_type', 'creation_date', 'link_1', 'link_2')
+        fields = ('id', 'place', 'short_description', 'information', 'categories', 'pictures', 'status', 'created_by', 'user_type', 'creation_date', 'link_1', 'link_2')
 
     def get_user_type(self, obj):
         return getUserType(self, obj)

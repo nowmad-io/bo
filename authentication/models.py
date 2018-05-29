@@ -25,12 +25,7 @@ class travelUserManager(BaseUserManager):
             first_name=first_name.capitalize(),
             last_name=last_name.capitalize()
         )
-
-        img_temp = NamedTemporaryFile(delete=True)
-        img_temp.write(urllib.request.urlopen(settings.AVATAR_URL + '%(first_name)s+%(last_name)s' % {'first_name': first_name, "last_name": last_name}).read())
-        img_temp.flush()
-
-        user.picture.save(email + '.png', File(img_temp))
+        
         user.set_password(password)
         user.save(using=self._db)
         return user

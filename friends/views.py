@@ -277,6 +277,8 @@ class FriendSearchViewSet(viewsets.ViewSet):
             pk__in=friendsId
         ).exclude(
             pk=request.user.id
+        ).exclude(
+            is_admin=True
         ).distinct()
 
         friendsFriendsSet = queryset.filter(
@@ -285,6 +287,8 @@ class FriendSearchViewSet(viewsets.ViewSet):
             pk__in=friendsId
         ).exclude(
             pk=request.user.id
+        ).exclude(
+            is_admin=True
         ).distinct()
 
         othersSet = queryset.exclude(
@@ -293,6 +297,8 @@ class FriendSearchViewSet(viewsets.ViewSet):
             pk__in=friendsFriendsId
         ).exclude(
             pk=request.user.id
+        ).exclude(
+            is_admin=True
         ).distinct()
 
         serializer = self.serializer_class({

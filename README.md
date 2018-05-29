@@ -91,7 +91,7 @@ $ heroku run python manage.py migrate --app api-nowmad
 $ heroku run bash --app api-nowmad
 ```
 
-### Open bash
+### Reset database
 ```
 $ heroku pg:reset DATABASE --app api-nowmad
 ```
