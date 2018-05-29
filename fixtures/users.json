@@ -10,8 +10,7 @@
     "first_name": "Xavier",
     "last_name": "Chemla",
     "is_active": true,
-    "is_admin": true,
-    "picture": "thumbnails/xx.com.png"
+    "is_admin": false
   }
 },
 {
@@ -25,8 +24,7 @@
     "first_name": "Julien",
     "last_name": "Rougeron",
     "is_active": true,
-    "is_admin": true,
-    "picture": "thumbnails/clock.png"
+    "is_admin": false
   }
 },
 {
@@ -40,9 +38,7 @@
     "first_name": "Foo",
     "last_name": "Bar",
     "is_active": true,
-    "is_admin": true,
-
-    "picture": "thumbnails/testtest.com.png"
+    "is_admin": false
   }
 },
 {
@@ -56,8 +52,21 @@
     "first_name": "Shandra",
     "last_name": "Menendez",
     "is_active": true,
-    "is_admin": true,
-    "picture": "thumbnails/ss.com.png"
+    "is_admin": false
+  }
+},
+{
+  "model": "authentication.traveluser",
+  "pk": 5,
+  "fields": {
+    "password": "pbkdf2_sha256$36000$YbI3yI5uJ22u$wxzxvBeXJO1FJCQMlHIxlR6Cau/ocA5tapsKcMg6rSY=",
+    "last_login": "2017-10-18T22:19:33.925Z",
+    "email": "team@team.com",
+    "date_of_birth": null,
+    "first_name": "Team",
+    "last_name": "Nowmad",
+    "is_active": true,
+    "is_admin": true
   }
 }
 ]
