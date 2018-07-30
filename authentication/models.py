@@ -22,10 +22,10 @@ class travelUserManager(BaseUserManager):
 
         user = self.model(
             email=self.normalize_email(email),
-            first_name=first_name.capitalize(),
-            last_name=last_name.capitalize()
+            first_name=first_name,
+            last_name=last_name
         )
-        
+
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -36,7 +36,7 @@ class travelUserManager(BaseUserManager):
         birth and password.
         """
         user = self.create_user(
-            email=email,
+            email=self.normalize_email(email),
             password=password,
             first_name=first_name,
             last_name=last_name,

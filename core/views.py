@@ -61,7 +61,10 @@ class PlaceListView(generics.ListAPIView):
 
         queryset = Place.objects.filter(
             reviews__in=pre_queryset
-        ).distinct()
+        ).prefetch_related(Prefetch(
+            'reviews',
+            queryset=pre_queryset,
+        )).distinct()
 
         return queryset
 
