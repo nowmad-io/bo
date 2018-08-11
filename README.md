@@ -1,5 +1,4 @@
 <h1 align="center">
-  <br>
   <a href="https://nowmad.io"><img src="https://github.com/nowmad-io/hybridapp/blob/master/assets/images/logos/full_logo_horizontal.png?raw=true" alt="Nowmad" width="350"></a>
   <br>
   Python/Django Backend
