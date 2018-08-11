@@ -1,7 +1,26 @@
-# Nowmad Backend
-> Python/Django backend of nowmad.io
+<h1 align="center">
+  <br>
+  <a href="https://nowmad.io"><img src="https://github.com/nowmad-io/hybridapp/blob/master/assets/images/logos/full_logo_horizontal.png?raw=true" alt="Nowmad" width="350"></a>
+  <br>
+  Python/Django Backend
+  <br>
+</h1>
 
-This server set up the REST API for the React Native app [Nowmad](https://github.com/nowmad-io/hybridapp). It offers Authentication, Friendship relations, and handles the CRUD actions for Reviews and Places objects.
+<h4 align="center">Python/Django plateform serving the REST API of <a href="https://nowmad.io">Nowmad.io</a></h4>
+
+<p align="center">
+  <a href="#librairies">Librairies</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#miscellaneous">Miscellaneous</a> •
+  <a href="#license">License</a> •
+  <a href="#authors">Authors</a>
+</p>
+
+## Librairies
+
+* Django
+* Django Rest Framework
+* Djoser
 
 ## Installation
 
@@ -84,10 +103,14 @@ $ heroku run python manage.py createsuperuser --app api-nowmad
 Set up SSL
 * https://vimeo.com/209534466
 
-## Meta
+## License
 
-Julien Rougeron – [Portfolio](https://julienr2.github.io) – julien.rougeron@gmail.com
+Distributed under the MIT license.
 
-Distributed under the MIT license. See ``LICENSE`` for more information.
+## Authors
 
-[https://github.com/julienr2/](https://github.com/dbader/)
+UX/UI Design
+[Shandra Menendez Aich](https://www.behance.net/Shandraich) – shandra.aich@gmail.com
+
+Fullstack
+[Julien Rougeron](https://github.com/julienr2) – [Portoflio](https://julienr2.github.io) – julien.rougeron@gmail.com
