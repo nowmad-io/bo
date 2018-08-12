@@ -1,11 +1,11 @@
 <h1 align="center">
-  <a href="https://nowmad.io"><img src="https://github.com/nowmad-io/hybridapp/blob/master/assets/images/logos/full_logo_horizontal.png?raw=true" alt="Nowmad" width="350"></a>
+  <a href="https://www.nowmad.io" target="_blank"><img src="https://github.com/nowmad-io/hybridapp/blob/master/assets/images/logos/full_logo_horizontal.png?raw=true" alt="Nowmad" width="350"></a>
   <br>
-  Python/Django Backend
+  Nowmad - Python/Django Backend
   <br>
 </h1>
 
-<h4 align="center">Python/Django plateform serving the REST API of <a href="https://nowmad.io">Nowmad.io</a></h4>
+<h4 align="center">Python/Django plateform serving the REST API of <a href="https://www.nowmad.io" target="_blank">Nowmad.io</a></h4>
 
 <p align="center">
   <a href="#librairies">Librairies</a> •
