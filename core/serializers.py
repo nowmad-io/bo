@@ -44,6 +44,7 @@ class PlaceSerializer(serializers.ModelSerializer):
         fields = ('id', 'place_id', 'name', 'longitude', 'latitude', 'address')
 
 class PictureSerializer(serializers.ModelSerializer):
+    id = serializers.CharField()
     uri = serializers.CharField(required=False)
     caption = serializers.CharField(allow_blank=True)
 
@@ -123,6 +124,26 @@ class ReviewSerializer(serializers.ModelSerializer):
     def get_user_type(self, obj):
         return getUserType(self, obj)
 
+class ReviewPicturesSerializer(serializers.ModelSerializer):
+    pictures = PictureSerializer(many=True)
+
+    class Meta:
+        model = Review
+        fields = ('id', 'pictures',)
+
+    def update(self, instance, validated_data):
+        newPictures = []
+        pictures = validated_data.get('pictures', instance.pictures)
+        print('yooo pictures', pictures)
+        for picture in pictures:
+            pic, _ = Picture.objects.get_or_create(**picture)
+            print('pic', pic)
+            newPictures.append(pic)
+        print('new pictures', newPictures)
+        instance.pictures.set(newPictures)
+
+        instance.save()
+        return instance
 
 class PlacesSerializer(serializers.ModelSerializer):
     reviews = ReviewsSerializer(many=True, read_only=True)
