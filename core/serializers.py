@@ -44,13 +44,12 @@ class PlaceSerializer(serializers.ModelSerializer):
         fields = ('id', 'place_id', 'name', 'longitude', 'latitude', 'address')
 
 class PictureSerializer(serializers.ModelSerializer):
-    source = Base64ImageField(required=False)
+    uri = serializers.CharField(required=False)
     caption = serializers.CharField(allow_blank=True)
-    pictureId = serializers.IntegerField(write_only=True, required=False)
 
     class Meta:
         model = Picture
-        fields = ('id', 'source', 'caption', 'pictureId')
+        fields = ('id', 'uri', 'caption')
 
 class ReviewsSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(many=True)
@@ -68,7 +67,7 @@ class ReviewsSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     place = PlaceSerializer(many=False)
     categories = CategorySerializer(many=True)
-    pictures = PictureSerializer(required=False, many=True)
+    pictures = PictureSerializer(required=False, many=True, read_only=True)
     created_by = UserSerializer(default=serializers.CurrentUserDefault(), read_only=True)
     user_type = serializers.SerializerMethodField()
 
@@ -117,16 +116,6 @@ class ReviewSerializer(serializers.ModelSerializer):
             newCategories.append(Category.objects.get(name=category['name']))
 
         instance.categories.set(newCategories)
-
-        newPictures = []
-        pictures = validated_data.get('pictures', instance.pictures)
-        for picture in pictures:
-            if 'pictureId' in picture:
-                newPictures.append(Picture.objects.get(pk=picture['pictureId']))
-            else:
-                newPictures.append(Picture.objects.create(**picture))
-
-        instance.pictures.set(newPictures);
 
         instance.save()
         return instance
