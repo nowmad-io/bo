@@ -100,16 +100,14 @@ class ReviewSerializer(serializers.ModelSerializer):
             getCategory = Category.objects.get(name=category['name'])
             review.categories.add(getCategory)
 
-        for picture in pictures_list:
-            newPicture = Picture.objects.create(**picture)
-            review.pictures.add(newPicture)
-
         return review
 
     def update(self, instance, validated_data):
         instance.short_description = validated_data.get('short_description', instance.short_description)
         instance.information = validated_data.get('information', instance.information)
         instance.status = validated_data.get('status', instance.status)
+        instance.link_1 = validated_data.get('link_1', instance.link_1)
+        instance.link_2 = validated_data.get('link_2', instance.link_2)
 
         newCategories = []
         categories = validated_data.get('categories', instance.categories)
