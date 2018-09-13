@@ -52,13 +52,12 @@ class travelUser(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
-    date_of_birth = models.DateField(blank=True, null=True)
     first_name = models.CharField(blank=True, max_length=30)
     last_name = models.CharField(blank=True,  max_length=30)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     public_default = models.BooleanField(default=False)
-    picture = models.ImageField(blank=True, max_length=100, upload_to='thumbnails', storage=PublicMediaStorage())
+    picture = models.URLField(blank=True, null=True)
     objects = travelUserManager()
 
     USERNAME_FIELD = 'email'
