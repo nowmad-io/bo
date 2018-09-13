@@ -12,7 +12,7 @@ from nowmad.storage_backends import PublicMediaStorage
 
 
 class travelUserManager(BaseUserManager):
-    def create_user(self, email, first_name='', last_name='', password=None):
+    def create_user(self, email, first_name='', last_name='', picture='', password=None):
         """
         Creates and saves a User with the given email, date of
         birth and password.
@@ -23,14 +23,15 @@ class travelUserManager(BaseUserManager):
         user = self.model(
             email=self.normalize_email(email),
             first_name=first_name,
-            last_name=last_name
+            last_name=last_name,
+            picture=picture
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password, first_name, last_name):
+    def create_superuser(self, email, password, first_name, last_name, picture):
         """
         Creates and saves a superuser with the given email, date of
         birth and password.
@@ -40,6 +41,7 @@ class travelUserManager(BaseUserManager):
             password=password,
             first_name=first_name,
             last_name=last_name,
+            picture=picture,
         )
         user.is_admin = True
         user.save(using=self._db)
