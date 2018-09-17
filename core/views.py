@@ -15,7 +15,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, permissions, viewsets
 from rest_framework import generics
 
-from .serializers import ReviewSerializer, ReviewsSerializer, CategorySerializer, PlacesSerializer, PlacesSearchSerializer
+from .serializers import ReviewSerializer, ReviewsSerializer, CategorySerializer, PlacesSerializer, PlacesSearchSerializer, ReviewPicturesSerializer
 from .models import Place, Review, Category, InterestedPeople
 from friends.models import Friend
 
@@ -83,7 +83,6 @@ class CategoryViewSet(viewsets.ViewSet):
         queryset = Category.objects.all()
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)
-
 
 class ReviewViewSet(viewsets.ViewSet):
     """
@@ -168,12 +167,35 @@ class ReviewViewSet(viewsets.ViewSet):
             'message': 'Bookmark deleted'
         }, status=status.HTTP_200_OK)
 
-class NotifyMe(View):
-    @method_decorator(csrf_exempt)
-    def dispatch(self, request, *args, **kwargs):
-        return super(NotifyMe, self).dispatch(request, *args, **kwargs)
+class ReviewPicturesViewSet(viewsets.ViewSet):
+    """
+    Update Review's Pictures
+    """
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (TokenAuthentication, SessionAuthentication)
+    serializer_class = ReviewPicturesSerializer
 
-    def post(self, request):
-        email = request.POST.get("email", "")
-        newInterested, _ = InterestedPeople.objects.get_or_create(email=email)
-        return JsonResponse({email: email})
+    def update(self, request, pk=None):
+        try:
+            review = Review.objects.get(pk=pk)
+        except Review.DoesNotExist:
+            return Response({
+                'status': 'Not Found',
+                'message': 'Review could not be find.'
+            }, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = self.serializer_class(review, data = request.data, context={'request':request})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data, status=status.HTTP_202_ACCEPTED
+            )
+
+        return Response({
+            'status': 'Bad request',
+            'message': 'Review could not be created with received data.',
+            'data': str(request.data),
+            'validated_data': serializer.validated_data,
+            'errors': serializer.errors
+        }, status=status.HTTP_400_BAD_REQUEST)

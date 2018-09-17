@@ -43,3 +43,19 @@ class MeView(viewsets.ModelViewSet):
 
         serializer = self.serializer_class(request.user, many=False, context= { 'request': request })
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def update(self, request):
+        serializer = self.serializer_class(request.user, data = request.data, context={'request':request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data, status=status.HTTP_202_ACCEPTED
+            )
+
+        return Response({
+            'status': 'Bad request',
+            'message': 'Review could not be created with received data.',
+            'data': str(request.data),
+            'validated_data': serializer.validated_data,
+            'errors': serializer.errors
+        }, status=status.HTTP_400_BAD_REQUEST)

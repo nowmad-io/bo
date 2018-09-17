@@ -212,18 +212,13 @@ class FriendViewSet(viewsets.ViewSet):
 
     def list(self, request):
         """List friends of authenticated user"""
-        query = self.request.query_params.get('query', '')
-
+        
         if request.user.is_authenticated:
             friendsId = list()
             friends = Friend.objects.friends(request.user)
 
             for friend in friends:
                 friendsId.append(friend.id)
-                friends_of_friend = Friend.objects.friends(friend)
-
-                for friend_friend in friends_of_friend:
-                    friendsId.append(friend_friend.id)
 
             queryset = User.objects.filter(
                 pk__in=friendsId

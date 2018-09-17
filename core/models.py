@@ -65,7 +65,8 @@ class Review(models.Model):
             return []
 
 class Picture(models.Model):
-    source = models.ImageField(max_length=200, upload_to='places', storage=PublicMediaStorage())
+    id = models.CharField(primary_key=True, max_length=200, default=default_id)
+    uri = models.URLField(blank=True)
     caption = models.CharField(max_length=300, blank=True)
 
 class InterestedPeople(models.Model):

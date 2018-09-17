@@ -12,7 +12,7 @@ from nowmad.storage_backends import PublicMediaStorage
 
 
 class travelUserManager(BaseUserManager):
-    def create_user(self, email, first_name='', last_name='', password=None):
+    def create_user(self, email, first_name='', last_name='', picture='', password=None):
         """
         Creates and saves a User with the given email, date of
         birth and password.
@@ -23,14 +23,15 @@ class travelUserManager(BaseUserManager):
         user = self.model(
             email=self.normalize_email(email),
             first_name=first_name,
-            last_name=last_name
+            last_name=last_name,
+            picture=picture
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password, first_name, last_name):
+    def create_superuser(self, email, password, first_name, last_name, picture):
         """
         Creates and saves a superuser with the given email, date of
         birth and password.
@@ -40,6 +41,7 @@ class travelUserManager(BaseUserManager):
             password=password,
             first_name=first_name,
             last_name=last_name,
+            picture=picture,
         )
         user.is_admin = True
         user.save(using=self._db)
@@ -52,13 +54,12 @@ class travelUser(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
-    date_of_birth = models.DateField(blank=True, null=True)
     first_name = models.CharField(blank=True, max_length=30)
     last_name = models.CharField(blank=True,  max_length=30)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     public_default = models.BooleanField(default=False)
-    picture = models.ImageField(blank=True, max_length=100, upload_to='thumbnails', storage=PublicMediaStorage())
+    picture = models.URLField(blank=True, null=True)
     objects = travelUserManager()
 
     USERNAME_FIELD = 'email'

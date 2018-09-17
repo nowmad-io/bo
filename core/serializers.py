@@ -44,13 +44,13 @@ class PlaceSerializer(serializers.ModelSerializer):
         fields = ('id', 'place_id', 'name', 'longitude', 'latitude', 'address')
 
 class PictureSerializer(serializers.ModelSerializer):
-    source = Base64ImageField(required=False)
+    id = serializers.CharField()
+    uri = serializers.CharField(required=False)
     caption = serializers.CharField(allow_blank=True)
-    pictureId = serializers.IntegerField(write_only=True, required=False)
 
     class Meta:
         model = Picture
-        fields = ('id', 'source', 'caption', 'pictureId')
+        fields = ('id', 'uri', 'caption')
 
 class ReviewsSerializer(serializers.ModelSerializer):
     categories = CategorySerializer(many=True)
@@ -68,7 +68,7 @@ class ReviewsSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     place = PlaceSerializer(many=False)
     categories = CategorySerializer(many=True)
-    pictures = PictureSerializer(required=False, many=True)
+    pictures = PictureSerializer(required=False, many=True, read_only=True)
     created_by = UserSerializer(default=serializers.CurrentUserDefault(), read_only=True)
     user_type = serializers.SerializerMethodField()
 
@@ -100,16 +100,14 @@ class ReviewSerializer(serializers.ModelSerializer):
             getCategory = Category.objects.get(name=category['name'])
             review.categories.add(getCategory)
 
-        for picture in pictures_list:
-            newPicture = Picture.objects.create(**picture)
-            review.pictures.add(newPicture)
-
         return review
 
     def update(self, instance, validated_data):
         instance.short_description = validated_data.get('short_description', instance.short_description)
         instance.information = validated_data.get('information', instance.information)
         instance.status = validated_data.get('status', instance.status)
+        instance.link_1 = validated_data.get('link_1', instance.link_1)
+        instance.link_2 = validated_data.get('link_2', instance.link_2)
 
         newCategories = []
         categories = validated_data.get('categories', instance.categories)
@@ -118,22 +116,31 @@ class ReviewSerializer(serializers.ModelSerializer):
 
         instance.categories.set(newCategories)
 
-        newPictures = []
-        pictures = validated_data.get('pictures', instance.pictures)
-        for picture in pictures:
-            if 'pictureId' in picture:
-                newPictures.append(Picture.objects.get(pk=picture['pictureId']))
-            else:
-                newPictures.append(Picture.objects.create(**picture))
-
-        instance.pictures.set(newPictures);
-
         instance.save()
         return instance
 
     def get_user_type(self, obj):
         return getUserType(self, obj)
 
+class ReviewPicturesSerializer(serializers.ModelSerializer):
+    pictures = PictureSerializer(many=True)
+
+    class Meta:
+        model = Review
+        fields = ('id', 'pictures',)
+
+    def update(self, instance, validated_data):
+        newPictures = []
+        pictures = validated_data.get('pictures', instance.pictures)
+
+        for picture in pictures:
+            pic, _ = Picture.objects.get_or_create(**picture)
+            newPictures.append(pic)
+
+        instance.pictures.set(newPictures)
+
+        instance.save()
+        return instance
 
 class PlacesSerializer(serializers.ModelSerializer):
     reviews = ReviewsSerializer(many=True, read_only=True)
