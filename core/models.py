@@ -12,13 +12,13 @@ def default_id():
 class Category(models.Model):
     name = models.CharField(max_length=200)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 class Status(models.Model):
     name = models.CharField(max_length=200)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 class Place(models.Model):
@@ -29,7 +29,7 @@ class Place(models.Model):
     longitude = models.FloatField(blank=False, null=False, default=0)
     latitude = models.FloatField(blank=False, null=False, default=0)
 
-    def __unicode__(self):
+    def __str__(self):
         return u"%s - %i - %i" % (self.name, self.longitude, self.latitude)
 
     def get_readonly_fields(self, request, obj=None):
@@ -55,7 +55,7 @@ class Review(models.Model):
     class Meta:
         ordering = ('-creation_date',)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.short_description
 
     def get_readonly_fields(self, request, obj=None):
@@ -69,8 +69,11 @@ class Picture(models.Model):
     uri = models.URLField(blank=True)
     caption = models.CharField(max_length=300, blank=True)
 
+    def __str__(self):
+        return self.uri
+
 class InterestedPeople(models.Model):
     email = models.CharField(max_length=200, blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.email
