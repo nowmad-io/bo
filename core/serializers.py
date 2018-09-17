@@ -132,12 +132,11 @@ class ReviewPicturesSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         newPictures = []
         pictures = validated_data.get('pictures', instance.pictures)
-        print('yooo pictures', pictures)
+
         for picture in pictures:
             pic, _ = Picture.objects.get_or_create(**picture)
-            print('pic', pic)
             newPictures.append(pic)
-        print('new pictures', newPictures)
+
         instance.pictures.set(newPictures)
 
         instance.save()

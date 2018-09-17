@@ -185,9 +185,8 @@ class ReviewPicturesViewSet(viewsets.ViewSet):
             }, status=status.HTTP_404_NOT_FOUND)
 
         serializer = self.serializer_class(review, data = request.data, context={'request':request})
-        print('here ?')
+
         if serializer.is_valid():
-            print('not here ?')
             serializer.save()
             return Response(
                 serializer.data, status=status.HTTP_202_ACCEPTED
