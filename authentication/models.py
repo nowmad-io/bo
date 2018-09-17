@@ -10,9 +10,8 @@ import urllib.request
 
 from nowmad.storage_backends import PublicMediaStorage
 
-
 class travelUserManager(BaseUserManager):
-    def create_user(self, email, first_name='', last_name='', picture='', password=None):
+    def create_user(self, email, first_name='', last_name='', picture=None, password=None):
         """
         Creates and saves a User with the given email, date of
         birth and password.
@@ -31,7 +30,7 @@ class travelUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password, first_name, last_name, picture):
+    def create_superuser(self, email, password, first_name, last_name, picture=None):
         """
         Creates and saves a superuser with the given email, date of
         birth and password.
