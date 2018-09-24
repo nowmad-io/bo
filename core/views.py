@@ -6,6 +6,7 @@ from django.db.models import Prefetch, Count, Q
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+import json
 
 from itertools import chain
 from rest_framework.decorators import list_route
@@ -199,3 +200,14 @@ class ReviewPicturesViewSet(viewsets.ViewSet):
             'validated_data': serializer.validated_data,
             'errors': serializer.errors
         }, status=status.HTTP_400_BAD_REQUEST)
+
+class NotifyMe(View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(NotifyMe, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+        params = json.loads(request.body.decode('utf-8'))
+        email = params.get('email', '')
+        newInterested, _ = InterestedPeople.objects.get_or_create(email=email)
+        return JsonResponse({email: email})
