@@ -3,7 +3,7 @@ botocore==1.8.10
 certifi==2017.11.5
 chardet==3.0.4
 dj-database-url==0.4.2
-Django==2.0
+Django==2.2.13
 django-cors-headers==2.1.0
 django-extra-fields==0.9
 django-shortuuidfield==0.1.3
